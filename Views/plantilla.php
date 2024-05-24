@@ -22,6 +22,7 @@ $rutaLocal = Ruta::rutaCtr();
     <script src="<?php echo $rutaLocal?>Views/assets/js/modulos/fontawesome/js/fontawesome.min.js"></script> 
     <link rel="stylesheet" href="<?php echo $rutaLocal?>Views/assets/js/modulos/fontawesome/css/all.min.css">
 
+    <script src="<?php echo $rutaLocal?>Views/assets/js/modulos/jquery.js"></script> 
     <script src="<?php echo $rutaLocal?>Views/assets/js/modulos/sweetalert.js"></script> 
 
 </head>

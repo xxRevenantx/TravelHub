@@ -10,8 +10,13 @@ include_once "Controllers/rutaCtr.php";
 include_once "Controllers/loginCtr.php";
 include_once "Controllers/validaciones.php";
 
+include_once "Controllers/avionCtr.php";
+
+
+
 // Modelos
 include_once "Models/loginMdl.php";
+include_once "Models/avionMdl.php";
 
 
 $template = new Template();

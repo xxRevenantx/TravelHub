@@ -28,3 +28,8 @@ export function swalMixin(position,icon,title){
         title: title,
       })
 }
+
+// Url principal
+export function travelHub(){
+  return "http://localhost/travelHub/";
+}

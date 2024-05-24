@@ -19,7 +19,7 @@ include 'Components/navAdmin.php'
     <label for="empresaPropietaria">Empresa Propietaria: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
     <input type="text" id="empresaPropietaria" name="empresaPropietaria" placeholder="Ej. Aerolíneas Internacionales" >
 
-    <button type="submit" class="btnformulario">Guardar Avión</button>
+    <button type="submit" name="btn" class="btnformulario">Guardar Avión</button>
 
     <?php
         $validacion = new Validaciones();

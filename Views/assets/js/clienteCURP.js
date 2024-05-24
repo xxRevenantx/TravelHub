@@ -84,6 +84,7 @@ let form = document.querySelector(".formClienteAdmin");
 
 if (form) { // Verifica si el formulario existe
 
+    // fecha actual
     document.addEventListener('DOMContentLoaded', function() {
         const fechaRegistroInput = document.getElementById('fechaRegistro');
         const today = new Date();

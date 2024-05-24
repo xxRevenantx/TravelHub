@@ -1,5 +1,5 @@
 // EXPORTAMOSLAS FUNCIONES
-import {swal, swalMixin} from './modulos/modules.js'; 
+import {swal, swalMixin, travelHub} from './modulos/modules.js'; 
 
 // VALIDACIONES
 
@@ -152,7 +152,35 @@ function avion(){
             } 
        
 
-            swalMixin("top","success","Campos validados correctamente")
+
+        // Recopila los datos del formulario
+        let datosFormulario = {
+            numeroSerie: numeroSerie,
+            modelo: modelo,
+            capacidadAsientos: capacidad,
+            empresaPropietaria: empresaPropietaria
+        };
+
+        // Realiza la solicitud AJAX
+        $.ajax({
+            url:  travelHub()+"Views/Ajax/avion.ajax.php", // Asegúrate de cambiar esta URL
+            type: 'POST',
+            data: datosFormulario,
+            dataType : "json",
+
+            success: function(response) {
+                console.log(response);
+                // Aquí manejas lo que ocurre después de enviar los datos exitosamente
+                alert('Avión guardado correctamente');
+            },
+            error: function(xhr, status, error) {
+                // Aquí manejas los errores
+                alert('No se pudo guardar el avión');
+            }
+        });
+          
+
+
 }
 
 

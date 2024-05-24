@@ -1,9 +1,9 @@
 <?php
-include_once "conexion.php";
-
+include_once "CANP_conexion.php";
 
 class LoginMdl{
-    
+
+   
     static public function validarLoginMdl($tabla, $datos){
          $PDO = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE usuario = :usuario AND pass = :pass");
          $PDO->bindParam(":usuario",$datos["usuario"],PDO::PARAM_STR);
