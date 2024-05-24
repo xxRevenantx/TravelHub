@@ -1,11 +1,11 @@
 // EXPORTAMOSLAS FUNCIONES
-import {swal, swalMixin} from './modulos/modules.js'; 
+import {swal, swalMixin, travelHub} from './modulos/modules.js'; 
 
 
 /* ============= GENERAR CURP ======================== */
 
-// Función generarCURP que recibe los parámetros: nombre, primerApellido, segundoApellido, fechaNacimiento, sexo y estado
-function generarCURP(nombre, primerApellido, segundoApellido, fechaNacimiento, sexo, estado) {
+// Función generarCURP que recibe los parámetros: nombre, primerApellido, segundoApellido, fechaNacimiento, sexo y lugar de Nacimiento
+function generarCURP(nombre, primerApellido, segundoApellido, fechaNacimiento, sexo, lugarNacimiento) {
     const vocalRegex = /[AEIOU]/i; // Expresión regular para encontrar la primera vocal
     const consonanteRegex = /[^AEIOU]/i; // Expresión regular para encontrar la primera consonante que no sea vocal
 
@@ -58,7 +58,7 @@ function generarCURP(nombre, primerApellido, segundoApellido, fechaNacimiento, s
     curp += sexo.toUpperCase();
 
     // Añade el estado de nacimiento en mayúsculas a la CURP
-    curp += estado.toUpperCase();
+    curp += lugarNacimiento.toUpperCase();
 
     // Añade la primera consonante interna del primer apellido a la CURP
     curp += encontrarPrimeraConsonante(primerApellido);
@@ -114,8 +114,8 @@ if (form) { // Verifica si el formulario existe
         // Obtiene el valor del select con id 'sexo' y lo asigna a la variable 'sexo'
         const sexo = document.getElementById('sexo').value;
         
-         // Obtiene el valor del select con id 'estado' y lo asigna a la variable 'estado'
-        const estado = document.getElementById('estado').value;
+         // Obtiene el valor del select con id 'de lugar de Nacimiento' y lo asigna a la variable 'lugar de Nacimiento'
+        const lugarNacimiento = document.getElementById('lugarNacimiento').value;
 
 
         const rfc = document.getElementById('rfc').value;
@@ -124,7 +124,7 @@ if (form) { // Verifica si el formulario existe
         const fechaRegistro = document.getElementById('fechaRegistro').value;
        
         // Verifica que todas las variables tienen un valor (no están vacías)
-        if (nombre && primerApellido && segundoApellido && fechaNacimiento && sexo && estado && rfc && fechaRegistro) {
+        if (nombre && primerApellido && segundoApellido && fechaNacimiento && sexo && lugarNacimiento && curp && rfc && fechaRegistro) {
 
             const soloLetras = /^[a-zA-ZñÑ\s]+$/;
             const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
@@ -162,7 +162,7 @@ if (form) { // Verifica si el formulario existe
             }
             
              // Llama a la función generarCURP con los valores obtenidos y asigna el resultado a la variable 'curp'
-            const curp = generarCURP(nombre, primerApellido, segundoApellido, fechaNacimiento, sexo, estado);
+            const curp = generarCURP(nombre, primerApellido, segundoApellido, fechaNacimiento, sexo, lugarNacimiento);
 
             // Asigna el valor de 'curp' en mayúsculas al input con id 'curp'
               document.getElementById('curp').value = curp.toUpperCase().trim();
@@ -173,11 +173,40 @@ if (form) { // Verifica si el formulario existe
                return;
             }
          
-            swalMixin("top","success","Los datos han sido validados correctamente")
+             // Recopila los datos del formulario
+             let datosFormulario = {
+                nombre: nombre,
+                primerApellido: primerApellido,
+                segundoApellido: segundoApellido,
+                lugarNacimiento: lugarNacimiento,
+                fechaNacimiento: fechaNacimiento,
+                sexo: sexo,
+                rfc: rfc,
+                curp: curp,
+                fechaRegistro: fechaRegistro
+            };
+
+        // Realiza la solicitud AJAX
+        $.ajax({
+            url:  travelHub()+"Views/Ajax/cliente.ajax.php", // Asegúrate de cambiar esta URL
+            type: 'POST',
+            data: datosFormulario,
+            dataType : "json",
+
+            success: function(response) {
+                console.log(response);
+                // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
+                swalMixin("top","success","Cliente guardado exitosamente en la base de datos")
+            },
+            error: function(xhr, status, error) {
+                // Aquí manejas los errores
+                alert('No se pudo guardar el cliente');
+            }
+        });
     
             
         }else{
-             swalMixin("center","error","Por favor, completa todos los campos")
+            swalMixin("top","error","Ocurrió un problemaal guardar el cliente")
         }
     });
 }

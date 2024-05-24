@@ -1,5 +1,5 @@
 <?php
-class TransporteTerrestre {
+class TransporteTerrestreMdl {
 
     // Función para añadir un nuevo transporte terrestre
     public static function canp_registrar_transporte_terrestre($tipoTransporte, $placa, $capacidad, $anioFabricacion, $empresa) {

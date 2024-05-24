@@ -1,5 +1,5 @@
 <?php
-class Destino {
+class DestinoMdl {
 
 // Función para añadir un nuevo destino
 public static function canp_registrar_destino($destino, $avion1, $avion2, $transporte1, $transporte2, $pais, $resena, $coordenadas) {

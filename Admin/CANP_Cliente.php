@@ -26,9 +26,9 @@ include 'Components/navAdmin.php'
         </div>
         <div class="form-row">
             <div class="form-group">
-                <label for="estado">Lugar de Nacimiento: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
+                <label for="lugarNacimiento">Lugar de Nacimiento: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
                 
-                <select id="estado" name="estado">
+                <select id="lugarNacimiento" name="lugarNacimiento">
                     <?php include 'Components/lugares.php' ?>
                 </select>
             </div>
