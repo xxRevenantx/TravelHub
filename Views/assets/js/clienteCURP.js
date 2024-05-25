@@ -80,9 +80,9 @@ function generarCURP(nombre, primerApellido, segundoApellido, fechaNacimiento, s
 
 
 // Selecciona el formulario con la clase "formClienteAdmin" y lo asigna a la variable 'form'
-let form = document.querySelector(".formClienteAdmin");
+let formClienteAdmin = document.querySelector(".formClienteAdmin");
 
-if (form) { // Verifica si el formulario existe
+if (formClienteAdmin) { // Verifica si el formulario existe
 
     // fecha actual
     document.addEventListener('DOMContentLoaded', function() {
@@ -95,7 +95,7 @@ if (form) { // Verifica si el formulario existe
         fechaRegistroInput.value = fechaRegistro;
     });
     
-    form.addEventListener('submit', function(e) {// Agrega un evento de escucha para el evento 'submit' del formulario
+    formClienteAdmin.addEventListener('submit', function(e) {// Agrega un evento de escucha para el evento 'submit' del formulario
         
         e.preventDefault(); // Previene la acción por defecto del formulario (evita que se envíe)
         
@@ -172,41 +172,149 @@ if (form) { // Verifica si el formulario existe
                swalMixin("top","error","La CURP debe tener exactamente 18 caracteres alfanuméricos")
                return;
             }
-         
-             // Recopila los datos del formulario
-             let datosFormulario = {
-                nombre: nombre,
-                primerApellido: primerApellido,
-                segundoApellido: segundoApellido,
-                lugarNacimiento: lugarNacimiento,
-                fechaNacimiento: fechaNacimiento,
-                sexo: sexo,
-                rfc: rfc,
-                curp: curp,
-                fechaRegistro: fechaRegistro
-            };
+            
 
-        // Realiza la solicitud AJAX
-        $.ajax({
-            url:  travelHub()+"Views/Ajax/cliente.ajax.php", // Asegúrate de cambiar esta URL
-            type: 'POST',
-            data: datosFormulario,
-            dataType : "json",
+            if(formClienteAdmin.idClienteActualizar.value != ""){ // ACTUALIZAR
+                let id = formClienteAdmin.idClienteActualizar.value;
+                // Recopila los datos del formulario
+                let datosFormulario = {
+                    idA: id,
+                    nombreA: nombre,
+                    primerApellidoA: primerApellido,
+                    segundoApellidoA: segundoApellido,
+                    lugarNacimientoA: lugarNacimiento,
+                    fechaNacimientoA: fechaNacimiento,
+                    sexoA: sexo,
+                    rfcA: rfc, 
+                    curpA: curp,
+                    fechaRegistroA: fechaRegistro 
+                };
+                  // Realiza la solicitud AJAX
+                  $.ajax({
+                    url:  travelHub()+"Views/Ajax/cliente.ajax.php", 
+                    type: 'POST',
+                    data: datosFormulario,
+                    dataType : "json",
+                    beforeSend: function () {
+                        swalMixin("top","info","Espera... actualizando cliente")
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if(response == true){
+                            // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
+                            swalMixin("top","success","Cliente actualizado exitosamente en la base de datos")
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                        }else{
+                            console.log(response);
+                            swalMixin("top","error","El cliente no se pudo actualizar")
+                        }
+                    
+                    },
+                    error: function(xhr, status, error) {
+                        // Aquí manejas los errores
+                        alert('No se pudo actualizar el cliente');
+                    }
+                });
+                    }else{
 
-            success: function(response) {
-                console.log(response);
-                // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
-                swalMixin("top","success","Cliente guardado exitosamente en la base de datos")
-            },
-            error: function(xhr, status, error) {
-                // Aquí manejas los errores
-                alert('No se pudo guardar el cliente');
-            }
-        });
-    
+                // Recopila los datos del formulario
+                let datosFormulario = {
+                    nombre: nombre,
+                    primerApellido: primerApellido,
+                    segundoApellido: segundoApellido,
+                    lugarNacimiento: lugarNacimiento,
+                    fechaNacimiento: fechaNacimiento,
+                    sexo: sexo,
+                    rfc: rfc, 
+                    curp: curp,
+                    fechaRegistro: fechaRegistro 
+                };
+                        // Realiza la solicitud AJAX
+                        $.ajax({
+                            url:  travelHub()+"Views/Ajax/cliente.ajax.php", 
+                            type: 'POST',
+                            data: datosFormulario,
+                            dataType : "json",
+                            beforeSend: function () {
+                                swalMixin("top","info","Espera... guardando cliente")
+                            },
+                            success: function(response) {
+                                if(response == true){
+                                    // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
+                                    swalMixin("top","success","Cliente guardado exitosamente en la base de datos")
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2000);
+                                }else{
+                                    console.log(response);
+                                    swalMixin("top","error","El cliente no se pudo guardar")
+                                }
+                            
+                            },
+                            error: function(xhr, status, error) {
+                                // Aquí manejas los errores
+                                alert('No se pudo guardar el cliente');
+                            }
+                        });
+                
+                    }
             
         }else{
-            swalMixin("top","error","Ocurrió un problemaal guardar el cliente")
+            swalMixin("top","error","Por favor, llena todos los campos")
         }
     });
+
+
+    //EDITAR CLIENTE
+
+$('.tblClientes').on('click', '.btnEditarCliente', function(e){
+    let id = $(this).attr("btnEditarCliente");
+
+     // Recopila los datos del formulario
+     let datosFormulario = {
+        idEditar: id,
+    };
+
+    $.ajax({
+        url:  travelHub()+"Views/Ajax/cliente.ajax.php", // Asegúrate de cambiar esta URL
+        type: 'POST',
+        data: datosFormulario,
+        dataType : "json",
+
+        success: function(response) {
+
+            window.scroll({
+                top: 100,
+                left: 100,
+                behavior: "smooth",
+              });
+            formClienteAdmin.idClienteActualizar.value = response.id_cliente;
+            formClienteAdmin.nombre.value = response.nombre;
+            formClienteAdmin.primerApellido.value = response.primer_apellido;
+            formClienteAdmin.segundoApellido.value = response.segundo_apellido;
+            formClienteAdmin.lugarNacimiento.value = response.lugarNacimiento;
+            formClienteAdmin.fechaNacimiento.value = response.fechaNacimiento;
+            formClienteAdmin.sexo.value = response.sexo;
+            formClienteAdmin.rfc.value = response.RFC;
+            formClienteAdmin.curp.value = response.CURP;
+            formClienteAdmin.fechaRegistro.value = response.fecha_registro;
+            formClienteAdmin.btnCliente.textContent = "Guardar cambios"
+            formClienteAdmin.btnCliente.style.background = "#ffd500"
+            formClienteAdmin.btnCliente.style.color = "#000"
+
+          
+          
+        },
+        error: function(xhr, status, error) {
+            // Aquí manejas los errores
+            alert('No se pudo guardar el cliente');
+        }
+    });
+
+})
+   
+
+
 }

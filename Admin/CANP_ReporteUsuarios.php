@@ -4,6 +4,8 @@ include 'Components/navAdmin.php'
 ?>
 
     <div class="contenedor">
+
+
 <h2>Listado de Usuarios</h2>
         <table>
             <thead>

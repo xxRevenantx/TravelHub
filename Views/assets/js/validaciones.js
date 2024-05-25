@@ -8,6 +8,7 @@ let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre")
 let formDestinoAdmin = document.querySelector(".formDestinoAdmin");
 let formTipoDestino = document.querySelector(".formTipoDestino");
 let formAvion = document.querySelector(".formAvion");
+let formUsuario = document.querySelector(".formUsuario");
 
 
 // VALIDAR EL DESTINO
@@ -42,6 +43,7 @@ if(formAvion){
         avion();
     })
 }
+
 
 
 

@@ -197,7 +197,7 @@ button:hover {
     background-color: #00796b;
 }
 
-button.edit{
+.edit{
     padding: 10px 20px;
     background-color: #ffe600;
     color: black;
@@ -206,7 +206,7 @@ button.edit{
     border-radius: 5px;
 }
 
-button.delete{
+.delete{
     padding: 10px 20px;
     background-color: #960000;
     color: white;
@@ -402,7 +402,7 @@ input[type="password"] {
 
 
 
-
+    
 h2.login{
     text-align: center;
 }
@@ -491,3 +491,10 @@ h2.login{
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+.btn{
+    padding: 5px;
+    color: #000;
+
+}
+
+

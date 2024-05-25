@@ -9,7 +9,12 @@ require_once "../../Controllers/clienteCtr.php";
 /* CLASE */
 class ClienteAjax {
 
-    public $id;
+
+    public $idEditar;
+
+
+
+    //INSERTAR
     public $nombre;
     public $primerApellido;
     public $segundoApellido;
@@ -19,6 +24,19 @@ class ClienteAjax {
     public $rfc;
     public $curp;
     public $fechaRegistro;
+
+    //ACTUALIZAR
+    public $idA;
+    public $nombreA;
+    public $primerApellidoA;
+    public $segundoApellidoA;
+    public $lugarNacimientoA;
+    public $fechaNacimientoA;
+    public $sexoA;
+    public $rfcA;
+    public $curpA;
+    public $fechaRegistroA;
+
 
     // REGISTRAR CLIENTE
     public function canp_registrar_cliente_ajax(){
@@ -33,20 +51,32 @@ class ClienteAjax {
             'curp' => $this->curp,
             'fechaRegistro' => $this->fechaRegistro
         ];
-          $respuesta = ClienteCtr::canp_registrar_cliente_ctr($datosCliente);
+        $respuesta = ClienteCtr::canp_registrar_cliente_ctr($datosCliente);
         echo json_encode($respuesta);
     }
 
     // LEER CLIENTE
-    public function canp_leer_cliente_ajax(){
-        $idCliente = $_POST['idCliente']; // El ID del cliente a leer, enviado desde AJAX
-        $respuesta = ClienteCtr::canp_leer_cliente_ctr($idCliente);
+    public function canp_leer_cliente_id_ajax(){
+        $idCliente = $this->idEditar; // El ID del cliente a leer, enviado desde AJAX
+        $respuesta = ClienteCtr::canp_leer_cliente_id_ctr($idCliente);
         echo json_encode($respuesta);
     }
 
     // ACTUALIZAR CLIENTE
     public function canp_actualizar_cliente_ajax(){
-        $respuesta = ClienteCtr::canp_actualizar_cliente_ctr($_POST);
+        $datosCliente = [
+            'id' => $this->idA,
+            'nombre' => $this->nombreA,
+            'primerApellido' => $this->primerApellidoA,
+            'segundoApellido' => $this->segundoApellidoA,
+            'lugarNacimiento' => $this->lugarNacimientoA,
+            'fechaNacimiento' => $this->fechaNacimientoA,
+            'sexo' => $this->sexoA,
+            'rfc' => $this->rfcA,
+            'curp' => $this->curpA,
+            'fechaRegistro' => $this->fechaRegistroA
+        ];
+        $respuesta = ClienteCtr::canp_actualizar_cliente_ctr($datosCliente);
         echo json_encode($respuesta);
     }
 
@@ -74,6 +104,12 @@ if(isset($_POST["nombre"])) {
     $c->canp_registrar_cliente_ajax();
 }
 
+// LEER POR ID
+if(isset($_POST["idEditar"])) {
+    $c = new ClienteAjax();
+    $c->idEditar = $_POST["idEditar"];
+    $c->canp_leer_cliente_id_ajax();
+}
 // LEER
 if(isset($_POST["btnLeerCliente"])) {
     $c = new ClienteAjax();
@@ -82,17 +118,18 @@ if(isset($_POST["btnLeerCliente"])) {
 }
 
 // ACTUALIZAR
-if(isset($_POST["btnActualizarCliente"])) {
+if(isset($_POST["nombreA"])) {
     $c = new ClienteAjax();
-    $c->id = $_POST["idCliente"];
-    $c->nombre = $_POST["nombre"];
-    $c->primerApellido = $_POST["primerApellido"];
-    $c->segundoApellido = $_POST["segundoApellido"];
-    $c->lugarNacimiento = $_POST["lugarNacimiento"];
-    $c->fechaNacimiento = $_POST["fechaNacimiento"];
-    $c->sexo = $_POST["sexo"];
-    $c->rfc = $_POST["rfc"];
-    $c->fechaRegistro = $_POST["fechaRegistro"];
+    $c->idA = $_POST["idA"];
+    $c->nombreA = $_POST["nombreA"];
+    $c->primerApellidoA = $_POST["primerApellidoA"];
+    $c->segundoApellidoA = $_POST["segundoApellidoA"];
+    $c->lugarNacimientoA = $_POST["lugarNacimientoA"];
+    $c->fechaNacimientoA = $_POST["fechaNacimientoA"];
+    $c->sexoA = $_POST["sexoA"];
+    $c->rfcA = $_POST["rfcA"];
+    $c->curpA = $_POST["curpA"];
+    $c->fechaRegistroA = $_POST["fechaRegistroA"];
     $c->canp_actualizar_cliente_ajax();
 }
 

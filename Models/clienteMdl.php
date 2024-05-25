@@ -1,58 +1,81 @@
 <?php
+include_once "CANP_conexion.php";
 class ClienteMdl {
 
 // Función para añadir un nuevo cliente
 public static function canp_registrar_cliente_mdl($datosCliente) {
     try {
         $db = Conexion::conectar();
-        $sql = "INSERT INTO tblcliente (nombre, primerApellido, segundo_apellido, lugarNacimiento, fechaNacimiento, sexo, rfc, fechaRegistro) VALUES (:nombre, :primerApellido, :segundoApellido, :estado, :lugarNacimiento, :sexo, :rfc, :fechaRegistro)";
+        $sql = "INSERT INTO tblcliente (nombre, primer_apellido, segundo_apellido, lugarNacimiento, fechaNacimiento, sexo, RFC, CURP, fecha_registro) VALUES (:nombre, :primerApellido, :segundoApellido, :lugarNacimiento, :fechaNacimiento, :sexo, :rfc, :curp, :fechaRegistro)";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':primerApellido', $primerApellido);
-        $stmt->bindParam(':segundoApellido', $segundoApellido);
-        $stmt->bindParam(':lugarNacimiento', $lugarNacimiento);
-        $stmt->bindParam(':fechaNacimiento', $fechaNacimiento);
-        $stmt->bindParam(':sexo', $sexo);
-        $stmt->bindParam(':rfc', $rfc);
-        $stmt->bindParam(':fechaRegistro', $fechaRegistro);
-        $stmt->execute();
-        return "Cliente registrado exitosamente.";
+        $stmt->bindParam(':nombre', $datosCliente["nombre"]);
+        $stmt->bindParam(':primerApellido', $datosCliente["primerApellido"]);
+        $stmt->bindParam(':segundoApellido', $datosCliente["segundoApellido"]);
+        $stmt->bindParam(':lugarNacimiento', $datosCliente["lugarNacimiento"]);
+        $stmt->bindParam(':fechaNacimiento', $datosCliente["fechaNacimiento"]);
+        $stmt->bindParam(':sexo', $datosCliente["sexo"]);
+        $stmt->bindParam(':rfc', $datosCliente["rfc"]);
+        $stmt->bindParam(':curp', $datosCliente["curp"]);
+        $stmt->bindParam(':fechaRegistro', $datosCliente["fechaRegistro"]);
+        
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+        
     } catch (PDOException $e) {
-        return "Error al registrar cliente: " . $e->getMessage();
+        return $e;
     }
 }
 
-// Función para obtener los datos de un cliente específico
-public static function canp_leer_cliente_mdl($id) {
+// Función para obtener los datos de los clientes
+public static function canp_leer_clientes_mdl() {
     try {
         $db = Conexion::conectar();
-        $sql = "SELECT * FROM clientes WHERE id = :id";
+        $sql = "SELECT * FROM tblcliente";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id', $id);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        return "Error al leer datos del cliente: " . $e->getMessage();
+    }
+}
+// Función para obtener los datos de un cliente específico
+public static function canp_leer_cliente_id_mdl($id) {
+    try {
+        $db = Conexion::conectar($id);
+        $sql = "SELECT * FROM tblcliente WHERE id_cliente = :id_cliente";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':id_cliente', $id);
+        $stmt->execute();
+        return $stmt->fetch();
     } catch (PDOException $e) {
         return "Error al leer datos del cliente: " . $e->getMessage();
     }
 }
 
 // Función para actualizar un cliente
-public static function canp_actualizar_cliente_mdl($id, $nombre, $primerApellido, $segundoApellido, $estado, $fechaNacimiento, $sexo, $rfc, $fechaRegistro) {
+public static function canp_actualizar_cliente_mdl($datosCliente) {
     try {
         $db = Conexion::conectar();
-        $sql = "UPDATE clientes SET nombre = :nombre, primerApellido = :primerApellido, segundoApellido = :segundoApellido, estado = :estado, fechaNacimiento = :fechaNacimiento, sexo = :sexo, rfc = :rfc, fechaRegistro = :fechaRegistro WHERE id = :id";
+        $sql = "UPDATE tblcliente SET nombre = :nombre, primer_pellido = :primerApellido, segundo_apellido = :segundoApellido, lugarNacimiento = :lugarNacimiento, fechaNacimiento = :fechaNacimiento, sexo = :sexo, RFC = :rfc, CURP = :CURP, fecha_registro = :fechaRegistro WHERE id_cliente = :id";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':primerApellido', $primerApellido);
-        $stmt->bindParam(':segundoApellido', $segundoApellido);
-        $stmt->bindParam(':estado', $estado);
-        $stmt->bindParam(':fechaNacimiento', $fechaNacimiento);
-        $stmt->bindParam(':sexo', $sexo);
-        $stmt->bindParam(':rfc', $rfc);
-        $stmt->bindParam(':fechaRegistro', $fechaRegistro);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        return "Cliente actualizado exitosamente.";
+        $stmt->bindParam(':nombre', $datosCliente["nombre"]);
+        $stmt->bindParam(':primerApellido', $datosCliente["primerApellido"]);
+        $stmt->bindParam(':segundoApellido', $datosCliente["segundoApellido"]);
+        $stmt->bindParam(':lugarNacimiento', $datosCliente["lugarNacimiento"]);
+        $stmt->bindParam(':fechaNacimiento', $datosCliente["fechaNacimiento"]);
+        $stmt->bindParam(':sexo', $datosCliente["sexo"]);
+        $stmt->bindParam(':rfc', $datosCliente["rfc"]);
+        $stmt->bindParam(':curp', $datosCliente["curp"]);
+        $stmt->bindParam(':fechaRegistro', $datosCliente["fechaRegistro"]);
+        $stmt->bindParam(':id', $datosCliente["id"]);
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
     } catch (PDOException $e) {
         return "Error al actualizar cliente: " . $e->getMessage();
     }
