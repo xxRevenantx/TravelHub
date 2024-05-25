@@ -8,7 +8,7 @@ include 'Components/navAdmin.php'
         <h2>Añadir Nuevo Cliente</h2>
        
         <form class="formClienteAdmin" method="post">
-            <input type="text" name="idClienteActualizar" class="idClienteActualizar">
+            <input type="hidden" name="idClienteActualizar" class="idClienteActualizar">
         <div class="form-row">
             <div class="form-group">
                 <label for="nombre">Nombre: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>

@@ -68,27 +68,119 @@ function destino(){
                 return;
             }
         }
-       
-      
-      
-        swalMixin("top","success","Campos validados correctamente")
     });
+       
+        if(formDestinoAdmin.idDestinoActualizar.value != ""){ // ACTUALIZAR
+            let id = formDestinoAdmin.idDestinoActualizar.value;
+            // Recopila los datos del formulario
+            let datosFormulario = {
+                idA: id,
+                nombreA: nombre,
+                primerApellidoA: primerApellido,
+                segundoApellidoA: segundoApellido,
+                lugarNacimientoA: lugarNacimiento,
+                fechaNacimientoA: fechaNacimiento,
+                sexoA: sexo,
+                rfcA: rfc, 
+                curpA: curp,
+                fechaRegistroA: fechaRegistro 
+            };
+              // Realiza la solicitud AJAX
+              $.ajax({
+                url:  travelHub()+"Views/Ajax/cliente.ajax.php", 
+                type: 'POST',
+                data: datosFormulario,
+                dataType : "json",
+                beforeSend: function () {
+                    swalMixin("top","info","Espera... actualizando cliente")
+                     formClienteAdmin.btnCliente.setAttribute("disabled","")
+                     formClienteAdmin.btnCliente.style.opacity = "0.5"
+                },
+                success: function(response) {
+                    if(response == true){
+                        // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
+                        swalMixin("top","success","Cliente actualizado exitosamente en la base de datos")
+                         formClienteAdmin.btnCliente.setAttribute("disabled","")
+                         formClienteAdmin.btnCliente.style.opacity = "0.5"
+                        setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                    }else{
+                        console.log(response);
+                        swalMixin("top","error","El cliente no se pudo actualizar")
+                    }
+                
+                },
+                error: function(xhr, status, error) {
+                    // Aquí manejas los errores
+                    alert('No se pudo actualizar el cliente');
+                }
+            });
+                
+        
+        }else{ // Registrar cliente
+
+            // Datos del formulario
+            let datosFormularioDestino = {
+                idDestinoActualizar: document.querySelector('.idDestinoActualizar').value,
+                destino: document.querySelector('#destino').value,
+                avion1: document.querySelector('#avion1').value,
+                avion2: document.querySelector('#avion2').value,
+                transporte1: document.querySelector('#transporte1').value,
+                transporte2: document.querySelector('#transporte2').value,
+                pais: document.querySelector('#pais').value,
+                resena: document.querySelector('#resena').value,
+                coordenadas: document.querySelector('#coordenadas').value
+            };
+
+
+            $.ajax({
+                url: travelHub() + "Views/Ajax/destino.ajax.php",
+                type: 'POST',
+                data: datosFormularioDestino,
+                dataType: "json",
+                beforeSend: function() {
+                    swalMixin("top", "info", "Espera... guardando destino");
+                },
+                success: function(response) {
+                    if (response === true) {
+                        swalMixin("top", "success", "Destino guardado exitosamente en la base de datos");
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        console.log(response);
+                        swalMixin("top", "error", "El destino no se pudo guardar");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('No se pudo guardar el destino. Error: ' + error);
+                }
+            });
+   
+                }
+      
+      
+        
+
 
 
 }
 
 function tipoDestino(){
     const campos = ['nombreDestino', 'actividadesPopulares', 'epocaSugerida'];
-
+    let datosFormulario = {};
     campos.forEach(function(campoId) {
         const input = document.getElementById(campoId);
         if (!input.value.trim()) {
             swalMixin("center","error","Por favor, complete los campos requeridos")
             return;
         }
-
-        swalMixin("top","success","Campos validados correctamente")
+        datosFormulario[campoId] = input.value.trim(); // Añadir cada campo al objeto de datos
+       
     });
+
+
    
 
 }

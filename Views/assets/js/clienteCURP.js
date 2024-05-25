@@ -197,13 +197,16 @@ if (formClienteAdmin) { // Verifica si el formulario existe
                     dataType : "json",
                     beforeSend: function () {
                         swalMixin("top","info","Espera... actualizando cliente")
+                         formClienteAdmin.btnCliente.setAttribute("disabled","")
+                         formClienteAdmin.btnCliente.style.opacity = "0.5"
                     },
                     success: function(response) {
-                        console.log(response);
                         if(response == true){
                             // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
                             swalMixin("top","success","Cliente actualizado exitosamente en la base de datos")
-                        setTimeout(() => {
+                             formClienteAdmin.btnCliente.setAttribute("disabled","")
+                             formClienteAdmin.btnCliente.style.opacity = "0.5"
+                            setTimeout(() => {
                             location.reload();
                         }, 2000);
                         }else{
@@ -217,7 +220,9 @@ if (formClienteAdmin) { // Verifica si el formulario existe
                         alert('No se pudo actualizar el cliente');
                     }
                 });
-                    }else{
+                    
+            
+            }else{ // Registrar cliente
 
                 // Recopila los datos del formulario
                 let datosFormulario = {
@@ -267,7 +272,7 @@ if (formClienteAdmin) { // Verifica si el formulario existe
     });
 
 
-    //EDITAR CLIENTE
+//EDITAR CLIENTE
 
 $('.tblClientes').on('click', '.btnEditarCliente', function(e){
     let id = $(this).attr("btnEditarCliente");
@@ -278,7 +283,7 @@ $('.tblClientes').on('click', '.btnEditarCliente', function(e){
     };
 
     $.ajax({
-        url:  travelHub()+"Views/Ajax/cliente.ajax.php", // Asegúrate de cambiar esta URL
+        url:  travelHub()+"Views/Ajax/cliente.ajax.php", 
         type: 'POST',
         data: datosFormulario,
         dataType : "json",
@@ -315,6 +320,68 @@ $('.tblClientes').on('click', '.btnEditarCliente', function(e){
 
 })
    
+
+// ELIMINAR CLIENTES
+
+$('.tblClientes').on('click', '.eliminarCliente', function(e){
+
+
+    let eliminarCliente = $(this).attr("eliminarCliente");
+    let removeRow = $(this).parent().parent();
+    
+    console.log(eliminarCliente);
+    console.log(removeRow);
+    
+
+    let datos = new FormData();
+    datos.append("eliminarCliente",eliminarCliente);
+
+
+        Swal.fire({
+          title: "¿Estás seguro?",
+          text: "El cliente será eliminado permanentemente",
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'cancelar',
+          confirmButtonText: 'Sí, eliminar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+                 eliminar();
+               
+          }
+        })
+ 
+    function eliminar(){
+        $.ajax({
+            url:  travelHub()+"Views/Ajax/cliente.ajax.php", 
+            method: 'POST',
+            data : datos,
+            dataType : 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                swalMixin("top","info","Espera...")
+        },
+            success: function (resultado) {
+
+                if(resultado == true){
+                    console.log(resultado);
+                    swalMixin("top","success","Cliente eliminado correctamente...")
+                    removeRow.remove();
+                }else{
+                    swalMixin("top","error","Ocurrió un error al eliminar el Cliente...")
+
+                }
+
+        }
+        })
+    }
+
+
+})
 
 
 }

@@ -32,87 +32,26 @@ include 'Components/navAdmin.php'
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Bali</td>
-                    <td>Surf, yoga, exploración de templos</td>
-                    <td>Mayo - Agosto</td>
-                    <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Alpes Suizos</td>
-                    <td>Esquí, montañismo, spas</td>
-                    <td>Diciembre - Abril</td>
-                    <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Kyoto</td>
-                    <td>Visitas a templos, ceremonias de té, festivales de cerezos</td>
-                    <td>Marzo - Mayo</td>
-                    < <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Nueva York</td>
-                    <td>Teatro Broadway, museos, parques</td>
-                    <td>Todo el año</td>
-                    <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Patagonia Argentina</td>
-                    <td>Trekking, avistamiento de glaciares, kayaking</td>
-                    <td>Noviembre - Febrero</td>
-                    <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>Serengeti</td>
-                    <td>Safaris, globo aerostático</td>
-                    <td>Junio - Octubre</td>
-                    <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>Islas Galápagos</td>
-                    <td>Snorkel, observación de fauna, cruceros</td>
-                    <td>Todo el año</td>
-                    <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>Toscana</td>
-                    <td>Recorridos vinícolas, ciclismo, arte renacentista</td>
-                    <td>Marzo - Junio, Septiembre - Octubre</td>
-                    <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-   
+
+                    <?php
+                        $destinos = DestinoCtr::canp_leer_tipos_destinos_ctr();
+                        foreach ($destinos as $key => $destino) {
+                           echo '
+                           <tr>
+                           <td>'.($key+1).'</td>
+                           <td>'.$destino["Nombre_destino"].'</td>
+                           <td>'.$destino["Actividades_populares"].'</td>
+                           <td>'.$destino["Epoca_sugerida"].'</td>
+
+                           <td>
+                           <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
+                           <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                           </td>
+                       </tr>
+                           ';
+                        }
+                    ?>
+
             </tbody>
         </table>
         </div>

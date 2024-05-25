@@ -38,6 +38,10 @@ class ClienteAjax {
     public $fechaRegistroA;
 
 
+    // Eliminar
+    public $eliminarCliente;
+
+
     // REGISTRAR CLIENTE
     public function canp_registrar_cliente_ajax(){
         $datosCliente = [
@@ -55,7 +59,7 @@ class ClienteAjax {
         echo json_encode($respuesta);
     }
 
-    // LEER CLIENTE
+    // LEER CLIENTE POR ID
     public function canp_leer_cliente_id_ajax(){
         $idCliente = $this->idEditar; // El ID del cliente a leer, enviado desde AJAX
         $respuesta = ClienteCtr::canp_leer_cliente_id_ctr($idCliente);
@@ -82,8 +86,8 @@ class ClienteAjax {
 
     // ELIMINAR CLIENTE
     public function canp_eliminar_cliente_ajax(){
-        $idCliente = $_POST['idCliente']; // El ID del cliente a eliminar, enviado desde AJAX
-        $respuesta = ClienteCtr::canp_eliminar_cliente_ctr($idCliente);
+        $eliminarCliente =$this->eliminarCliente;
+        $respuesta = ClienteCtr::canp_eliminar_cliente_ctr($eliminarCliente);
         echo json_encode($respuesta);
     }
 
@@ -134,8 +138,8 @@ if(isset($_POST["nombreA"])) {
 }
 
 // ELIMINAR
-if(isset($_POST["btnEliminarCliente"])) {
+if(isset($_POST["eliminarCliente"])) {
     $c = new ClienteAjax();
-    $c->id = $_POST["idCliente"];
+    $c->eliminarCliente = $_POST["eliminarCliente"];
     $c->canp_eliminar_cliente_ajax();
 }

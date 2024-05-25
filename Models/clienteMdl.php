@@ -59,7 +59,7 @@ public static function canp_leer_cliente_id_mdl($id) {
 public static function canp_actualizar_cliente_mdl($datosCliente) {
     try {
         $db = Conexion::conectar();
-        $sql = "UPDATE tblcliente SET nombre = :nombre, primer_pellido = :primerApellido, segundo_apellido = :segundoApellido, lugarNacimiento = :lugarNacimiento, fechaNacimiento = :fechaNacimiento, sexo = :sexo, RFC = :rfc, CURP = :CURP, fecha_registro = :fechaRegistro WHERE id_cliente = :id";
+        $sql = "UPDATE tblcliente SET nombre = :nombre, primer_apellido = :primerApellido, segundo_apellido = :segundoApellido, lugarNacimiento = :lugarNacimiento, fechaNacimiento = :fechaNacimiento, sexo = :sexo, RFC = :rfc, CURP = :CURP, fecha_registro = :fechaRegistro WHERE id_cliente = :id";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':nombre', $datosCliente["nombre"]);
         $stmt->bindParam(':primerApellido', $datosCliente["primerApellido"]);
@@ -68,7 +68,7 @@ public static function canp_actualizar_cliente_mdl($datosCliente) {
         $stmt->bindParam(':fechaNacimiento', $datosCliente["fechaNacimiento"]);
         $stmt->bindParam(':sexo', $datosCliente["sexo"]);
         $stmt->bindParam(':rfc', $datosCliente["rfc"]);
-        $stmt->bindParam(':curp', $datosCliente["curp"]);
+        $stmt->bindParam(':CURP', $datosCliente["curp"]);
         $stmt->bindParam(':fechaRegistro', $datosCliente["fechaRegistro"]);
         $stmt->bindParam(':id', $datosCliente["id"]);
         if($stmt->execute()){
@@ -82,14 +82,18 @@ public static function canp_actualizar_cliente_mdl($datosCliente) {
 }
 
 // Función para eliminar un cliente
-public static function canp_eliminar_cliente_mdl($id) {
+public static function canp_eliminar_cliente_mdl($idCliente) {
     try {
         $db = Conexion::conectar();
-        $sql = "DELETE FROM clientes WHERE id = :id";
+        $sql = "DELETE FROM tblcliente WHERE id_cliente = :id";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id', $idCliente);
         $stmt->execute();
-        return "Cliente eliminado exitosamente.";
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
     } catch (PDOException $e) {
         return "Error al eliminar cliente: " . $e->getMessage();
     }
