@@ -114,12 +114,7 @@ if(isset($_POST["idEditar"])) {
     $c->idEditar = $_POST["idEditar"];
     $c->canp_leer_cliente_id_ajax();
 }
-// LEER
-if(isset($_POST["btnLeerCliente"])) {
-    $c = new ClienteAjax();
-    $c->id = $_POST["idCliente"];
-    $c->canp_leer_cliente_ajax();
-}
+
 
 // ACTUALIZAR
 if(isset($_POST["nombreA"])) {

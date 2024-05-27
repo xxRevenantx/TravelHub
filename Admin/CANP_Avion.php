@@ -7,6 +7,7 @@ include 'Components/navAdmin.php'
     <div class="contenedor">
    <h2>Añadir/Editar Avión</h2>
    <form class="formAvion" method="post">
+    <input type="hidden" class="idAvion" name="idAvion">
     <label for="numeroSerie">Número de Serie: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
     <input type="text" id="numeroSerie" name="numeroSerie" placeholder="Ej. 123456789ABC" >
 
@@ -19,7 +20,7 @@ include 'Components/navAdmin.php'
     <label for="empresaPropietaria">Empresa Propietaria: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
     <input type="text" id="empresaPropietaria" name="empresaPropietaria" placeholder="Ej. Aerolíneas Internacionales" >
 
-    <button type="submit" name="btn" class="btnformulario">Guardar Avión</button>
+    <button type="submit" name="btnAvion" class="btnformulario btnAvion">Guardar Avión</button>
 
     <?php
         $validacion = new Validaciones();
@@ -28,7 +29,7 @@ include 'Components/navAdmin.php'
 </form>
 
     <h2>Listado de Aviones</h2>
-    <table>
+    <table class="tblAvion">
         <thead>
             <tr>
                 <th>ID</th>
@@ -40,61 +41,26 @@ include 'Components/navAdmin.php'
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>SN001234</td>
-                <td>Boeing 737</td>
-                <td>180</td>
-                <td>Air Global</td>
+
+        <?php
+            $aviones = AvionCtr::canp_leer_aviones_ctr();
+
+            foreach ($aviones as $key => $avion) {
+                echo '<tr>
+                <td>'.($key+1).'</td>
+                <td>'.$avion["numero_serie"].'</td>
+                <td>'.$avion["modelo"].'</td>
+                <td>'.$avion["capacidad_asientos"].'</td>
+                <td>'.$avion["empresa_propietaria"].'</td>
                 <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>            
-                </tr>
-            <tr>
-                <td>2</td>
-                <td>SN001235</td>
-                <td>Airbus A320</td>
-                <td>160</td>
-                <td>Fast Airways</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>SN001236</td>
-                <td>Boeing 777</td>
-                <td>315</td>
-                <td>SkyHigh</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>SN001237</td>
-                <td>Airbus A380</td>
-                <td>555</td>
-                <td>Luxury Flights</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>SN001238</td>
-                <td>Boeing 787 Dreamliner</td>
-                <td>242</td>
-                <td>DreamFlyer</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
+                           <button class="edit editarAvion" editarAvion="'.$avion["id_avion"].'"> <i class="fa-solid fa-pen-to-square"></i></button>
+                           <button class="delete eliminarAvion" eliminarAvion="'.$avion["id_avion"].'" ><i class="fa-solid fa-trash"></i></button>
+                           </td>           
+                </tr>';
+            }
+        ?>
+
+
         </tbody>
     </table>
     </div>

@@ -147,10 +147,51 @@ a{
 
 nav.menu{
     background: #e3e3e3;
+    position: relative;
+
 }
 nav.menu ul{
  font-display: flex;    
  justify-content: center;
+}
+
+.hamburger-menu {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.menu-list li {
+    margin: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .menu-list {
+        display: none;
+        flex-direction: column;
+        background-color: #333;
+        position: absolute;
+        top: 40px;
+        right: 0;
+        width: 200px;
+        color: #fff;
+    }
+
+    .menu-list li {
+        margin: 10px 0;
+        color: #fff;
+    }
+
+    .hamburger-menu {
+        display: block;
+    }
 }
 
 nav.menu ul li{

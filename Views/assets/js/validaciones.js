@@ -1,9 +1,10 @@
 // EXPORTAMOSLAS FUNCIONES
 import {swal, swalMixin, travelHub} from './modulos/modules.js'; 
+import {editar_tipo_destino, insertar_o_actualizar_tipo_destino, eliminar_tipo_destino} from './CRUDS/CRUD_tipo_destino.js'; 
+import {editar_avion,insertar_o_actualizar_avion, eliminar_avion} from './CRUDS/CRUD_avion.js'; 
+import {insertar_o_actualizar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
 
 // VALIDACIONES
-
-
 let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre");
 let formDestinoAdmin = document.querySelector(".formDestinoAdmin");
 let formTipoDestino = document.querySelector(".formTipoDestino");
@@ -21,30 +22,176 @@ if(formDestinoAdmin){
 }
 
 // VALIDAR EL TRANSPORTE TERRESTRE
-if(formTransporteTerrestre){
-    formTransporteTerrestre.addEventListener("submit", function(e){
-        e.preventDefault();
-        transporteTerrestre();
-    })
+function transporteTerrestre(){
+
+    if(formTransporteTerrestre){
+        formTransporteTerrestre.addEventListener("submit", function(e){
+
+            e.preventDefault();
+            let tipoTransporte = e.target.tipoTransporte.value;
+            let placa = e.target.placa.value;
+            let capacidad = e.target.capacidad.value;
+            let anioFabricacion = e.target.anioFabricacion.value;
+            let empresaPropietaria =e.target.empresa.value;
+        
+        
+            if(tipoTransporte == "" || placa == "" || capacidad == "" || anioFabricacion == "" || empresaPropietaria == ""){
+                swalMixin("center","error","Los campos no puede quedar vacíos")
+                return;
+            }
+            // Capacidad de pasajeros
+            if( document.querySelector('.capacidad')){
+                    const isValidCapacidad = Number.isInteger(Number(capacidad)) && capacidad >= 1 && capacidad <= 80;
+                    if (!isValidCapacidad) {
+                        swalMixin("center","error","La capacidad de pasajeros debe ser de 1 y 80")
+                        return;
+                    } 
+            }
+            // Año de fabricación
+            if( document.querySelector('.anioFabricacion')){
+                const isValidAnioFabricacion = Number.isInteger(Number(anioFabricacion)) && anioFabricacion >= 2000 && anioFabricacion <= 2024;
+                if (!isValidAnioFabricacion) {
+                    swalMixin("center","error","El año de fabricación debe ser 2000 al 2024")
+                        return;
+                }   
+            }
+        // Preparar datos para inserción
+        let datosFormularioInsertar = {
+            tipoTransporte: tipoTransporte.trim(),
+            placa: placa.trim(),
+            capacidad: capacidad.trim(),
+            anioFabricacion: anioFabricacion.trim(),
+            empresaPropietaria: empresaPropietaria.trim(),
+        };
+
+
+        let idTransporteTerrestre = e.target.idTransporteTerrestre.value;
+        // Preparar datos para actualización
+        let datosFormularioActualizar = {
+            idTransporteTerrestreA: idTransporteTerrestre.trim(),
+            tipoTransporteA: tipoTransporte.trim(),
+            placaA: placa.trim(),
+            capacidadA: capacidad.trim(),
+            anioFabricacionA: anioFabricacion.trim(),
+            empresaPropietariaA: empresaPropietaria.trim(),
+        };
+
+
+            // Insertar transporte terrestre
+            insertar_o_actualizar_transporte_terrestre(formTransporteTerrestre, idTransporteTerrestre, datosFormularioInsertar, datosFormularioActualizar)
+          
+        })
+
+
+
+    }
+  
 }
 
+
 // VALIDAR EL TIPO DE DESTINO
+function tipoDestino(){
 if(formTipoDestino){
     formTipoDestino.addEventListener("submit", function(e){
         e.preventDefault();
-        tipoDestino();
+        let nombreDestino = e.target.nombreDestino.value;
+        let actividadesPopulares = e.target.actividadesPopulares.value;
+        let epocaSugerida = e.target.epocaSugerida.value;
+
+
+        if(nombreDestino == "" || actividadesPopulares == "" || epocaSugerida == "" ){
+            swalMixin("center","error","Los campos no puede quedar vacíos")
+            return;
+        }
+
+        // Recopila los datos del formulario
+        let datosFormularioInsertar = {
+            nombreDestino: nombreDestino.trim(),
+            actividadesPopulares: actividadesPopulares.trim(),
+            epocaSugerida: epocaSugerida.trim(),
+        };
+
+        
+        let idTipoDestino =  formTipoDestino.idTipoDestino.value;
+                // Recopila los datos del formulario
+        let datosFormularioActualizar = {
+            idA: idTipoDestino.trim(),
+            nombreDestinoA: nombreDestino.trim(),
+            actividadesPopularesA: actividadesPopulares.trim(),
+            epocaSugeridaA: epocaSugerida.trim(),
+        };
+
+
+            insertar_o_actualizar_tipo_destino(formTipoDestino, idTipoDestino, datosFormularioInsertar, datosFormularioActualizar); // Función para insertar los registros del tipo de destino
     })
+}
+
+
+
+    editar_tipo_destino(formTipoDestino);
+    eliminar_tipo_destino();
 }
 
 // VALIDAR EL AVION
-if(formAvion){
+function avion(){
+    if(formAvion){
     formAvion.addEventListener("submit", function(e){
         e.preventDefault();
-        avion();
-    })
+    
+        // Recoger los valores del formulario
+        let numeroSerie = e.target.numeroSerie.value;
+        let modelo = e.target.modelo.value;
+        let capacidadAsientos = e.target.capacidadAsientos.value;
+        let empresaPropietaria = e.target.empresaPropietaria.value;
+
+
+        // Validación de campos no vacíos
+        if(numeroSerie == "" || modelo == "" || capacidadAsientos == "" || empresaPropietaria == ""){
+            swalMixin("center","error","Todos los campos son obligatorios");
+            return;
+        }
+
+        
+
+        const isValidCapacidad = Number.isInteger(Number(capacidadAsientos)) && capacidadAsientos >= 1 && capacidadAsientos <= 80;
+            
+        if (!isValidCapacidad) {
+            swalMixin("center","error","La capacidad de asientos debe ser de 1 y 80")
+            return;
+        } 
+    
+    
+        // Preparar datos para inserción o actualización
+        let datosFormularioInsertar = {
+            numeroSerie: numeroSerie.trim(),
+            modelo: modelo.trim(),
+            capacidadAsientos: capacidadAsientos.trim(),
+            empresaPropietaria: empresaPropietaria.trim(),
+        };
+    
+        let idAvionA = formAvion.idAvion.value;
+    
+        let datosFormularioActualizar = {
+            idAvionA: idAvionA.trim(),
+            numeroSerieA: numeroSerie.trim(),
+            modeloA: modelo.trim(),
+            capacidadAsientosA: capacidadAsientos.trim(),
+            empresaPropietariaA: empresaPropietaria.trim()
+        };
+    
+        // Función para insertar o actualizar registros de avión
+        insertar_o_actualizar_avion(formAvion, idAvionA, datosFormularioInsertar, datosFormularioActualizar);
+       
+    });
+
+
+    // Función para editar avión
+    editar_avion(formAvion);
+    // Eliminar avión
+    eliminar_avion();
+    
 }
-
-
+}
 
 
 function destino(){
@@ -118,7 +265,7 @@ function destino(){
             });
                 
         
-        }else{ // Registrar cliente
+        }else{ // REGISTRAR DESTINO
 
             // Datos del formulario
             let datosFormularioDestino = {
@@ -167,118 +314,9 @@ function destino(){
 
 }
 
-function tipoDestino(){
-    const campos = ['nombreDestino', 'actividadesPopulares', 'epocaSugerida'];
-    let datosFormulario = {};
-    campos.forEach(function(campoId) {
-        const input = document.getElementById(campoId);
-        if (!input.value.trim()) {
-            swalMixin("center","error","Por favor, complete los campos requeridos")
-            return;
-        }
-        datosFormulario[campoId] = input.value.trim(); // Añadir cada campo al objeto de datos
-       
-    });
 
 
-   
-
-}
-
-function transporteTerrestre(){
-
-    let tipoTransporte = document.querySelector(".tipoTransporte").value;
-    let placa = document.querySelector(".placa").value;
-    let capacidad = document.querySelector(".capacidad").value;
-    let anioFabricacion = document.querySelector(".anioFabricacion").value;
-    let empresa = document.querySelector(".empresa").value;
-
-
-    if(tipoTransporte == "" || placa == "" || capacidad == "" || anioFabricacion == "" || empresa == ""){
-        swalMixin("center","error","Los campos no puede quedar vacíos")
-        return;
-    }
-    // Capacidad de pasajeros
-    if( document.querySelector('.capacidad')){
-            const isValidCapacidad = Number.isInteger(Number(capacidad)) && capacidad >= 1 && capacidad <= 80;
-            if (!isValidCapacidad) {
-                swalMixin("center","error","La capacidad de pasajeros debe ser de 1 y 80")
-                return;
-            } 
-    }
-
-    // Año de fabricación
-    if( document.querySelector('.anioFabricacion')){
-        const isValidAnioFabricacion = Number.isInteger(Number(anioFabricacion)) && anioFabricacion >= 2000 && anioFabricacion <= 2024;
-        if (!isValidAnioFabricacion) {
-            swalMixin("center","error","El año de fabricación debe ser 2000 al 2024")
-                return;
-        }   
-    }
-
-
-
-
-
-
-    swalMixin("top","success","Datos validados correctamente")
-
-
-}
-
-
-function avion(){
-
-            const numeroSerie = document.getElementById('numeroSerie').value;
-            const modelo = document.getElementById('modelo').value;
-            const capacidad = document.getElementById('capacidadAsientos').value;
-            const empresaPropietaria = document.getElementById('empresaPropietaria').value;
-
-            if(numeroSerie == "" || modelo == "" || capacidad == "" || empresaPropietaria == "" ){
-                swalMixin("center","error","Los campos no puede quedar vacíos")
-                return;
-            }
-            const isValidCapacidad = Number.isInteger(Number(capacidad)) && capacidad >= 1 && capacidad <= 80;
-            
-            if (!isValidCapacidad) {
-                swalMixin("center","error","La capacidad de asientos debe ser de 1 y 80")
-                return;
-            } 
-       
-
-
-        // Recopila los datos del formulario
-        let datosFormulario = {
-            numeroSerie: numeroSerie,
-            modelo: modelo,
-            capacidadAsientos: capacidad,
-            empresaPropietaria: empresaPropietaria
-        };
-
-        // Realiza la solicitud AJAX
-        $.ajax({
-            url:  travelHub()+"Views/Ajax/avion.ajax.php", // Asegúrate de cambiar esta URL
-            type: 'POST',
-            data: datosFormulario,
-            dataType : "json",
-
-            success: function(response) {
-                console.log(response);
-                // Aquí manejas lo que ocurre después de enviar los datos exitosamente
-                alert('Avión guardado correctamente');
-            },
-            error: function(xhr, status, error) {
-                // Aquí manejas los errores
-                alert('No se pudo guardar el avión');
-            }
-        });
-          
-
-
-}
-
-
-
-
-
-
+// EJECUCIÓN DE FUNCIONES
+tipoDestino();
+avion();
+transporteTerrestre();

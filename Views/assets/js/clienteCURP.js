@@ -327,7 +327,7 @@ $('.tblClientes').on('click', '.eliminarCliente', function(e){
 
 
     let eliminarCliente = $(this).attr("eliminarCliente");
-    let removeRow = $(this).parent().parent();
+    let removeRow = $(this).closest('tr');
     
     console.log(eliminarCliente);
     console.log(removeRow);

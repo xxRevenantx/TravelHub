@@ -7,6 +7,7 @@ include 'Components/navAdmin.php'
 
         <h2>Añadir Nuevo Tipo de Destino</h2>
         <form method="POST" class="formTipoDestino">
+            <input type="hidden" id="idTipoDestino" name="idTipoDestino" >
             <label for="nombreDestino">Nombre del Destino: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
             <input type="text" id="nombreDestino" name="nombreDestino" placeholder="Nombre del Destino" >
             <label for="actividadesPopulares">Actividades Populares: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
@@ -21,7 +22,7 @@ include 'Components/navAdmin.php'
             ?>
         </form>
         <h2>Lista de Tipos de Destinos</h2>
-        <table>
+        <table class="tblTipoDestino">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -44,8 +45,8 @@ include 'Components/navAdmin.php'
                            <td>'.$destino["Epoca_sugerida"].'</td>
 
                            <td>
-                           <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                           <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                           <button class="edit editarTipoDestino" editartipoDestino="'.$destino["id_tipodestino"].'"> <i class="fa-solid fa-pen-to-square"></i></button>
+                           <button class="delete eliminarTipoDestino" eliminarTipoDestino="'.$destino["id_tipodestino"].'" ><i class="fa-solid fa-trash"></i></button>
                            </td>
                        </tr>
                            ';

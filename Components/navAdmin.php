@@ -1,5 +1,6 @@
 <nav class="menu">
-    <ul>
+    <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
+    <ul class="menu-list">
         <li class="<?php echo Funciones::estaActivo('CANP_Admin') ? 'activo' : ''; ?>"><a href="<?php echo $rutaLocal ?>Admin/CANP_Admin">Inicio</a></li>
         <li class="<?php echo Funciones::estaActivo('CANP_Destino') ? 'activo' : ''; ?>"><a href="<?php echo $rutaLocal ?>Admin/CANP_Destino">Gestión de Destinos</a></li>
         <li class="<?php echo Funciones::estaActivo('CANP_TipoDestino') ? 'activo' : ''; ?>"><a href="<?php echo $rutaLocal ?>Admin/CANP_TipoDestino">Gestión de Tipos de Destino</a></li>

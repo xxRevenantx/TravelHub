@@ -6,6 +6,7 @@ include 'Components/navAdmin.php'
     <div class="contenedor">
    <h2>Añadir/Editar Transporte</h2>
     <form class="formTransporteTerrestre" method="post">
+        <input type="text" class="idTransporteTerrestre" name="idTransporteTerrestre">
         <label for="tipoTransporte">Tipo de Transporte: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
         <input type="text" id="tipoTransporte" class="tipoTransporte" name="tipoTransporte" placeholder="Ej. Autobús, Taxi, Tren">
 
@@ -23,7 +24,7 @@ include 'Components/navAdmin.php'
         <label for="empresa">Empresa Propietaria: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
         <input type="text" id="empresa" class="empresa" name="empresa" placeholder="Ej. Transportes S.A.">
 
-        <button name="btnTransporteTerrestre" class="btnformulario" type="submit">Guardar Transporte</button>
+        <button name="btnTransporteTerrestre" class="btnformulario btnTransporteTerrestre" type="submit">Guardar Transporte</button>
 
         <?php
                 $validacion = new Validaciones();
@@ -33,7 +34,7 @@ include 'Components/navAdmin.php'
     </form>
 
     <h2>Listado de Transporte Terrestre</h2>
-    <table>
+    <table class="tblTransporteTerrestre">
         <thead>
             <tr>
                 <th>ID</th>
@@ -46,67 +47,28 @@ include 'Components/navAdmin.php'
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Autobús</td>
-                <td>XYZ-123</td>
-                <td>45</td>
-                <td>2019</td>
-                <td>Empresa A</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Minivan</td>
-                <td>ABC-789</td>
-                <td>8</td>
-                <td>2021</td>
-                <td>Empresa B</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Shuttle</td>
-                <td>DEF-456</td>
-                <td>16</td>
-                <td>2018</td>
-                <td>Empresa C</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Trolebús</td>
-                <td>GHI-012</td>
-                <td>30</td>
-                <td>2017</td>
-                <td>Empresa D</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Taxi</td>
-                <td>JKL-345</td>
-                <td>4</td>
-                <td>2020</td>
-                <td>Empresa E</td>
-                <td>
-                    <button class="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="delete"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-            </tr>
-         
+
+        <?php
+            $transportes = TransporteTerrestreCtr::canp_leer_transportes_terrestres_ctr();
+
+            foreach ($transportes as $key => $transporte) {
+               echo '
+               <tr>
+               <td>'.($key+1).'</td>
+               <td>'.$transporte["tipo_transporte"].'</td>
+               <td>'.$transporte["placa"].'</td>
+               <td>'.$transporte["capacidad_pasajeros"].'</td>
+               <td>'.$transporte["anio_fabricacion"].'</td>
+               <td>'.$transporte["empresa_propietaria"].'</td>
+               <td>
+                   <button class="edit editarTransporteTerrestre" editarTransporteTerrestre="'.$transporte["id_transpterrestre"].'"> <i class="fa-solid fa-pen-to-square"></i></button>
+                   <button class="delete eliminarTransporteTerrestre" eliminarTransporteTerrestre="'.$transporte["id_transpterrestre"].'"><i class="fa-solid fa-trash"></i></button>
+                   </td>
+           </tr>
+               ';
+            }
+        ?>
+          
         </tbody>
     </table>
 </div>
