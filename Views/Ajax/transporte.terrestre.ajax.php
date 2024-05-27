@@ -15,12 +15,13 @@ class TransporteTerrestreAjax {
     // EDITAR
     public $idTransporte;
     // ACTUALIZAR
-    public $idTransporteA;
+    public $idTransporteTerrestreA;
     public $tipoTransporteA;
     public $placaA;
     public $capacidadA;
     public $anioFabricacionA;
     public $empresaPropietariaA;
+
 
     // ELIMINAR
     public $eliminarTransporte;
@@ -40,7 +41,7 @@ class TransporteTerrestreAjax {
 
     // LEER TRANSPORTE TERRESTRE
     public function canp_leer_transporte_terrestre_id_ajax() {
-        $idTransporte = $_POST['idTransporte']; // El ID del transporte terrestre a leer, enviado desde AJAX
+        $idTransporte = $this->idTransporte; // El ID del transporte terrestre a leer, enviado desde AJAX
         $respuesta = TransporteTerrestreCtr::canp_leer_transporte_terrestre_id_ctr($idTransporte);
         echo json_encode($respuesta);
     }
@@ -48,7 +49,7 @@ class TransporteTerrestreAjax {
     // ACTUALIZAR TRANSPORTE TERRESTRE
     public function canp_actualizar_transporte_terrestre_ajax() {
         $datosTransporte = [
-            'id_transporteterrestre' => $this->idTransporteA,
+            'id_transporteterrestre' => $this->idTransporteTerrestreA,
             'tipo_transporte' => $this->tipoTransporteA,
             'placa' => $this->placaA,
             'capacidad_pasajeros' => $this->capacidadA,
@@ -87,9 +88,9 @@ if(isset($_POST["idTransporte"])) {
 }
 
 // ACTUALIZAR TRANSPORTE TERRESTRE
-if(isset($_POST["idTransporteA"])) {
+if(isset($_POST["idTransporteTerrestreA"])) {
     $a = new TransporteTerrestreAjax();
-    $a->idTransporteA = $_POST["idTransporteA"];
+    $a->idTransporteTerrestreA = $_POST["idTransporteTerrestreA"];
     $a->tipoTransporteA = $_POST["tipoTransporteA"];
     $a->placaA = $_POST["placaA"];
     $a->capacidadA = $_POST["capacidadA"];

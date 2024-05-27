@@ -2,7 +2,8 @@
 import {swal, swalMixin, travelHub} from './modulos/modules.js'; 
 import {editar_tipo_destino, insertar_o_actualizar_tipo_destino, eliminar_tipo_destino} from './CRUDS/CRUD_tipo_destino.js'; 
 import {editar_avion,insertar_o_actualizar_avion, eliminar_avion} from './CRUDS/CRUD_avion.js'; 
-import {insertar_o_actualizar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
+import {editar_transporte_terrestre,insertar_o_actualizar_transporte_terrestre, eliminar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
+import {insertar_o_actualizar_destino, imagen} from './CRUDS/CRUD_destino.js'; 
 
 // VALIDACIONES
 let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre");
@@ -13,13 +14,73 @@ let formUsuario = document.querySelector(".formUsuario");
 
 
 // VALIDAR EL DESTINO
-if(formDestinoAdmin){
-    formDestinoAdmin.addEventListener("submit", function(e){
-        e.preventDefault();
-        destino();
-    })
+function destino(){
 
+    if(formDestinoAdmin){
+        formDestinoAdmin.addEventListener("submit", function(e){
+
+            e.preventDefault();
+           // Coordenadas
+             const regex = /^-?\d{1,3}\.\d{1,6},\s?-?\d{1,3}\.\d{1,6}$/;
+             let destino =  e.target.destino.value;
+             let avion1 =  e.target.avion1.value;
+             let avion2 =  e.target.avion2.value;
+             let transporte1 =  e.target.transporte1.value;
+             let transporte2 =  e.target.transporte2.value;
+             let pais =  e.target.pais.value;
+             let resena =  e.target.resena.value;
+             let coordenadas =  e.target.coordenadas.value;
+
+                // Validar que los campos no estén vacíos
+            if (!destino.trim() || !avion1.trim() || !avion2.trim() || !transporte1.trim() || !transporte2.trim() || !pais.trim() || !resena.trim() || !coordenadas.trim()) {
+                    swalMixin("center", "error", "Por favor, complete todos los campos obligatorios");
+                    return;
+            }
+
+
+             if (!regex.test(coordenadas)){
+                swalMixin("center","error","Por favor, ingrese las coordenadas en el formato correcto (ej. 35.6895, 139.6917)")
+                return;
+            }
+
+
+                // Datos del formulario
+                let datosFormularioDestinoInsertar = {
+                    destino: destino,
+                    avion1: avion1,
+                    avion2: avion2,
+                    transporte1: transporte1,
+                    transporte2: transporte2,
+                    pais: pais,
+                    resena: resena,
+                    coordenadas: coordenadas
+                };
+
+                let idDestinoActualizar =  e.target.idDestinoActualizar.value;
+                // Datos del formulario para actualizar
+                let datosFormularioDestinoActualizar = {
+                    idDestinoActualizarA: idDestinoActualizar,
+                    destinoA: destino,
+                    avion1A: avion1,
+                    avion2A: avion2,
+                    transporte1A: transporte1,
+                    transporte2A: transporte2,
+                    paisA: pais,
+                    resenaA: resena,
+                    coordenadasA: coordenadas
+                };
+                        
+                 insertar_o_actualizar_destino(formDestinoAdmin, idDestinoActualizar, datosFormularioDestinoInsertar, datosFormularioDestinoActualizar)
+
+
+        })
+    
+    }
+       
+    // Imagen
+    imagen();
 }
+
 
 // VALIDAR EL TRANSPORTE TERRESTRE
 function transporteTerrestre(){
@@ -81,11 +142,11 @@ function transporteTerrestre(){
             insertar_o_actualizar_transporte_terrestre(formTransporteTerrestre, idTransporteTerrestre, datosFormularioInsertar, datosFormularioActualizar)
           
         })
-
-
-
     }
-  
+    // Editar transporte terrestre
+    editar_transporte_terrestre(formTransporteTerrestre)
+    // Eliminar transporte terrestre
+    eliminar_transporte_terrestre();
 }
 
 
@@ -194,129 +255,9 @@ function avion(){
 }
 
 
-function destino(){
- 
-    // Coordenadas
-    const regex = /^-?\d{1,3}\.\d{1,6},\s?-?\d{1,3}\.\d{1,6}$/;
-
-    // Validar cada campo que es obligatorio
-    ['destino', 'avion1', 'avion2', 'transporte1', 'transporte2', 'pais', 'resena', 'coordenadas'].forEach(id => {
-        
-        const input = document.getElementById(id);
-
-        if (!input.value.trim()) { // Validar que todos los campos hayan sido completados
-            swalMixin("center","error","Por favor, complete los campos requeridos")
-            return;
-        } 
-
-        if(id == "coordenadas"){ // Validación de las coordenadas
-            if (!regex.test(input.value.trim())){
-                swalMixin("center","error","Por favor, ingrese las coordenadas en el formato correcto (ej. 35.6895, 139.6917)")
-                return;
-            }
-        }
-    });
-       
-        if(formDestinoAdmin.idDestinoActualizar.value != ""){ // ACTUALIZAR
-            let id = formDestinoAdmin.idDestinoActualizar.value;
-            // Recopila los datos del formulario
-            let datosFormulario = {
-                idA: id,
-                nombreA: nombre,
-                primerApellidoA: primerApellido,
-                segundoApellidoA: segundoApellido,
-                lugarNacimientoA: lugarNacimiento,
-                fechaNacimientoA: fechaNacimiento,
-                sexoA: sexo,
-                rfcA: rfc, 
-                curpA: curp,
-                fechaRegistroA: fechaRegistro 
-            };
-              // Realiza la solicitud AJAX
-              $.ajax({
-                url:  travelHub()+"Views/Ajax/cliente.ajax.php", 
-                type: 'POST',
-                data: datosFormulario,
-                dataType : "json",
-                beforeSend: function () {
-                    swalMixin("top","info","Espera... actualizando cliente")
-                     formClienteAdmin.btnCliente.setAttribute("disabled","")
-                     formClienteAdmin.btnCliente.style.opacity = "0.5"
-                },
-                success: function(response) {
-                    if(response == true){
-                        // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
-                        swalMixin("top","success","Cliente actualizado exitosamente en la base de datos")
-                         formClienteAdmin.btnCliente.setAttribute("disabled","")
-                         formClienteAdmin.btnCliente.style.opacity = "0.5"
-                        setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                    }else{
-                        console.log(response);
-                        swalMixin("top","error","El cliente no se pudo actualizar")
-                    }
-                
-                },
-                error: function(xhr, status, error) {
-                    // Aquí manejas los errores
-                    alert('No se pudo actualizar el cliente');
-                }
-            });
-                
-        
-        }else{ // REGISTRAR DESTINO
-
-            // Datos del formulario
-            let datosFormularioDestino = {
-                idDestinoActualizar: document.querySelector('.idDestinoActualizar').value,
-                destino: document.querySelector('#destino').value,
-                avion1: document.querySelector('#avion1').value,
-                avion2: document.querySelector('#avion2').value,
-                transporte1: document.querySelector('#transporte1').value,
-                transporte2: document.querySelector('#transporte2').value,
-                pais: document.querySelector('#pais').value,
-                resena: document.querySelector('#resena').value,
-                coordenadas: document.querySelector('#coordenadas').value
-            };
-
-
-            $.ajax({
-                url: travelHub() + "Views/Ajax/destino.ajax.php",
-                type: 'POST',
-                data: datosFormularioDestino,
-                dataType: "json",
-                beforeSend: function() {
-                    swalMixin("top", "info", "Espera... guardando destino");
-                },
-                success: function(response) {
-                    if (response === true) {
-                        swalMixin("top", "success", "Destino guardado exitosamente en la base de datos");
-                        setTimeout(() => {
-                            location.reload();
-                        }, 2000);
-                    } else {
-                        console.log(response);
-                        swalMixin("top", "error", "El destino no se pudo guardar");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert('No se pudo guardar el destino. Error: ' + error);
-                }
-            });
-   
-                }
-      
-      
-        
-
-
-
-}
-
-
 
 // EJECUCIÓN DE FUNCIONES
 tipoDestino();
 avion();
 transporteTerrestre();
+destino();

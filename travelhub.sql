@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2024 a las 05:39:46
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 27-05-2024 a las 20:00:07
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -170,7 +170,7 @@ CREATE TABLE `tbltransporteterrestre` (
 --
 
 INSERT INTO `tbltransporteterrestre` (`id_transpterrestre`, `tipo_transporte`, `placa`, `capacidad_pasajeros`, `anio_fabricacion`, `empresa_propietaria`) VALUES
-(1, 'Autobús', 'ABC1234', 50, 2015, 'Transporte Urbano SA'),
+(1, 'Autobús', 'ABC1234', 60, 2015, 'Transporte Urbano SA'),
 (2, 'Taxi', 'XYZ5678', 4, 2018, 'Taxis Rápidos SRL'),
 (3, 'Autobús', 'DEF9012', 45, 2014, 'Viajes Seguros SL'),
 (4, 'Minivan', 'GHI3456', 7, 2019, 'Transportes Familiares S.A.'),
@@ -179,8 +179,7 @@ INSERT INTO `tbltransporteterrestre` (`id_transpterrestre`, `tipo_transporte`, `
 (7, 'Autobús', 'PQR5678', 60, 2013, 'Rutas Confortables S.A.'),
 (8, 'Minivan', 'STU9012', 8, 2020, 'Servicios Ejecutivos SRL'),
 (9, 'Camioneta', 'VWX3456', 6, 2015, 'Carga y Transporte SA'),
-(10, 'Autobús', 'YZA7890', 55, 2012, 'Transporte Escolar SA'),
-(11, 'taxi', 'dfgdfg', 34, 2015, 'sdfdsfsdfsdf');
+(10, 'Autobús', 'YZA7890', 55, 2012, 'Transporte Escolar SA');
 
 -- --------------------------------------------------------
 
@@ -300,7 +299,7 @@ ALTER TABLE `tbltipodestino`
 -- AUTO_INCREMENT de la tabla `tbltransporteterrestre`
 --
 ALTER TABLE `tbltransporteterrestre`
-  MODIFY `id_transpterrestre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_transpterrestre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `tblusuarios`

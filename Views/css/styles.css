@@ -538,4 +538,20 @@ h2.login{
 
 }
 
+#imagenSeleccionada{
+    width: 100px;
+}
 
+#previewImagen {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: none;
+    text-align: center;
+}
+
+#previewImagen img {
+    max-width: 40%;
+    height: auto;
+    border-radius: 5px;
+}

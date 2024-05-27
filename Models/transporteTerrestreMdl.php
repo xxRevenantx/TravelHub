@@ -41,44 +41,50 @@ class TransporteTerrestreMdl {
     public static function canp_leer_transporte_terrestre_id_mdl($id) {
         try {
             $db = Conexion::conectar();
-            $sql = "SELECT * FROM  tbltransporteterrestre WHERE id = :id";
+            $sql = "SELECT * FROM  tbltransporteterrestre WHERE id_transpterrestre = :id";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch();
         } catch (PDOException $e) {
             return "Error al leer datos del transporte terrestre: " . $e->getMessage();
         }
     }
 
     // Función para actualizar un transporte terrestre
-    public static function canp_actualizar_transporte_terrestre_mdl($id, $tipoTransporte, $placa, $capacidad, $anioFabricacion, $empresa) {
+    public static function canp_actualizar_transporte_terrestre_mdl($datosTransporte) {
         try {
             $db = Conexion::conectar();
-            $sql = "UPDATE  tbltransporteterrestre SET tipoTransporte = :tipoTransporte, placa = :placa, capacidad = :capacidad, anioFabricacion = :anioFabricacion, empresa = :empresa WHERE id = :id";
+            $sql = "UPDATE  tbltransporteterrestre SET tipo_transporte = :tipo_transporte, placa = :placa, capacidad_pasajeros = :capacidad_pasajeros, anio_fabricacion = :anio_fabricacion, empresa_propietaria = :empresa_propietaria WHERE id_transpterrestre = :id";
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(':tipoTransporte', $tipoTransporte);
-            $stmt->bindParam(':placa', $placa);
-            $stmt->bindParam(':capacidad', $capacidad);
-            $stmt->bindParam(':anioFabricacion', $anioFabricacion);
-            $stmt->bindParam(':empresa', $empresa);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return "Transporte terrestre actualizado exitosamente.";
+            $stmt->bindParam(':tipo_transporte', $datosTransporte["tipo_transporte"]);
+            $stmt->bindParam(':placa', $datosTransporte["placa"]);
+            $stmt->bindParam(':capacidad_pasajeros', $datosTransporte["capacidad_pasajeros"]);
+            $stmt->bindParam(':anio_fabricacion', $datosTransporte["anio_fabricacion"]);
+            $stmt->bindParam(':empresa_propietaria', $datosTransporte["empresa_propietaria"]);
+            $stmt->bindParam(':id', $datosTransporte["id_transporteterrestre"]);
+            if( $stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
         } catch (PDOException $e) {
             return "Error al actualizar transporte terrestre: " . $e->getMessage();
         }
     }
 
     // Función para eliminar un transporte terrestre
-    public static function canp_eliminar_transporte_terrestre_mdl($id) {
+    public static function canp_eliminar_transporte_terrestre_mdl($idTransporte) {
         try {
             $db = Conexion::conectar();
-            $sql = "DELETE FROM  tbltransporteterrestre WHERE id = :id";
+            $sql = "DELETE FROM  tbltransporteterrestre WHERE id_transpterrestre = :id";
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return "Transporte terrestre eliminado exitosamente.";
+            $stmt->bindParam(':id', $idTransporte);
+            if( $stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
         } catch (PDOException $e) {
             return "Error al eliminar transporte terrestre: " . $e->getMessage();
         }

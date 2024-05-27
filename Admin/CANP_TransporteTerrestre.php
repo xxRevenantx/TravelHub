@@ -6,7 +6,7 @@ include 'Components/navAdmin.php'
     <div class="contenedor">
    <h2>Añadir/Editar Transporte</h2>
     <form class="formTransporteTerrestre" method="post">
-        <input type="text" class="idTransporteTerrestre" name="idTransporteTerrestre">
+        <input type="hidden" class="idTransporteTerrestre" name="idTransporteTerrestre">
         <label for="tipoTransporte">Tipo de Transporte: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
         <input type="text" id="tipoTransporte" class="tipoTransporte" name="tipoTransporte" placeholder="Ej. Autobús, Taxi, Tren">
 

@@ -64,9 +64,12 @@ function mostrarDescripcion(indice) {
     // Función para mover el carrusel a la siguiente imagen
     function moverASiguienteImagen() {
         const slide = document.getElementById('carrusel-slide');
-        indiceActual = (indiceActual + 1) % 5;
-        slide.style.transform = `translateX(${-indiceActual * 800}px)`;
-        actualizarIndicadores();
+        if(slide){
+            indiceActual = (indiceActual + 1) % 5;
+            slide.style.transform = `translateX(${-indiceActual * 800}px)`;
+            actualizarIndicadores();
+        }
+
 
     }
 

@@ -5,21 +5,26 @@ include_once "CANP_conexion.php";
 class DestinoMdl {
 
 // Función para añadir un nuevo destino
-public static function canp_registrar_destino_mdl($destino, $avion1, $avion2, $transporte1, $transporte2, $pais, $resena, $coordenadas) {
+public static function canp_registrar_destino_mdl($datosDestino) {
     try {
         $db = Conexion::conectar();
-        $sql = "INSERT INTO tbldestino (nombre, avion1, avion2, transporte1, transporte2, pais, resena, coordenadas) VALUES (:destino, :avion1, :avion2, :transporte1, :transporte2, :pais, :resena, :coordenadas)";
+        $sql = "INSERT INTO tbldestino (id_tipodestino, id_avion1, id_avion2, id_transpterrestre1, id_transpterrestre2, pais, resenia, coordenadas, imagen_destino) VALUES (:id_tipodestino, :id_avion1, :id_avion2, :id_transpterrestre1, :id_transpterrestre2, :pais, :resenia, :coordenadas, :imagen_destino)";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':destino', $destino);
-        $stmt->bindParam(':avion1', $avion1);
-        $stmt->bindParam(':avion2', $avion2);
-        $stmt->bindParam(':transporte1', $transporte1);
-        $stmt->bindParam(':transporte2', $transporte2);
-        $stmt->bindParam(':pais', $pais);
-        $stmt->bindParam(':resena', $resena);
-        $stmt->bindParam(':coordenadas', $coordenadas);
-        $stmt->execute();
-        return "Destino añadido exitosamente.";
+        $stmt->bindParam(':id_tipodestino', $datosDestino[""]);
+        $stmt->bindParam(':id_avion1', $datosDestino[""]);
+        $stmt->bindParam(':id_avion2', $datosDestino[""]);
+        $stmt->bindParam(':id_transpterrestre1', $datosDestino[""]);
+        $stmt->bindParam(':id_transpterrestre2', $datosDestino[""]);
+        $stmt->bindParam(':pais', $datosDestino[""]);
+        $stmt->bindParam(':resenia', $datosDestino[""]);
+        $stmt->bindParam(':coordenadas', $datosDestino[""]);
+        $stmt->bindParam(':imagen_destino', $datosDestino[""]);
+        if( $stmt->execute()){
+            return true;
+        }else{
+            false;
+        }
+        
     } catch (PDOException $e) {
         return "Error al añadir destino: " . $e->getMessage();
     }

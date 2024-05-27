@@ -33,7 +33,7 @@ export function insertar_o_actualizar_transporte_terrestre(formTransporteTerrest
 // EDITAR TRANSPORTE TERRESTRE
 export function editar_transporte_terrestre(formTransporteTerrestre) {
     $('.tblTransporteTerrestre').on('click', '.editarTransporteTerrestre', function(e) {
-        let idTransporte = $(this).attr("data-idTransporte");
+        let idTransporte = $(this).attr("editarTransporteTerrestre");
 
         // Recopila los datos necesarios para la edición
         let datosFormulario = {
@@ -41,7 +41,7 @@ export function editar_transporte_terrestre(formTransporteTerrestre) {
         };
 
         $.ajax({
-            url: travelHub() + "Views/Ajax/transporteTerrestre.ajax.php",
+            url: travelHub() + "Views/Ajax/transporte.terrestre.ajax.php",
             type: 'POST',
             data: datosFormulario,
             dataType: "json",
@@ -53,7 +53,7 @@ export function editar_transporte_terrestre(formTransporteTerrestre) {
                     behavior: "smooth",
                 });
                 // Asumiendo que tienes un formulario con los campos necesarios para editar un transporte terrestre
-                formTransporteTerrestre.idTransporteTerrestre.value = response.id_transporteterrestre;
+                formTransporteTerrestre.idTransporteTerrestre.value = response.id_transpterrestre;
                 formTransporteTerrestre.tipoTransporte.value = response.tipo_transporte;
                 formTransporteTerrestre.placa.value = response.placa;
                 formTransporteTerrestre.capacidad.value = response.capacidad_pasajeros;
@@ -75,7 +75,7 @@ export function editar_transporte_terrestre(formTransporteTerrestre) {
 // Función para actualizar un transporte terrestre
 function actualizar_transporte_terrestre(formTransporteTerrestre, datosFormularioActualizar) {
     $.ajax({
-        url: travelHub() + "Views/Ajax/transporteTerrestre.ajax.php",
+        url: travelHub() + "Views/Ajax/transporte.terrestre.ajax.php",
         type: 'POST',
         data: datosFormularioActualizar,
         dataType: "json",
@@ -85,6 +85,7 @@ function actualizar_transporte_terrestre(formTransporteTerrestre, datosFormulari
             formTransporteTerrestre.btnTransporteTerrestre.style.opacity = "0.5";
         },
         success: function(response) {
+            console.log(response);
             if (response == true) {
                 swalMixin("top", "success", "Transporte terrestre actualizado exitosamente en la base de datos");
                 setTimeout(() => {
@@ -104,7 +105,7 @@ function actualizar_transporte_terrestre(formTransporteTerrestre, datosFormulari
 // Función para eliminar un transporte terrestre
 export function eliminar_transporte_terrestre() {
     $('.tblTransporteTerrestre').on('click', '.eliminarTransporteTerrestre', function(e) {
-        let eliminarTransporte = $(this).attr("data-idTransporte");
+        let eliminarTransporte = $(this).attr("eliminarTransporteTerrestre");
         let removeRow = $(this).closest('tr');
 
         Swal.fire({
@@ -119,7 +120,7 @@ export function eliminar_transporte_terrestre() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: travelHub() + "Views/Ajax/transporteTerrestre.ajax.php",
+                    url: travelHub() + "Views/Ajax/transporte.terrestre.ajax.php",
                     type: 'POST',
                     data: { eliminarTransporte: eliminarTransporte },
                     dataType: 'json',
