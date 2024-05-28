@@ -538,11 +538,11 @@ h2.login{
 
 }
 
-#imagenSeleccionada{
-    width: 100px;
+.imagenSeleccionada{
+    width: 400px;
 }
 
-#previewImagen {
+.previewImagen {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 15px;
@@ -550,8 +550,11 @@ h2.login{
     text-align: center;
 }
 
-#previewImagen img {
+.previewImagen img {
     max-width: 40%;
     height: auto;
     border-radius: 5px;
+}
+.imagenDestino{
+    width: 200px;
 }

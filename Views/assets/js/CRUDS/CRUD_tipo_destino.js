@@ -163,7 +163,7 @@ export function eliminar_tipo_destino(){
                             $(this).remove(); // Elimina la fila de la tabla visualmente
                         });
                     } else {
-                        swalMixin("top", "error", "Ocurrió un error al eliminar el tipo de destino");
+                        swalMixin("top", "error", "No se puede eliminar este tipo de destino porque está vinculado a un destino.");
                     }
                 },
                 error: function() {

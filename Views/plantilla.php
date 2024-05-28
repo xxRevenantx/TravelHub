@@ -36,7 +36,7 @@ $ruta1 = null;
 $mensaje = "";
 
 // ADMINISTRADOR
-if(isset($_SESSION['validar']) && $_SESSION['validar'] == true && $_SESSION["usuario"] == "admin"){ 
+if(isset($_SESSION['validar']) && $_SESSION['validar'] == true && $_SESSION["rol"] == 1){ 
     if(isset($_GET["url"])){
         $url = explode("/", $_GET["url"]);
              if($url[0] == "logout"){
@@ -55,7 +55,7 @@ if(isset($_SESSION['validar']) && $_SESSION['validar'] == true && $_SESSION["usu
        
 }
  // CLIENTE
-else if(isset($_SESSION['validar']) && $_SESSION['validar'] == true && $_SESSION["usuario"] == "cliente"){
+else if(isset($_SESSION['validar']) && $_SESSION['validar'] == true && $_SESSION["rol"] == 2){
 
     if(isset($_GET["url"])){
         $url = explode("/", $_GET["url"]);

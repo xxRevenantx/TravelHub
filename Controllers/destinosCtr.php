@@ -18,12 +18,13 @@ public static function canp_leer_destino_id_ctr($idDestino) {
     $respuesta = DestinoMdl::canp_leer_destino_id_mdl($idDestino);
     return $respuesta; // Devuelve los datos del destino o un mensaje de error
 }
-
-// Función para actualizar los datos de un destino
+// Función para actualizar destinos
 public static function canp_actualizar_destino_ctr($datosDestino) {
     $respuesta = DestinoMdl::canp_actualizar_destino_mdl($datosDestino);
-    return $respuesta; // Devuelve un mensaje de éxito o error
+    return $respuesta; // Devuelve los datos del destino o un mensaje de error
 }
+
+
 
 // Función para eliminar un destino
 public static function canp_eliminar_destino_ctr($idDestino) {

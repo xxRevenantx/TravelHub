@@ -31,5 +31,5 @@ export function swalMixin(position,icon,title){
 
 // Url principal
 export function travelHub(){
-  return "http://localhost/travelHub/";
+  return "http://localhost/TravelHub/";
 }

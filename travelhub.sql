@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2024 a las 20:00:07
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.0.25
+-- Tiempo de generación: 28-05-2024 a las 07:32:56
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -97,15 +97,9 @@ CREATE TABLE `tblcliente` (
   `sexo` varchar(1) NOT NULL,
   `RFC` varchar(13) NOT NULL,
   `CURP` varchar(18) NOT NULL,
-  `fecha_registro` date NOT NULL
+  `fecha_registro` date NOT NULL,
+  `id_rol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `tblcliente`
---
-
-INSERT INTO `tblcliente` (`id_cliente`, `nombre`, `primer_apellido`, `segundo_apellido`, `lugarNacimiento`, `fechaNacimiento`, `sexo`, `RFC`, `CURP`, `fecha_registro`) VALUES
-(8, 'Carlos', 'Nuñez', 'Perez', 'JC', '1995-12-08', 'H', 'JPG12356789BF', 'NUPC951208HJCXRRW8', '2024-05-26');
 
 -- --------------------------------------------------------
 
@@ -126,6 +120,32 @@ CREATE TABLE `tbldestino` (
   `imagen_destino` blob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `tbldestino`
+--
+
+INSERT INTO `tbldestino` (`id_destino`, `id_tipodestino`, `id_avion1`, `id_avion2`, `id_transpterrestre1`, `id_transpterrestre2`, `pais`, `resenia`, `coordenadas`, `imagen_destino`) VALUES
+(8, 1, 6, 8, 5, 6, 'Arabia Saudita', 'Cancún', '35.6895, 139.6917', 0x2e2e2f2e2e2f56696577732f6173736574732f696d6167656e65732f64657374696e6f732f686f7573652e6a7067);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblroles`
+--
+
+CREATE TABLE `tblroles` (
+  `Id_rol` int(11) NOT NULL,
+  `rol` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `tblroles`
+--
+
+INSERT INTO `tblroles` (`Id_rol`, `rol`) VALUES
+(1, 'Admin'),
+(2, 'Cliente');
+
 -- --------------------------------------------------------
 
 --
@@ -144,11 +164,16 @@ CREATE TABLE `tbltipodestino` (
 --
 
 INSERT INTO `tbltipodestino` (`id_tipodestino`, `Nombre_destino`, `Actividades_populares`, `Epoca_sugerida`) VALUES
-(1, 'Playa del Carmen', 'Buceo, Nado con Delfines, Festivales de Música', 'Verano'),
-(2, 'Cancún', 'Parques Temáticos, Compras, Vida Nocturna', 'Invierno'),
-(3, 'Tulum', 'Visitas a Ruinas, Snorkel, Yoga', 'Primavera'),
-(4, 'Chichen Itzá', 'Visita a Ruinas, Tour Cultural, Fotografía', 'Otoño'),
-(5, 'Isla Mujeres', 'Buceo, Nado con Tiburón Ballena, Relajación', 'Verano');
+(1, 'Cancún OTRO', 'Buceo, Snorkel, Fiesta', 'Verano'),
+(2, 'París', 'Museos, Gastronomía, Paseos en barco', 'Primavera'),
+(3, 'Tokio', 'Tecnología, Cultura pop, Compras', 'Otoño'),
+(4, 'Nueva York', 'Teatros, Rascacielos, Central Park', 'Invierno'),
+(5, 'Sídney', 'Surf, Ópera, Puentes', 'Verano'),
+(6, 'Roma', 'Historia, Arquitectura, Gastronomía', 'Primavera'),
+(7, 'Londres', 'Museos, Historia, Compras', 'Otoño'),
+(8, 'Barcelona', 'Playas, Arquitectura, Fútbol', 'Verano'),
+(9, 'Bangkok', 'Templos, Cultura, Compras', 'Primavera'),
+(10, 'Dubái', 'Compras, Modernidad, Desierto', 'Invierno');
 
 -- --------------------------------------------------------
 
@@ -189,12 +214,21 @@ INSERT INTO `tbltransporteterrestre` (`id_transpterrestre`, `tipo_transporte`, `
 
 CREATE TABLE `tblusuarios` (
   `Id_usuario` int(11) NOT NULL,
+  `Usuario` varchar(255) NOT NULL,
   `Nombre` varchar(50) NOT NULL,
   `Apellido` varchar(50) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Password` varchar(255) NOT NULL,
-  `Rol` varchar(50) NOT NULL
+  `Rol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `tblusuarios`
+--
+
+INSERT INTO `tblusuarios` (`Id_usuario`, `Usuario`, `Nombre`, `Apellido`, `Email`, `Password`, `Rol`) VALUES
+(1, 'admin_CANP', 'Carlos', 'Nunez', 'carlos@gmail.com', 'es1921022834', 1),
+(2, 'cliente_CANP', 'Carlos', 'Nuñez', 'carlos@gmail.com', 'es1921022834', 2);
 
 --
 -- Índices para tablas volcadas
@@ -224,7 +258,8 @@ ALTER TABLE `tblbitacora`
 -- Indices de la tabla `tblcliente`
 --
 ALTER TABLE `tblcliente`
-  ADD PRIMARY KEY (`id_cliente`);
+  ADD PRIMARY KEY (`id_cliente`),
+  ADD KEY `tblcliente_ibfk_1` (`id_rol`);
 
 --
 -- Indices de la tabla `tbldestino`
@@ -236,6 +271,12 @@ ALTER TABLE `tbldestino`
   ADD KEY `id_avion2` (`id_avion2`),
   ADD KEY `id_transpterrestre1` (`id_transpterrestre1`),
   ADD KEY `id_transpterrestre2` (`id_transpterrestre2`);
+
+--
+-- Indices de la tabla `tblroles`
+--
+ALTER TABLE `tblroles`
+  ADD PRIMARY KEY (`Id_rol`);
 
 --
 -- Indices de la tabla `tbltipodestino`
@@ -253,7 +294,8 @@ ALTER TABLE `tbltransporteterrestre`
 -- Indices de la tabla `tblusuarios`
 --
 ALTER TABLE `tblusuarios`
-  ADD PRIMARY KEY (`Id_usuario`);
+  ADD PRIMARY KEY (`Id_usuario`),
+  ADD KEY `Rol` (`Rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -281,13 +323,19 @@ ALTER TABLE `tblbitacora`
 -- AUTO_INCREMENT de la tabla `tblcliente`
 --
 ALTER TABLE `tblcliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tbldestino`
 --
 ALTER TABLE `tbldestino`
-  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `tblroles`
+--
+ALTER TABLE `tblroles`
+  MODIFY `Id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tbltipodestino`
@@ -305,7 +353,7 @@ ALTER TABLE `tbltransporteterrestre`
 -- AUTO_INCREMENT de la tabla `tblusuarios`
 --
 ALTER TABLE `tblusuarios`
-  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -319,14 +367,26 @@ ALTER TABLE `tblbitacora`
   ADD CONSTRAINT `tblbitacora_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `tblcliente` (`id_cliente`);
 
 --
+-- Filtros para la tabla `tblcliente`
+--
+ALTER TABLE `tblcliente`
+  ADD CONSTRAINT `tblcliente_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `tblusuarios` (`Id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `tbldestino`
 --
 ALTER TABLE `tbldestino`
-  ADD CONSTRAINT `tbldestino_ibfk_1` FOREIGN KEY (`id_tipodestino`) REFERENCES `tbltipodestino` (`id_tipodestino`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbldestino_ibfk_2` FOREIGN KEY (`id_avion1`) REFERENCES `tblavion` (`id_avion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbldestino_ibfk_3` FOREIGN KEY (`id_avion2`) REFERENCES `tblavion` (`id_avion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbldestino_ibfk_4` FOREIGN KEY (`id_transpterrestre1`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbldestino_ibfk_5` FOREIGN KEY (`id_transpterrestre2`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbldestino_ibfk_1` FOREIGN KEY (`id_tipodestino`) REFERENCES `tbltipodestino` (`id_tipodestino`),
+  ADD CONSTRAINT `tbldestino_ibfk_2` FOREIGN KEY (`id_avion1`) REFERENCES `tblavion` (`id_avion`),
+  ADD CONSTRAINT `tbldestino_ibfk_3` FOREIGN KEY (`id_avion2`) REFERENCES `tblavion` (`id_avion`),
+  ADD CONSTRAINT `tbldestino_ibfk_4` FOREIGN KEY (`id_transpterrestre1`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`),
+  ADD CONSTRAINT `tbldestino_ibfk_5` FOREIGN KEY (`id_transpterrestre2`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`);
+
+--
+-- Filtros para la tabla `tblusuarios`
+--
+ALTER TABLE `tblusuarios`
+  ADD CONSTRAINT `tblusuarios_ibfk_1` FOREIGN KEY (`Rol`) REFERENCES `tblroles` (`Id_rol`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

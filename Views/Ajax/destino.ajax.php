@@ -3,6 +3,8 @@
 require_once "../../Models/destinosMdl.php";
 require_once "../../Controllers/destinosCtr.php";
 
+
+
 class DestinoAjax {
 
     // EDITAR
@@ -17,9 +19,11 @@ class DestinoAjax {
     public $pais;
     public $resena;
     public $coordenadas;
+    public $imagen;
+    public $tmp;
 
     // ACTUALIZAR
-    public $idDestinoA;
+    public $idDestinoActualizar;
     public $destinoA;
     public $avion1A;
     public $avion2A;
@@ -28,25 +32,54 @@ class DestinoAjax {
     public $paisA;
     public $resenaA;
     public $coordenadasA;
+    public $imagenA;
+    public $tmpA;
+    public $imagenDB;
 
     // ELIMINAR
     public $eliminarDestino;
 
     // REGISTRAR DESTINO
     public function canp_registrar_destino_ajax() {
-        $datosDestino = [
-            'destino' => $this->destino,
-            'avion1' => $this->avion1,
-            'avion2' => $this->avion2,
-            'transporte1' => $this->transporte1,
-            'transporte2' => $this->transporte2,
-            'pais' => $this->pais,
-            'resena' => $this->resena,
-            'coordenadas' => $this->coordenadas
-        ];
-        $respuesta = DestinoCtr::canp_registrar_destino_ctr($datosDestino);
-        echo json_encode($respuesta);
+
+         // Manejar la imagen
+         if(isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] == 0) {
+            $nombreArchivo =  $this->imagen;
+            $archivoTmp =     $this->tmp;
+            $directorioDestino = "../../Views/assets/imagenes/destinos/";
+            $rutaArchivo = $directorioDestino . basename($nombreArchivo);
+
+            // Crear el directorio si no existe
+            if (!file_exists($directorioDestino)) {
+                mkdir($directorioDestino, 0777, true);
+            }
+
+            // Mover el archivo subido al directorio de destino
+            if(move_uploaded_file($archivoTmp, $rutaArchivo)) {
+                // Guardar la ruta del archivo en la base de datos
+            
+                    $datosDestino = [
+                        'destino' => $this->destino,
+                        'avion1' => $this->avion1,
+                        'avion2' => $this->avion2,
+                        'transporte1' => $this->transporte1,
+                        'transporte2' => $this->transporte2,
+                        'pais' => $this->pais,
+                        'resena' => $this->resena,
+                        'coordenadas' => $this->coordenadas,
+                        'imagen' => $rutaArchivo // Ruta del archivo en el servidor
+
+                    ];
+                $respuesta = DestinoCtr::canp_registrar_destino_ctr($datosDestino);
+                echo json_encode($respuesta);
+            } else {
+                echo json_encode(["error" => "Error al mover el archivo"]);
+            }
+        } else {
+            echo json_encode(["error" => "Error al cargar la imagen"]);
+        }
     }
+
 
     // LEER DESTINO POR ID
     public function canp_leer_destino_id_ajax() {
@@ -57,19 +90,62 @@ class DestinoAjax {
 
     // ACTUALIZAR DESTINO
     public function canp_actualizar_destino_ajax() {
-        $datosDestino = [
-            'id' => $this->idDestinoA,
-            'destino' => $this->destinoA,
-            'avion1' => $this->avion1A,
-            'avion2' => $this->avion2A,
-            'transporte1' => $this->transporte1A,
-            'transporte2' => $this->transporte2A,
-            'pais' => $this->paisA,
-            'resena' => $this->resenaA,
-            'coordenadas' => $this->coordenadasA
-        ];
-        $respuesta = DestinoCtr::canp_actualizar_destino_ctr($datosDestino);
-        echo json_encode($respuesta);
+
+             // Manejar la imagen
+             if(isset($_FILES["imagenA"]) && $_FILES["imagenA"]["error"] == 0) {
+                $nombreArchivo =  $this->imagenA;
+                $archivoTmp =     $this->tmpA;
+                $directorioDestino = "../../Views/assets/imagenes/destinos/";
+                $rutaArchivo = $directorioDestino . basename($nombreArchivo);
+    
+                // Crear el directorio si no existe
+                if (!file_exists($directorioDestino)) {
+                    mkdir($directorioDestino, 0777, true);
+                }
+    
+                // Mover el archivo subido al directorio de destino
+                if(move_uploaded_file($archivoTmp, $rutaArchivo)) {
+                    // Guardar la ruta del archivo en la base de datos
+                    $datosDestino = [
+                        'id' => $this->idDestinoActualizar,
+                        'destino' => $this->destinoA,
+                        'avion1' => $this->avion1A,
+                        'avion2' => $this->avion2A,
+                        'transporte1' => $this->transporte1A,
+                        'transporte2' => $this->transporte2A,
+                        'pais' => $this->paisA,
+                        'resena' => $this->resenaA,
+                        'coordenadas' => $this->coordenadasA,
+                        'imagen' => $rutaArchivo // Ruta del archivo en el servidor
+                    ];
+                    $respuesta = DestinoCtr::canp_actualizar_destino_ctr($datosDestino);
+                    echo json_encode($respuesta);
+                } else {
+                    echo json_encode(["error" => "Error al mover el archivo"]);
+                }
+            } else {
+                // Guardar la ruta del archivo en la base de datos
+                $datosDestino = [
+                    'id' => $this->idDestinoActualizar,
+                    'destino' => $this->destinoA,
+                    'avion1' => $this->avion1A,
+                    'avion2' => $this->avion2A,
+                    'transporte1' => $this->transporte1A,
+                    'transporte2' => $this->transporte2A,
+                    'pais' => $this->paisA,
+                    'resena' => $this->resenaA,
+                    'coordenadas' => $this->coordenadasA,
+                    'imagen' => $this->imagenDB // Ruta del archivo en el servidor
+                ];
+                    $respuesta = DestinoCtr::canp_actualizar_destino_ctr($datosDestino);
+                    echo json_encode($respuesta);
+            }
+
+
+
+
+      
+      
     }
 
     // ELIMINAR DESTINO
@@ -91,6 +167,8 @@ if (isset($_POST["destino"])) {
     $d->pais = $_POST["pais"];
     $d->resena = $_POST["resena"];
     $d->coordenadas = $_POST["coordenadas"];
+    $d->imagen = !empty($_FILES["imagen"]["name"])?$_FILES["imagen"]["name"]:"";
+    $d->tmp = !empty($_FILES["imagen"]["tmp_name"])?$_FILES["imagen"]["tmp_name"]:"";
     $d->canp_registrar_destino_ajax();
 }
 
@@ -102,9 +180,9 @@ if (isset($_POST["idDestino"])) {
 }
 
 // ACTUALIZAR
-if (isset($_POST["destinoA"])) {
+if (isset($_POST["idDestinoActualizar"])) {
     $d = new DestinoAjax();
-    $d->idDestinoA = $_POST["idDestinoA"];
+    $d->idDestinoActualizar = $_POST["idDestinoActualizar"];
     $d->destinoA = $_POST["destinoA"];
     $d->avion1A = $_POST["avion1A"];
     $d->avion2A = $_POST["avion2A"];
@@ -113,6 +191,9 @@ if (isset($_POST["destinoA"])) {
     $d->paisA = $_POST["paisA"];
     $d->resenaA = $_POST["resenaA"];
     $d->coordenadasA = $_POST["coordenadasA"];
+    $d->imagenDB = $_POST["imagenDB"];
+    $d->imagenA = !empty($_FILES["imagenA"]["name"])?$_FILES["imagenA"]["name"]:"";
+    $d->tmpA = !empty($_FILES["imagenA"]["tmp_name"])?$_FILES["imagenA"]["tmp_name"]:"";
     $d->canp_actualizar_destino_ajax();
 }
 

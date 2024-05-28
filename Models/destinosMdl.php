@@ -10,15 +10,15 @@ public static function canp_registrar_destino_mdl($datosDestino) {
         $db = Conexion::conectar();
         $sql = "INSERT INTO tbldestino (id_tipodestino, id_avion1, id_avion2, id_transpterrestre1, id_transpterrestre2, pais, resenia, coordenadas, imagen_destino) VALUES (:id_tipodestino, :id_avion1, :id_avion2, :id_transpterrestre1, :id_transpterrestre2, :pais, :resenia, :coordenadas, :imagen_destino)";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id_tipodestino', $datosDestino[""]);
-        $stmt->bindParam(':id_avion1', $datosDestino[""]);
-        $stmt->bindParam(':id_avion2', $datosDestino[""]);
-        $stmt->bindParam(':id_transpterrestre1', $datosDestino[""]);
-        $stmt->bindParam(':id_transpterrestre2', $datosDestino[""]);
-        $stmt->bindParam(':pais', $datosDestino[""]);
-        $stmt->bindParam(':resenia', $datosDestino[""]);
-        $stmt->bindParam(':coordenadas', $datosDestino[""]);
-        $stmt->bindParam(':imagen_destino', $datosDestino[""]);
+        $stmt->bindParam(':id_tipodestino', $datosDestino["destino"]);
+        $stmt->bindParam(':id_avion1', $datosDestino["avion1"]);
+        $stmt->bindParam(':id_avion2', $datosDestino["avion2"]);
+        $stmt->bindParam(':id_transpterrestre1', $datosDestino["transporte1"]);
+        $stmt->bindParam(':id_transpterrestre2', $datosDestino["transporte2"]);
+        $stmt->bindParam(':pais', $datosDestino["pais"]);
+        $stmt->bindParam(':resenia', $datosDestino["resena"]);
+        $stmt->bindParam(':coordenadas', $datosDestino["coordenadas"]);
+        $stmt->bindParam(':imagen_destino', $datosDestino["imagen"]);
         if( $stmt->execute()){
             return true;
         }else{
@@ -42,24 +42,42 @@ public static function canp_leer_destinos_mdl() {
         return "Error al leer datos del destino: " . $e->getMessage();
     }
 }
-
-// Función para actualizar un destino
-public static function canp_actualizar_destino_mdl($id, $destino, $avion1, $avion2, $transporte1, $transporte2, $pais, $resena, $coordenadas) {
+// Función para obtener los datos de los destinos por un id en especifico
+public static function canp_leer_destino_id_mdl($idDestino) {
     try {
         $db = Conexion::conectar();
-        $sql = "UPDATE tbldestino SET nombre = :destino, avion1 = :avion1, avion2 = :avion2, transporte1 = :transporte1, transporte2 = :transporte2, pais = :pais, resena = :resena, coordenadas = :coordenadas WHERE id = :id";
+        $sql = "SELECT * FROM tbldestino WHERE id_destino = :id";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':destino', $destino);
-        $stmt->bindParam(':avion1', $avion1);
-        $stmt->bindParam(':avion2', $avion2);
-        $stmt->bindParam(':transporte1', $transporte1);
-        $stmt->bindParam(':transporte2', $transporte2);
-        $stmt->bindParam(':pais', $pais);
-        $stmt->bindParam(':resena', $resena);
-        $stmt->bindParam(':coordenadas', $coordenadas);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id', $idDestino);
         $stmt->execute();
-        return "Destino actualizado exitosamente.";
+        return $stmt->fetch();
+    } catch (PDOException $e) {
+        return "Error al leer datos del destino: " . $e->getMessage();
+    }
+}
+
+// Función para actualizar un destino
+public static function canp_actualizar_destino_mdl($datosDestino) {
+
+    try {
+        $db = Conexion::conectar();
+        $sql = "UPDATE tbldestino SET id_tipodestino = :id_tipodestino, id_avion1 = :id_avion1, id_avion2 = :id_avion2, id_transpterrestre1 = :id_transpterrestre1, id_transpterrestre2 = :id_transpterrestre2, pais = :pais, resenia = :resenia, coordenadas = :coordenadas, imagen_destino = :imagen_destino WHERE id_destino = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':id_tipodestino', $datosDestino["destino"]);
+        $stmt->bindParam(':id_avion1', $datosDestino["avion1"]);
+        $stmt->bindParam(':id_avion2', $datosDestino["avion2"]);
+        $stmt->bindParam(':id_transpterrestre1', $datosDestino["transporte1"]);
+        $stmt->bindParam(':id_transpterrestre2', $datosDestino["transporte2"]);
+        $stmt->bindParam(':pais', $datosDestino["pais"]);
+        $stmt->bindParam(':resenia', $datosDestino["resena"]);
+        $stmt->bindParam(':imagen_destino', $datosDestino["imagen"]);
+        $stmt->bindParam(':coordenadas', $datosDestino["coordenadas"]);
+        $stmt->bindParam(':id', $datosDestino["id"]);
+        if( $stmt->execute()){
+            return true;
+        }else{
+            false;
+        }
     } catch (PDOException $e) {
         return "Error al actualizar destino: " . $e->getMessage();
     }
@@ -69,11 +87,14 @@ public static function canp_actualizar_destino_mdl($id, $destino, $avion1, $avio
 public static function canp_eliminar_destino_mdl($id) {
     try {
         $db = Conexion::conectar();
-        $sql = "DELETE FROM tbldestino WHERE id = :id";
+        $sql = "DELETE FROM tbldestino WHERE id_destino = :id";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        return "Destino eliminado exitosamente.";
+        if( $stmt->execute()){
+            return true;
+        }else{
+            false;
+        }
     } catch (PDOException $e) {
         return "Error al eliminar destino: " . $e->getMessage();
     }

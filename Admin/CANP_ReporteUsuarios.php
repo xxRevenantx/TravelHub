@@ -7,7 +7,7 @@ include 'Components/navAdmin.php'
 
 
 <h2>Listado de Usuarios</h2>
-        <table>
+        <table class="tblUsuarios">
             <thead>
                 <tr>
                     <th>ID</th>

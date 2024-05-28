@@ -3,7 +3,7 @@ import {swal, swalMixin, travelHub} from './modulos/modules.js';
 import {editar_tipo_destino, insertar_o_actualizar_tipo_destino, eliminar_tipo_destino} from './CRUDS/CRUD_tipo_destino.js'; 
 import {editar_avion,insertar_o_actualizar_avion, eliminar_avion} from './CRUDS/CRUD_avion.js'; 
 import {editar_transporte_terrestre,insertar_o_actualizar_transporte_terrestre, eliminar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
-import {insertar_o_actualizar_destino, imagen} from './CRUDS/CRUD_destino.js'; 
+import {editar_destino,insertar_o_actualizar_destino, imagen, eliminar_destino} from './CRUDS/CRUD_destino.js'; 
 
 // VALIDACIONES
 let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre");
@@ -17,6 +17,8 @@ let formUsuario = document.querySelector(".formUsuario");
 function destino(){
 
     if(formDestinoAdmin){
+         // Imagen
+         imagen();
         formDestinoAdmin.addEventListener("submit", function(e){
 
             e.preventDefault();
@@ -30,55 +32,68 @@ function destino(){
              let pais =  e.target.pais.value;
              let resena =  e.target.resena.value;
              let coordenadas =  e.target.coordenadas.value;
+             let imagen =  e.target.imagen.files[0];
+             let imagenDB =  e.target.imagenDB.value;
+            
 
                 // Validar que los campos no estén vacíos
-            if (!destino.trim() || !avion1.trim() || !avion2.trim() || !transporte1.trim() || !transporte2.trim() || !pais.trim() || !resena.trim() || !coordenadas.trim()) {
+            if (!destino.trim() || !avion1.trim() || !avion2.trim() || !transporte1.trim() || !transporte2.trim() || !pais.trim() || !resena.trim() || !coordenadas.trim() ) {
                     swalMixin("center", "error", "Por favor, complete todos los campos obligatorios");
                     return;
             }
 
-
+            // Validar imagen
              if (!regex.test(coordenadas)){
                 swalMixin("center","error","Por favor, ingrese las coordenadas en el formato correcto (ej. 35.6895, 139.6917)")
                 return;
             }
 
+              // Validar que el campo de imagen no esté vacío
+            if (!imagen && imagenDB == "") {
+                swalMixin("center", "error", "Por favor, seleccione una imagen");
+                return;
+            }
 
-                // Datos del formulario
-                let datosFormularioDestinoInsertar = {
-                    destino: destino,
-                    avion1: avion1,
-                    avion2: avion2,
-                    transporte1: transporte1,
-                    transporte2: transporte2,
-                    pais: pais,
-                    resena: resena,
-                    coordenadas: coordenadas
-                };
+                let formData = new FormData(); // Crea un FormData para manejar archivos
+                // Agregar los valores al FormData
+                formData.append('destino', destino.trim());
+                formData.append('avion1', avion1.trim());
+                formData.append('avion2', avion2.trim());
+                formData.append('transporte1', transporte1.trim());
+                formData.append('transporte2', transporte2.trim());
+                formData.append('pais', pais.trim());
+                formData.append('resena', resena.trim());
+                formData.append('coordenadas', coordenadas.trim());
+                formData.append('imagen', imagen);
 
+
+                let formDataA = new FormData(); // Crea un FormData para manejar archivos
                 let idDestinoActualizar =  e.target.idDestinoActualizar.value;
+
                 // Datos del formulario para actualizar
-                let datosFormularioDestinoActualizar = {
-                    idDestinoActualizarA: idDestinoActualizar,
-                    destinoA: destino,
-                    avion1A: avion1,
-                    avion2A: avion2,
-                    transporte1A: transporte1,
-                    transporte2A: transporte2,
-                    paisA: pais,
-                    resenaA: resena,
-                    coordenadasA: coordenadas
-                };
+                formDataA.append('idDestinoActualizar', idDestinoActualizar.trim());
+                formDataA.append('destinoA', destino.trim());
+                formDataA.append('avion1A', avion1.trim());
+                formDataA.append('avion2A', avion2.trim());
+                formDataA.append('transporte1A', transporte1.trim());
+                formDataA.append('transporte2A', transporte2.trim());
+                formDataA.append('paisA', pais.trim());
+                formDataA.append('resenaA', resena.trim());
+                formDataA.append('coordenadasA', coordenadas.trim());
+                formDataA.append('imagenA', imagen);
+                formDataA.append('imagenDB', imagenDB);
                         
-                 insertar_o_actualizar_destino(formDestinoAdmin, idDestinoActualizar, datosFormularioDestinoInsertar, datosFormularioDestinoActualizar)
+                 insertar_o_actualizar_destino(formDestinoAdmin, idDestinoActualizar, formData, formDataA)
 
 
         })
-    
+       
     }
        
-    // Imagen
-    imagen();
+    //Editar destino
+    editar_destino(formDestinoAdmin);
+    //Eliminar Destino
+    eliminar_destino();
 }
 
 
