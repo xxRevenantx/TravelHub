@@ -45,4 +45,11 @@ class UsuariosCtr {
         }
     }
 
+ // Función para leer los datos de los roles
+ public static function canp_leer_rol_id_ctr() {
+    $respuesta = UsuariosMdl::canp_leer_rol_id_mdl();
+    return $respuesta; // Devuelve los datos de los usuarios o un mensaje de error
+}
+
+
 }

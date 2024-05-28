@@ -9,6 +9,7 @@ class LoginCtr{
                         $respuesta = LoginMdl::validarLoginMdl("tblusuarios", $datos);
 
                         // Validamos el usuario y el correo para el Admin
+                                if(is_array($respuesta)){
                                 if ($datos["usuario"] == $respuesta["Usuario"] && $datos["password"] == $respuesta["Password"]) {
 
                                         if($respuesta["Rol"] == 1){ // ADMIN
@@ -62,7 +63,11 @@ class LoginCtr{
                                     </div>';
                                 }
         
-                    
+                        }else{
+                                echo ' <div class="alert warning">
+                                <strong>Error!</strong> Credenciales incorrectas
+                            </div>';
+                        }
 
 
                 }

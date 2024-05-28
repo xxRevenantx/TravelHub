@@ -13,15 +13,13 @@ class UsuariosMdl {
         $stmt->bindParam(":apellido", $datosUsuario['apellido'], PDO::PARAM_STR);
         $stmt->bindParam(":email", $datosUsuario['email'], PDO::PARAM_STR);
         $stmt->bindParam(":password", $datosUsuario['password'], PDO::PARAM_STR);
-        $stmt->bindParam(":rol", $datosUsuario['rol'], PDO::PARAM_STR);
+        $stmt->bindParam(":rol", $datosUsuario['rol'], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            return "ok";
+            return true;
         } else {
-            return "error";
+            return false;
         }
-
-        $stmt = null;
     }
 
     // Método para leer todos los usuarios
@@ -41,7 +39,7 @@ class UsuariosMdl {
 
     // Método para actualizar un usuario
     public static function canp_actualizar_usuario_mdl($datosUsuario) {
-        $stmt = Conexion::conectar()->prepare("UPDATE tblusuarios SET Usuario = :usuario, Nombre = :nombre, Apellido = :apellido, Email = :email, Password = :password, Rol = :rol WHERE id_usuario = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE tblusuarios SET Usuario = :usuario, Nombre = :nombre, Apellido = :apellido, Email = :email, Password = :password, Rol = :rol WHERE Id_usuario = :id");
 
         $stmt->bindParam(":usuario", $datosUsuario['usuario'], PDO::PARAM_STR);
         $stmt->bindParam(":nombre", $datosUsuario['nombre'], PDO::PARAM_STR);
@@ -49,12 +47,12 @@ class UsuariosMdl {
         $stmt->bindParam(":email", $datosUsuario['email'], PDO::PARAM_STR);
         $stmt->bindParam(":password", $datosUsuario['password'], PDO::PARAM_STR);
         $stmt->bindParam(":rol", $datosUsuario['rol'], PDO::PARAM_STR);
-        $stmt->bindParam(":id", $datosUsuario['id'], PDO::PARAM_INT);
+        $stmt->bindParam(":id", $datosUsuario['id_usuario'], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            return "ok";
+            return true;
         } else {
-            return "error";
+            return false;
         }
 
         $stmt = null;
@@ -74,4 +72,11 @@ class UsuariosMdl {
         $stmt = null;
     }
 
+
+        // Método para leer los roles
+    public static function canp_leer_rol_id_mdl() {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM tblroles");
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }

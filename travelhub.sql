@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2024 a las 07:32:56
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 28-05-2024 a las 20:00:26
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -164,7 +164,7 @@ CREATE TABLE `tbltipodestino` (
 --
 
 INSERT INTO `tbltipodestino` (`id_tipodestino`, `Nombre_destino`, `Actividades_populares`, `Epoca_sugerida`) VALUES
-(1, 'Cancún OTRO', 'Buceo, Snorkel, Fiesta', 'Verano'),
+(1, 'Cancún', 'Buceo, Snorkel, Fiesta', 'Verano'),
 (2, 'París', 'Museos, Gastronomía, Paseos en barco', 'Primavera'),
 (3, 'Tokio', 'Tecnología, Cultura pop, Compras', 'Otoño'),
 (4, 'Nueva York', 'Teatros, Rascacielos, Central Park', 'Invierno'),
@@ -227,8 +227,9 @@ CREATE TABLE `tblusuarios` (
 --
 
 INSERT INTO `tblusuarios` (`Id_usuario`, `Usuario`, `Nombre`, `Apellido`, `Email`, `Password`, `Rol`) VALUES
-(1, 'admin_CANP', 'Carlos', 'Nunez', 'carlos@gmail.com', 'es1921022834', 1),
-(2, 'cliente_CANP', 'Carlos', 'Nuñez', 'carlos@gmail.com', 'es1921022834', 2);
+(1, 'admin_CANP', 'Carlos Alberto', 'Nunez', 'carlos@gmail.com', 'es1921022834', 1),
+(2, 'cliente_CANP', 'Carlos', 'Nuñez', 'carlos@gmail.com', 'es1921022834', 2),
+(3, 'super_CANP', 'Carlos Alberto', 'Nuñez Perez', 'carlos1995.al.nu@gmail.com', 'Carlos1995', 1);
 
 --
 -- Índices para tablas volcadas
@@ -353,7 +354,7 @@ ALTER TABLE `tbltransporteterrestre`
 -- AUTO_INCREMENT de la tabla `tblusuarios`
 --
 ALTER TABLE `tblusuarios`
-  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

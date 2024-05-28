@@ -4,6 +4,7 @@ import {editar_tipo_destino, insertar_o_actualizar_tipo_destino, eliminar_tipo_d
 import {editar_avion,insertar_o_actualizar_avion, eliminar_avion} from './CRUDS/CRUD_avion.js'; 
 import {editar_transporte_terrestre,insertar_o_actualizar_transporte_terrestre, eliminar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
 import {editar_destino,insertar_o_actualizar_destino, imagen, eliminar_destino} from './CRUDS/CRUD_destino.js'; 
+import {editar_usuario,validarContrasena, insertar_o_actualizar_usuario} from './CRUDS/CRUD_usuario.js'; 
 
 // VALIDACIONES
 let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre");
@@ -12,6 +13,72 @@ let formTipoDestino = document.querySelector(".formTipoDestino");
 let formAvion = document.querySelector(".formAvion");
 let formUsuario = document.querySelector(".formUsuario");
 
+
+// VALIDAR USUARIO
+function usuario(){
+
+    if(formUsuario){
+    
+        formUsuario.addEventListener("submit", function(e){
+
+            e.preventDefault();
+
+            const usuario = e.target.usuario.value.trim();
+            const nombre = e.target.nombre.value.trim();
+            const apellido = e.target.apellido.value.trim();
+            const email = e.target.email.value.trim();
+            const password = e.target.password.value.trim();
+            const rol = e.target.rol.value.trim();
+
+            // Validar que los campos no estén vacíos
+            if (!usuario || !nombre || !apellido || !email || !password || !rol) {
+                swalMixin("center", "error", "Por favor, complete todos los campos obligatorios");
+                return;
+
+            }
+
+             // Validar contraseña
+             
+                if (!validarContrasena(password)) {
+                    swalMixin("center", "error", "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.");
+                    return;
+                }
+
+                  // Preparar datos para inserción
+                    let datosFormularioInsertar = {
+                        usuario: usuario.trim(),
+                        nombre: nombre.trim(),
+                        apellido: apellido.trim(),
+                        email: email.trim(),
+                        password: password.trim(),
+                        rol: rol.trim(),
+                    };
+
+                    let idUsuario = e.target.idUsuario.value;
+
+                    // Preparar datos para actualización
+                    let datosFormularioActualizar = {
+                        idUsuarioA: idUsuario.trim(),
+                        usuarioA: usuario.trim(),
+                        nombreA: nombre.trim(),
+                        apellidoA: apellido.trim(),
+                        emailA: email.trim(),
+                        passwordA: password.trim(),
+                        rolA: rol.trim(),
+                    };
+
+                    // Insertar o actualizar usuario
+                    insertar_o_actualizar_usuario(formUsuario, idUsuario, datosFormularioInsertar, datosFormularioActualizar);
+
+
+            })
+
+
+            editar_usuario(formUsuario);
+    }
+       
+  
+}
 
 // VALIDAR EL DESTINO
 function destino(){
@@ -276,3 +343,4 @@ tipoDestino();
 avion();
 transporteTerrestre();
 destino();
+usuario();
