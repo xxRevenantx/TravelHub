@@ -168,23 +168,31 @@ public static function canp_eliminar_destino_mdl($id) {
         }
     }
 
-    // Función para eliminar un tipo de destino
-    public static function canp_eliminar_tipo_destino_mdl($id) {
-        try {
-            $db = Conexion::conectar();
-            $sql = "DELETE FROM tbltipodestino WHERE id_tipodestino = :id";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            if( $stmt->execute()){
-                return true;
-               }else{
-                return false;
-               }
-        } catch (PDOException $e) {
-            return "Error al eliminar tipo de destino: " . $e->getMessage();
+        // Función para eliminar un tipo de destino
+        public static function canp_validar_eliminacion_tipo_destino_mdl($id) {
+            try {
+                $db = Conexion::conectar();
+                $sql = "SELECT canp_validar_eliminacion_tipo_destino(:id) AS puedeEliminar";
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->execute();
+                $row = $stmt->fetch();
+
+                if ($row['puedeEliminar']) {
+                    // Proceder a eliminar el tipo de destino
+                    $sqlEliminar = "DELETE FROM tbltipodestino WHERE id_tipodestino = :id";
+                    $stmtEliminar = $db->prepare($sqlEliminar);
+                    $stmtEliminar->bindParam(':id', $id, PDO::PARAM_INT);
+                    $stmtEliminar->execute();
+
+                   return true;
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                return "Error al eliminar tipo de destino: " . $e->getMessage();
+            }
         }
-    }
 
 
 }

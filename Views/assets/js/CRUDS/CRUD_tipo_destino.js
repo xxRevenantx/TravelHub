@@ -18,7 +18,6 @@ export function  insertar_o_actualizar_tipo_destino(formTipoDestino, idtipoDesti
                 swalMixin("top", "info", "Espera... guardando destino");
             },
             success: function(response) {
-                console.log(response);
                 if (response === true) {
                     swalMixin("top", "success", "Destino guardado exitosamente en la base de datos");
                     setTimeout(() => {
@@ -123,9 +122,7 @@ export function eliminar_tipo_destino(){
         let idTipoDestino = $(this).attr("eliminarTipoDestino"); // Asegúrate de que el botón tenga un atributo 'eliminarTipoDestino'
         let removeRow = $(this).closest('tr'); // Usamos closest para seleccionar la fila completa
     
-        console.log(idTipoDestino); // Para depuración: muestra el ID del tipo de destino
-        console.log(removeRow); // Para depuración: muestra la fila que será eliminada
-    
+        console.log(idTipoDestino);
         Swal.fire({
             title: "¿Estás seguro?",
             text: "El tipo de destino será eliminado permanentemente",
@@ -157,6 +154,7 @@ export function eliminar_tipo_destino(){
                     swalMixin("top", "info", "Eliminando...");
                 },
                 success: function(resultado) {
+
                     if (resultado == true) {
                         swalMixin("top", "success", "Tipo de destino eliminado correctamente");
                         removeRow.fadeOut(400, function() { 

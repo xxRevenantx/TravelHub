@@ -57,7 +57,7 @@ class TipoDestinoAjax {
     // ELIMINAR TIPO DE DESTINO
     public function canp_eliminar_tipo_destino_ajax() {
         $eliminarTipoDestino = $this->eliminarTipoDestino;
-        $respuesta = DestinoCtr::canp_eliminar_tipo_destino_ctr($eliminarTipoDestino);
+        $respuesta = DestinoCtr::canp_validar_eliminacion_tipo_destino_ctr($eliminarTipoDestino);
         echo json_encode($respuesta);
     }
 }
@@ -91,6 +91,6 @@ if (isset($_POST["nombreDestinoA"])) {
 // ELIMINAR
 if (isset($_POST["eliminarTipoDestino"])) {
     $td = new TipoDestinoAjax();
-    $td->eliminarTipoDestino = $_POST["eliminarTipoDestino"];
+    $td->eliminarTipoDestino = intval($_POST["eliminarTipoDestino"]);
     $td->canp_eliminar_tipo_destino_ajax();
 }

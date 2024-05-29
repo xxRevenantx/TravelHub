@@ -4,7 +4,7 @@ import {editar_tipo_destino, insertar_o_actualizar_tipo_destino, eliminar_tipo_d
 import {editar_avion,insertar_o_actualizar_avion, eliminar_avion} from './CRUDS/CRUD_avion.js'; 
 import {editar_transporte_terrestre,insertar_o_actualizar_transporte_terrestre, eliminar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
 import {editar_destino,insertar_o_actualizar_destino, imagen, eliminar_destino} from './CRUDS/CRUD_destino.js'; 
-import {editar_usuario,validarContrasena, insertar_o_actualizar_usuario} from './CRUDS/CRUD_usuario.js'; 
+import {editar_usuario,validarContrasena, insertar_o_actualizar_usuario, eliminar_usuario} from './CRUDS/CRUD_usuario.js'; 
 
 // VALIDACIONES
 let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre");
@@ -74,10 +74,11 @@ function usuario(){
             })
 
 
-            editar_usuario(formUsuario);
+       
     }
        
-  
+    editar_usuario(formUsuario);
+    eliminar_usuario();
 }
 
 // VALIDAR EL DESTINO

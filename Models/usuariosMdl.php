@@ -64,9 +64,9 @@ class UsuariosMdl {
         $stmt->bindParam(":idUsuario", $idUsuario, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            return "ok";
+            return true;
         } else {
-            return "error";
+            return false;
         }
 
         $stmt = null;
@@ -74,8 +74,9 @@ class UsuariosMdl {
 
 
         // Método para leer los roles
-    public static function canp_leer_rol_id_mdl() {
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM tblroles");
+    public static function canp_leer_rol_id_mdl($rol) {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM tblroles WHERE Id_rol = :id_rol");
+        $stmt->bindParam(":id_rol", $rol, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch();
     }

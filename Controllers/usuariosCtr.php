@@ -28,26 +28,13 @@ class UsuariosCtr {
 
     // Función para eliminar un usuario
     public static function canp_eliminar_usuario_ctr($idUsuario) {
-        // Validar si el usuario puede ser eliminado
-        $db = Conexion::conectar();
-        $stmt = $db->prepare("SELECT fn_validar_eliminacion_destino(:idUsuario) AS puede_eliminar");
-        $stmt->bindParam(":idUsuario", $idUsuario, PDO::PARAM_INT);
-        $stmt->execute();
-        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($resultado['puede_eliminar']) {
-            // No se puede eliminar, devolver un mensaje de error
-            return "No se puede eliminar el usuario porque está vinculado a un destino.";
-        } else {
-            // Se puede eliminar, proceder con la eliminación
-            $respuesta = UsuariosMdl::canp_eliminar_usuario_mdl($idUsuario);
-            return $respuesta; // Devuelve un mensaje de éxito o error
-        }
+        $respuesta = UsuariosMdl::canp_eliminar_usuario_mdl($idUsuario);
+        return $respuesta; // Devuelve un mensaje de éxito o error
     }
 
  // Función para leer los datos de los roles
- public static function canp_leer_rol_id_ctr() {
-    $respuesta = UsuariosMdl::canp_leer_rol_id_mdl();
+ public static function canp_leer_rol_id_ctr($rol) {
+    $respuesta = UsuariosMdl::canp_leer_rol_id_mdl($rol);
     return $respuesta; // Devuelve los datos de los usuarios o un mensaje de error
 }
 

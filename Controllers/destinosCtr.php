@@ -60,8 +60,8 @@ public static function canp_actualizar_tipo_destino_ctr($datosTipoDestino) {
 }
 
 // Función para eliminar un tipo de destino
-public static function canp_eliminar_tipo_destino_ctr($idTipoDestino) {
-    $respuesta = DestinoMdl::canp_eliminar_tipo_destino_mdl($idTipoDestino);
+public static function canp_validar_eliminacion_tipo_destino_ctr($idTipoDestino) {
+    $respuesta = DestinoMdl::canp_validar_eliminacion_tipo_destino_mdl($idTipoDestino);
     return $respuesta; // Devuelve un mensaje de éxito o error
 }
 

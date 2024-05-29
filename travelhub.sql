@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2024 a las 20:00:26
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.0.25
+-- Tiempo de generación: 29-05-2024 a las 05:13:33
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `travelhub`
 --
+
+DELIMITER $$
+--
+-- Funciones
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `canp_validar_eliminacion_tipo_destino` (`tipo_destino_id` INT) RETURNS TINYINT(1)  BEGIN
+    DECLARE resultado INT;
+    
+    -- Verificar si el tipo de destino está vinculado a algún destino
+    SELECT COUNT(*) INTO resultado
+    FROM tbldestino
+    WHERE id_tipodestino = tipo_destino_id;
+
+    -- Si el resultado es mayor que 0, el tipo de destino no puede ser eliminado
+    IF resultado > 0 THEN
+        RETURN FALSE;
+    ELSE
+        RETURN TRUE;
+    END IF;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -171,9 +193,7 @@ INSERT INTO `tbltipodestino` (`id_tipodestino`, `Nombre_destino`, `Actividades_p
 (5, 'Sídney', 'Surf, Ópera, Puentes', 'Verano'),
 (6, 'Roma', 'Historia, Arquitectura, Gastronomía', 'Primavera'),
 (7, 'Londres', 'Museos, Historia, Compras', 'Otoño'),
-(8, 'Barcelona', 'Playas, Arquitectura, Fútbol', 'Verano'),
-(9, 'Bangkok', 'Templos, Cultura, Compras', 'Primavera'),
-(10, 'Dubái', 'Compras, Modernidad, Desierto', 'Invierno');
+(8, 'Barcelona', 'Playas, Arquitectura, Fútbol', 'Verano');
 
 -- --------------------------------------------------------
 
@@ -228,8 +248,7 @@ CREATE TABLE `tblusuarios` (
 
 INSERT INTO `tblusuarios` (`Id_usuario`, `Usuario`, `Nombre`, `Apellido`, `Email`, `Password`, `Rol`) VALUES
 (1, 'admin_CANP', 'Carlos Alberto', 'Nunez', 'carlos@gmail.com', 'es1921022834', 1),
-(2, 'cliente_CANP', 'Carlos', 'Nuñez', 'carlos@gmail.com', 'es1921022834', 2),
-(3, 'super_CANP', 'Carlos Alberto', 'Nuñez Perez', 'carlos1995.al.nu@gmail.com', 'Carlos1995', 1);
+(2, 'cliente_CANP', 'Carlos', 'Nuñez', 'carlos@gmail.com', 'es1921022834', 2);
 
 --
 -- Índices para tablas volcadas
@@ -330,7 +349,7 @@ ALTER TABLE `tblcliente`
 -- AUTO_INCREMENT de la tabla `tbldestino`
 --
 ALTER TABLE `tbldestino`
-  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `tblroles`
@@ -354,7 +373,7 @@ ALTER TABLE `tbltransporteterrestre`
 -- AUTO_INCREMENT de la tabla `tblusuarios`
 --
 ALTER TABLE `tblusuarios`
-  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -377,11 +396,11 @@ ALTER TABLE `tblcliente`
 -- Filtros para la tabla `tbldestino`
 --
 ALTER TABLE `tbldestino`
-  ADD CONSTRAINT `tbldestino_ibfk_1` FOREIGN KEY (`id_tipodestino`) REFERENCES `tbltipodestino` (`id_tipodestino`),
-  ADD CONSTRAINT `tbldestino_ibfk_2` FOREIGN KEY (`id_avion1`) REFERENCES `tblavion` (`id_avion`),
-  ADD CONSTRAINT `tbldestino_ibfk_3` FOREIGN KEY (`id_avion2`) REFERENCES `tblavion` (`id_avion`),
-  ADD CONSTRAINT `tbldestino_ibfk_4` FOREIGN KEY (`id_transpterrestre1`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`),
-  ADD CONSTRAINT `tbldestino_ibfk_5` FOREIGN KEY (`id_transpterrestre2`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`);
+  ADD CONSTRAINT `tbldestino_ibfk_1` FOREIGN KEY (`id_tipodestino`) REFERENCES `tbltipodestino` (`id_tipodestino`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbldestino_ibfk_2` FOREIGN KEY (`id_avion1`) REFERENCES `tblavion` (`id_avion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbldestino_ibfk_3` FOREIGN KEY (`id_avion2`) REFERENCES `tblavion` (`id_avion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbldestino_ibfk_4` FOREIGN KEY (`id_transpterrestre1`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbldestino_ibfk_5` FOREIGN KEY (`id_transpterrestre2`) REFERENCES `tbltransporteterrestre` (`id_transpterrestre`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tblusuarios`

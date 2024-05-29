@@ -6,7 +6,7 @@ include 'Components/navAdmin.php'
     <div class="contenedor"> 
     <h2>Añadir Usuario</h2>
     <form id="formUsuario" class="formUsuario" method="post" enctype="multipart/form-data">
-        <input type="text" id="idUsuario" name="idUsuario">
+        <input type="hidden" disabled id="idUsuario" name="idUsuario">
         
         <label for="usuario">Usuario:   <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
         <input type="text" id="usuario" name="usuario" placeholder="Introduce tu usuario">
@@ -51,7 +51,7 @@ include 'Components/navAdmin.php'
                 <?php
                     $usuarios = UsuariosCtr::canp_leer_usuarios_ctr();
                     foreach ($usuarios as $key => $usuario) {
-                            $rol = UsuariosCtr::canp_leer_rol_id_ctr();
+                            $rol = UsuariosCtr::canp_leer_rol_id_ctr($usuario["Rol"]);
                       echo '
                       <tr>
                             <td>'.($key+1).'</td>
