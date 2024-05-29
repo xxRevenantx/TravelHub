@@ -8,9 +8,10 @@ class DestinoMdl {
 public static function canp_registrar_destino_mdl($datosDestino) {
     try {
         $db = Conexion::conectar();
-        $sql = "INSERT INTO tbldestino (id_tipodestino, id_avion1, id_avion2, id_transpterrestre1, id_transpterrestre2, pais, resenia, coordenadas, imagen_destino) VALUES (:id_tipodestino, :id_avion1, :id_avion2, :id_transpterrestre1, :id_transpterrestre2, :pais, :resenia, :coordenadas, :imagen_destino)";
+        $sql = "INSERT INTO tbldestino (nombre_destino, id_tipodestino, id_avion1, id_avion2, id_transpterrestre1, id_transpterrestre2, pais, resenia, coordenadas, imagen_destino) VALUES (:nombre_destino,:id_tipodestino, :id_avion1, :id_avion2, :id_transpterrestre1, :id_transpterrestre2, :pais, :resenia, :coordenadas, :imagen_destino)";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id_tipodestino', $datosDestino["destino"]);
+        $stmt->bindParam(':nombre_destino', $datosDestino["destino"]);
+        $stmt->bindParam(':id_tipodestino', $datosDestino["tipodestino"]);
         $stmt->bindParam(':id_avion1', $datosDestino["avion1"]);
         $stmt->bindParam(':id_avion2', $datosDestino["avion2"]);
         $stmt->bindParam(':id_transpterrestre1', $datosDestino["transporte1"]);
@@ -61,9 +62,10 @@ public static function canp_actualizar_destino_mdl($datosDestino) {
 
     try {
         $db = Conexion::conectar();
-        $sql = "UPDATE tbldestino SET id_tipodestino = :id_tipodestino, id_avion1 = :id_avion1, id_avion2 = :id_avion2, id_transpterrestre1 = :id_transpterrestre1, id_transpterrestre2 = :id_transpterrestre2, pais = :pais, resenia = :resenia, coordenadas = :coordenadas, imagen_destino = :imagen_destino WHERE id_destino = :id";
+        $sql = "UPDATE tbldestino SET nombre_destino = :nombre_destino, id_tipodestino = :id_tipodestino, id_avion1 = :id_avion1, id_avion2 = :id_avion2, id_transpterrestre1 = :id_transpterrestre1, id_transpterrestre2 = :id_transpterrestre2, pais = :pais, resenia = :resenia, coordenadas = :coordenadas, imagen_destino = :imagen_destino WHERE id_destino = :id";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id_tipodestino', $datosDestino["destino"]);
+        $stmt->bindParam(':nombre_destino', $datosDestino["destino"]);
+        $stmt->bindParam(':id_tipodestino', $datosDestino["tipodestino"]);
         $stmt->bindParam(':id_avion1', $datosDestino["avion1"]);
         $stmt->bindParam(':id_avion2', $datosDestino["avion2"]);
         $stmt->bindParam(':id_transpterrestre1', $datosDestino["transporte1"]);

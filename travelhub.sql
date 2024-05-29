@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-05-2024 a las 05:13:33
+-- Tiempo de generación: 30-05-2024 a las 00:29:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -131,6 +131,7 @@ CREATE TABLE `tblcliente` (
 
 CREATE TABLE `tbldestino` (
   `id_destino` int(11) NOT NULL,
+  `nombre_destino` varchar(255) NOT NULL,
   `id_tipodestino` int(11) DEFAULT NULL,
   `id_avion1` int(11) DEFAULT NULL,
   `id_avion2` int(11) DEFAULT NULL,
@@ -146,8 +147,8 @@ CREATE TABLE `tbldestino` (
 -- Volcado de datos para la tabla `tbldestino`
 --
 
-INSERT INTO `tbldestino` (`id_destino`, `id_tipodestino`, `id_avion1`, `id_avion2`, `id_transpterrestre1`, `id_transpterrestre2`, `pais`, `resenia`, `coordenadas`, `imagen_destino`) VALUES
-(8, 1, 6, 8, 5, 6, 'Arabia Saudita', 'Cancún', '35.6895, 139.6917', 0x2e2e2f2e2e2f56696577732f6173736574732f696d6167656e65732f64657374696e6f732f686f7573652e6a7067);
+INSERT INTO `tbldestino` (`id_destino`, `nombre_destino`, `id_tipodestino`, `id_avion1`, `id_avion2`, `id_transpterrestre1`, `id_transpterrestre2`, `pais`, `resenia`, `coordenadas`, `imagen_destino`) VALUES
+(3, 'Cancún', 8, 8, 8, 6, 5, 'Argelia', 'Destino cancún', '35.6895, 139.6917', 0x2e2e2f2e2e2f56696577732f6173736574732f696d6167656e65732f64657374696e6f732f686f7573652e6a7067);
 
 -- --------------------------------------------------------
 
@@ -186,14 +187,15 @@ CREATE TABLE `tbltipodestino` (
 --
 
 INSERT INTO `tbltipodestino` (`id_tipodestino`, `Nombre_destino`, `Actividades_populares`, `Epoca_sugerida`) VALUES
-(1, 'Cancún', 'Buceo, Snorkel, Fiesta', 'Verano'),
-(2, 'París', 'Museos, Gastronomía, Paseos en barco', 'Primavera'),
-(3, 'Tokio', 'Tecnología, Cultura pop, Compras', 'Otoño'),
-(4, 'Nueva York', 'Teatros, Rascacielos, Central Park', 'Invierno'),
-(5, 'Sídney', 'Surf, Ópera, Puentes', 'Verano'),
-(6, 'Roma', 'Historia, Arquitectura, Gastronomía', 'Primavera'),
-(7, 'Londres', 'Museos, Historia, Compras', 'Otoño'),
-(8, 'Barcelona', 'Playas, Arquitectura, Fútbol', 'Verano');
+(1, 'Playa', 'Paseo en lancha', 'Verano'),
+(3, 'Histórico', 'Recorrido del centro histórico', 'Otoño'),
+(4, 'Playa', 'Visita a acuarios', 'Verano'),
+(5, 'Extranjero', 'Visita a museos', 'Invierno'),
+(6, 'Histórico', 'Tour por la ciudad', 'Primavera'),
+(7, 'Playa', 'Recorrido del centro histórico', 'Otoño'),
+(8, 'Extranjero', 'Paseo en lancha', 'Verano'),
+(9, 'Histórico', 'Visita a museos', 'Primavera'),
+(10, 'Playa', 'Tour por la ciudad', 'Primavera');
 
 -- --------------------------------------------------------
 
@@ -349,7 +351,7 @@ ALTER TABLE `tblcliente`
 -- AUTO_INCREMENT de la tabla `tbldestino`
 --
 ALTER TABLE `tbldestino`
-  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tblroles`
@@ -361,7 +363,7 @@ ALTER TABLE `tblroles`
 -- AUTO_INCREMENT de la tabla `tbltipodestino`
 --
 ALTER TABLE `tbltipodestino`
-  MODIFY `id_tipodestino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_tipodestino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `tbltransporteterrestre`

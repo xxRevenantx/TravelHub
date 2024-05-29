@@ -7,14 +7,21 @@ include 'Components/navAdmin.php'
 
         <h2>Añadir Nuevo Destino</h2>
         <form class="formDestinoAdmin" method="post" enctype="multipart/form-data">
+           
             <input type="hidden" class="idDestinoActualizar" name="idDestinoActualizar">
-            <label for="destino">Nombre del Destino: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
-            <select id="destino" class="destino" name="destino">
+           
+           
+            <label for="nombreDestino">Nombre del Destino: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
+            <input type="text" name="nombreDestino" class="nombreDestino" placeholder="Nombre de destino">
+           
+           
+            <label for="tipoDeDestino">Tipo de tipoDeDestino: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
+            <select id="tipoDeDestino" class="tipoDeDestino" name="tipoDeDestino">
            
             <?php
                 $destinos = DestinoCtr::canp_leer_tipos_destinos_ctr();
                 foreach ($destinos as $key => $destino) {
-                    echo ' <option value="'.$destino["id_tipodestino"].'">'.$destino["Nombre_destino"].'</option>';
+                    echo ' <option value="'.$destino["id_tipodestino"].'">'.$destino["Nombre_destino"]." => ".$destino["Actividades_populares"].'</option>';
                 }
             ?>
             </select>
@@ -96,6 +103,7 @@ include 'Components/navAdmin.php'
                 <tr>
                     <th>Id</th>
                     <th>Destino</th>
+                    <th>Tipo de destino</th>
                     <th>Avión 1</th>
                     <th>Avión 2</th>
                     <th>Transporte terrestre 1</th>
@@ -121,7 +129,8 @@ include 'Components/navAdmin.php'
                         echo '
                         <tr>
                         <td>'.($key+1).'</td>
-                        <td>'.$tipoDestino["Nombre_destino"].'</td>
+                        <td>'.$destino["nombre_destino"].'</td>
+                        <td>'.$tipoDestino["Nombre_destino"]. " (".$tipoDestino["Actividades_populares"].") ".'</td>
                         <td>'.$avion1["modelo"].'</td>
                         <td>'.$avion2["modelo"].'</td>
                         <td>'.$id_transporte1["tipo_transporte"].'</td>

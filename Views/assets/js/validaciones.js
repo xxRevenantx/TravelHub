@@ -92,7 +92,8 @@ function destino(){
             e.preventDefault();
            // Coordenadas
              const regex = /^-?\d{1,3}\.\d{1,6},\s?-?\d{1,3}\.\d{1,6}$/;
-             let destino =  e.target.destino.value;
+             let nombreDestino =  e.target.nombreDestino.value;
+             let tipoDestino =  e.target.tipoDeDestino.value;
              let avion1 =  e.target.avion1.value;
              let avion2 =  e.target.avion2.value;
              let transporte1 =  e.target.transporte1.value;
@@ -105,7 +106,7 @@ function destino(){
             
 
                 // Validar que los campos no estén vacíos
-            if (!destino.trim() || !avion1.trim() || !avion2.trim() || !transporte1.trim() || !transporte2.trim() || !pais.trim() || !resena.trim() || !coordenadas.trim() ) {
+            if (!nombreDestino.trim() || !tipoDestino.trim() || !avion1.trim() || !avion2.trim() || !transporte1.trim() || !transporte2.trim() || !pais.trim() || !resena.trim() || !coordenadas.trim() ) {
                     swalMixin("center", "error", "Por favor, complete todos los campos obligatorios");
                     return;
             }
@@ -124,7 +125,8 @@ function destino(){
 
                 let formData = new FormData(); // Crea un FormData para manejar archivos
                 // Agregar los valores al FormData
-                formData.append('destino', destino.trim());
+                formData.append('destino', nombreDestino.trim());
+                formData.append('tipodestino', tipoDestino.trim());
                 formData.append('avion1', avion1.trim());
                 formData.append('avion2', avion2.trim());
                 formData.append('transporte1', transporte1.trim());
@@ -140,7 +142,8 @@ function destino(){
 
                 // Datos del formulario para actualizar
                 formDataA.append('idDestinoActualizar', idDestinoActualizar.trim());
-                formDataA.append('destinoA', destino.trim());
+                formDataA.append('destinoA', nombreDestino.trim());
+                formDataA.append('tipodestinoA', tipoDestino.trim());
                 formDataA.append('avion1A', avion1.trim());
                 formDataA.append('avion2A', avion2.trim());
                 formDataA.append('transporte1A', transporte1.trim());

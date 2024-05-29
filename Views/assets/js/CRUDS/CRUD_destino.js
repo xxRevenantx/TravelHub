@@ -89,7 +89,8 @@ export function editar_destino(formDestino) {
                 });
 
                 formDestino.idDestinoActualizar.value = response.id_destino;
-                formDestino.destino.value = response.id_tipodestino;
+                formDestino.nombreDestino.value = response.nombre_destino;
+                formDestino.tipoDeDestino.value = response.id_tipodestino;
                 formDestino.avion1.value = response.id_avion1;
                 formDestino.avion2.value = response.id_avion2;
                 formDestino.transporte1.value = response.id_transpterrestre1;
@@ -116,6 +117,7 @@ export function editar_destino(formDestino) {
 
 // ACTUALIZAR DESTINO
 function actualizar_destino(formDestino, datosFormularioActualizar) {
+
     $.ajax({
         url: travelHub() + "Views/Ajax/destino.ajax.php",
         type: 'POST',
@@ -129,6 +131,7 @@ function actualizar_destino(formDestino, datosFormularioActualizar) {
             formDestino.btnDestino.style.opacity = "0.5";
         },
         success: function(response) {
+            console.log(response);
             if (response == true) {
                 // Notificar éxito
                 swalMixin("top", "success", "Destino actualizado exitosamente en la base de datos");

@@ -12,6 +12,7 @@ class DestinoAjax {
 
     // REGISTRAR
     public $destino;
+    public $tipodestino;
     public $avion1;
     public $avion2;
     public $transporte1;
@@ -25,6 +26,7 @@ class DestinoAjax {
     // ACTUALIZAR
     public $idDestinoActualizar;
     public $destinoA;
+    public $tipodestinoA;
     public $avion1A;
     public $avion2A;
     public $transporte1A;
@@ -60,6 +62,7 @@ class DestinoAjax {
             
                     $datosDestino = [
                         'destino' => $this->destino,
+                        'tipodestino' => $this->tipodestino,
                         'avion1' => $this->avion1,
                         'avion2' => $this->avion2,
                         'transporte1' => $this->transporte1,
@@ -109,6 +112,7 @@ class DestinoAjax {
                     $datosDestino = [
                         'id' => $this->idDestinoActualizar,
                         'destino' => $this->destinoA,
+                        'tipodestino' => $this->tipodestinoA,
                         'avion1' => $this->avion1A,
                         'avion2' => $this->avion2A,
                         'transporte1' => $this->transporte1A,
@@ -128,6 +132,7 @@ class DestinoAjax {
                 $datosDestino = [
                     'id' => $this->idDestinoActualizar,
                     'destino' => $this->destinoA,
+                    'tipodestino' => $this->tipodestinoA,
                     'avion1' => $this->avion1A,
                     'avion2' => $this->avion2A,
                     'transporte1' => $this->transporte1A,
@@ -160,6 +165,7 @@ class DestinoAjax {
 if (isset($_POST["destino"])) {
     $d = new DestinoAjax();
     $d->destino = $_POST["destino"];
+    $d->tipodestino = $_POST["tipodestino"];
     $d->avion1 = $_POST["avion1"];
     $d->avion2 = $_POST["avion2"];
     $d->transporte1 = $_POST["transporte1"];
@@ -184,6 +190,7 @@ if (isset($_POST["idDestinoActualizar"])) {
     $d = new DestinoAjax();
     $d->idDestinoActualizar = $_POST["idDestinoActualizar"];
     $d->destinoA = $_POST["destinoA"];
+    $d->tipodestinoA = $_POST["tipodestinoA"];
     $d->avion1A = $_POST["avion1A"];
     $d->avion2A = $_POST["avion2A"];
     $d->transporte1A = $_POST["transporte1A"];
