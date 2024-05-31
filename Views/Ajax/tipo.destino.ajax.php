@@ -26,6 +26,36 @@ class TipoDestinoAjax {
 
     // REGISTRAR TIPO DE DESTINO
     public function canp_registrar_tipo_destino_ajax() {
+          // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+          $epocaSugeridaNormalizada = strtolower($this->epocaSugerida);
+
+          // Lista de épocas válidas
+          $epocasValidas = ['primavera', 'verano', 'otoño', 'invierno'];
+  
+          // Validar que la época sugerida sea una de las permitidas
+          if (!in_array($epocaSugeridaNormalizada, $epocasValidas)) {
+              echo json_encode(['error' => 'La época sugerida debe ser Primavera, Verano, Otoño o Invierno.']);
+              return;
+          }
+
+          // Lista de actividades válidas
+        $actividadesValidas = [
+            'paseo en lancha',
+            'tour por la ciudad',
+            'recorrido del centro histórico',
+            'visita a museos',
+            'visita a acuarios'
+        ];
+
+        // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+        $actividadesPopularesNormalizadas = strtolower($this->actividadesPopulares);
+
+        // Validar que las actividades populares sean una de las permitidas
+        if (!in_array($actividadesPopularesNormalizadas, $actividadesValidas)) {
+            echo json_encode(['error' => 'Las actividades populares deben ser una de las siguientes: paseo en lancha, tour por la ciudad, recorrido del centro histórico, visita a museos, visita a acuarios.']);
+            return;
+        }
+
         $datosTipoDestino = [
             'nombreDestino' => $this->nombreDestino,
             'actividadesPopulares' => $this->actividadesPopulares,
@@ -44,6 +74,38 @@ class TipoDestinoAjax {
 
     // ACTUALIZAR TIPO DE DESTINO
     public function canp_actualizar_tipo_destino_ajax() {
+             // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+          $epocaSugeridaNormalizada = strtolower($this->epocaSugeridaA);
+
+          // Lista de épocas válidas
+          $epocasValidas = ['primavera', 'verano', 'otoño', 'invierno'];
+  
+          // Validar que la época sugerida sea una de las permitidas
+          if (!in_array($epocaSugeridaNormalizada, $epocasValidas)) {
+              echo json_encode(['error' => 'La época sugerida debe ser Primavera, Verano, Otoño o Invierno.']);
+              return;
+          }
+
+
+            // Lista de actividades válidas
+            $actividadesValidas = [
+                'paseo en lancha',
+                'tour por la ciudad',
+                'recorrido del centro histórico',
+                'visita a museos',
+                'visita a acuarios'
+            ];
+
+            // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+            $actividadesPopularesNormalizadas = strtolower($this->actividadesPopularesA);
+
+            // Validar que las actividades populares sean una de las permitidas
+            if (!in_array($actividadesPopularesNormalizadas, $actividadesValidas)) {
+                echo json_encode(['error' => 'Las actividades populares deben ser una de las siguientes: paseo en lancha, tour por la ciudad, recorrido del centro histórico, visita a museos, visita a acuarios.']);
+                return;
+            }
+
+
         $datosTipoDestino = [
             'id' => $this->idA,
             'nombreDestino' => $this->nombreDestinoA,

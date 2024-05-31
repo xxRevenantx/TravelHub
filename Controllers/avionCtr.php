@@ -4,6 +4,11 @@ class AvionCtr {
 
     // Función para registrar un avión
     public static function canp_registrar_avion_ctr($datosAvion) {
+        // Validar el número de serie del avión: alfanumérico y exactamente 10 caracteres
+        if (!isset($datosAvion['numeroSerie']) || !preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/', $datosAvion['numeroSerie'])) {
+            return false;
+        }
+
         $respuesta = AvionMdl::canp_registrar_avion_mdl($datosAvion);
         return $respuesta; // Esto podría devolver, por ejemplo, un mensaje de éxito o error
     }
@@ -22,6 +27,10 @@ class AvionCtr {
 
     // Función para actualizar los datos de un avión
     public static function canp_actualizar_avion_ctr($datosAvion) {
+              // Validar el número de serie del avión: alfanumérico y exactamente 10 caracteres
+       if (!isset($datosAvion['numeroSerie']) || !preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/', $datosAvion['numeroSerie'])) {
+    return false;
+    }
         $respuesta = AvionMdl::canp_actualizar_avion_mdl($datosAvion);
         return $respuesta; // Devuelve un mensaje de éxito o error
     }

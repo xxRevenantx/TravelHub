@@ -37,6 +37,35 @@ public static function canp_eliminar_destino_ctr($idDestino) {
 
   // Función para registrar un tipo de destino
   public static function canp_registrar_tipo_destino_ctr($datosTipoDestino) {
+
+    $epocaSugeridaNormalizada = strtolower($datosTipoDestino["epocaSugerida"]);
+    // Lista de épocas válidas
+    $epocasValidas = ['primavera', 'verano', 'otoño', 'invierno'];
+    // Validar que la época sugerida sea una de las permitidas
+    if (!in_array($epocaSugeridaNormalizada, $epocasValidas)) {
+        return false;
+    }
+
+     // Lista de actividades válidas
+     $actividadesValidas = [
+        'paseo en lancha',
+        'tour por la ciudad',
+        'recorrido del centro histórico',
+        'visita a museos',
+        'visita a acuarios'
+    ];
+
+    // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+    $actividadesPopularesNormalizadas = strtolower($datosTipoDestino["actividadesPopulares"]);
+
+    // Validar que las actividades populares sean una de las permitidas
+    if (!in_array($actividadesPopularesNormalizadas, $actividadesValidas)) {
+        return false;
+    }
+
+
+
+
     $respuesta = DestinoMdl::canp_registrar_tipo_destino_mdl($datosTipoDestino);
     return $respuesta; // Esto podría devolver, por ejemplo, un mensaje de éxito o error
 }
@@ -55,6 +84,35 @@ public static function canp_leer_tipo_destino_id_ctr($idTipoDestino) {
 
 // Función para actualizar los datos de un tipo de destino
 public static function canp_actualizar_tipo_destino_ctr($datosTipoDestino) {
+    $epocaSugeridaNormalizada = strtolower($datosTipoDestino["epocaSugerida"]);
+    // Lista de épocas válidas
+    $epocasValidas = ['primavera', 'verano', 'otoño', 'invierno'];
+    // Validar que la época sugerida sea una de las permitidas
+    if (!in_array($epocaSugeridaNormalizada, $epocasValidas)) {
+        return false;
+    }
+
+     // Lista de actividades válidas
+     $actividadesValidas = [
+        'paseo en lancha',
+        'tour por la ciudad',
+        'recorrido del centro histórico',
+        'visita a museos',
+        'visita a acuarios'
+    ];
+
+    // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+    $actividadesPopularesNormalizadas = strtolower($datosTipoDestino["actividadesPopulares"]);
+
+    // Validar que las actividades populares sean una de las permitidas
+    if (!in_array($actividadesPopularesNormalizadas, $actividadesValidas)) {
+        return false;
+    }
+
+    
+
+
+
     $respuesta = DestinoMdl::canp_actualizar_tipo_destino_mdl($datosTipoDestino);
     return $respuesta; // Devuelve un mensaje de éxito o error
 }

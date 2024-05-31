@@ -10,9 +10,10 @@ include 'Components/navAdmin.php'
             <input type="hidden" id="idTipoDestino" name="idTipoDestino" >
             <label for="nombreDestino">Nombre del Destino: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
             <input type="text" id="nombreDestino" name="nombreDestino" placeholder="Nombre del Destino" >
-            <label for="actividadesPopulares">Actividades Populares: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
+            <label for="actividadesPopulares">Actividades Populares: <div class="tooltip required"> *<span class="tooltiptext">paseo en lancha, tour por la ciudad, recorrido del centro histórico, visita a museos,visita a acuarios.  </span></div></label>
             <input type="text" id="actividadesPopulares" name="actividadesPopulares" placeholder="Actividades Populares" >
-            <label for="epocaSugerida">Época Sugerida: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
+            <label for="epocaSugerida">Época Sugerida: <div class="tooltip required"> *<span class="tooltiptext">primavera, verano, otoño e invierno.
+</span></div></label>
             <input type="text" id="epocaSugerida" name="epocaSugerida" placeholder="Época Sugerida" >
             <button name="btntTipoDestino" class="btnformulario" type="submit">Guardar Destino</button>
             <?php

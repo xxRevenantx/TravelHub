@@ -11,7 +11,7 @@ include 'Components/navAdmin.php'
         <input type="text" id="tipoTransporte" class="tipoTransporte" name="tipoTransporte" placeholder="Ej. Autobús, Taxi, Tren">
 
         <label for="placa">Placa: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
-        <input type="text" id="placa" class="placa" name="placa" placeholder="Ej. XYZ1234">
+        <input type="text" id="placa" class="placa" name="placa" placeholder="Ej. 123456">
 
         <label for="capacidad">Capacidad de Pasajeros (1-80): <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>
         <input type="text" id="capacidad" class="capacidad" name="capacidad" placeholder="Ej. 15">

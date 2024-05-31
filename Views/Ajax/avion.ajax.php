@@ -32,15 +32,25 @@ class AvionAjax{
 
    // REGISTRAR AVIÓN
    public function canp_registrar_avion_ajax(){
-    $datosAvion = [
-        'numeroSerie' => $this->numeroSerie,
-        'modelo' => $this->modelo,
-        'capacidadAsientos' => $this->capacidadAsientos,
-        'empresaPropietaria' => $this->empresaPropietaria
-    ];
-      $respuesta = AvionCtr::canp_registrar_avion_ctr($datosAvion);
-      echo json_encode($respuesta);
-   }
+
+    
+    // Validación del número de serie: alfanumérico y exactamente 10 caracteres
+    if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/', $this->numeroSerie)) {
+        echo json_encode(["error" => "El número de serie debe ser alfanumérico y contener exactamente 10 caracteres, incluyendo al menos una letra y un número."]);
+        return;
+    }
+
+        $datosAvion = [
+            'numeroSerie' => $this->numeroSerie,
+            'modelo' => $this->modelo,
+            'capacidadAsientos' => $this->capacidadAsientos,
+            'empresaPropietaria' => $this->empresaPropietaria
+        ];
+
+
+        $respuesta = AvionCtr::canp_registrar_avion_ctr($datosAvion);
+        echo json_encode($respuesta);
+    }
 
    // LEER AVIÓN
     public function canp_leer_avion_id_ajax(){
@@ -51,6 +61,14 @@ class AvionAjax{
 
     // ACTUALIZAR AVIÓN
     public function canp_actualizar_avion_ajax(){
+
+    // Validación del número de serie: alfanumérico y exactamente 10 caracteres
+    if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/', $this->numeroSerieA)) {
+        echo json_encode(["error" => "El número de serie debe ser alfanumérico y contener exactamente 10 caracteres, incluyendo al menos una letra y un número."]);
+        return;
+    }
+
+    
         $datosAvion = [
             'idAvion' => $this->idAvionA,
             'numeroSerie' => $this->numeroSerieA,
@@ -90,7 +108,7 @@ if(isset($_POST["idAvion"])) {
 }
 
 // ACTUALIZAR
-if(isset($_POST["numeroSerieA"])) {
+if(isset($_POST["idAvionA"])) {
     $a = new AvionAjax();
     $a->idAvionA = $_POST["idAvionA"];  
     $a->numeroSerieA = $_POST["numeroSerieA"];

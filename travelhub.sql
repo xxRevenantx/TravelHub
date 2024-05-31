@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2024 a las 00:29:30
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 30-05-2024 a las 19:48:03
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -77,16 +77,17 @@ CREATE TABLE `tblavion` (
 --
 
 INSERT INTO `tblavion` (`id_avion`, `numero_serie`, `modelo`, `capacidad_asientos`, `empresa_propietaria`) VALUES
-(4, '123456789ABC', 'Boeing 747', 67, 'Aerolíneas Internacionales'),
-(5, '987654321DEF', 'Airbus A380', 50, 'Global Airways'),
-(6, '234567891ABC', 'Boeing 737', 78, 'Aerolíneas Internacionales'),
-(7, '876543219DEF', 'Airbus A320', 80, 'Continental Flights'),
-(8, '345678912ABC', 'Boeing 777', 34, 'Global Airways'),
-(9, '765432198DEF', 'Boeing 787', 42, 'Sky Partners'),
-(10, '456789123ABC', 'Airbus A350', 24, 'Continental Flights'),
-(11, '654321987DEF', 'Boeing 737 MAX', 20, 'Sky Partners'),
-(12, '567891234ABC', 'Embraer E190', 5, 'Regional Jet'),
-(13, '543219876DEF', 'Bombardier Q400', 67, 'Regional Jet');
+(4, '123456789A', 'Boeing 747', 67, 'Aerolíneas Internacionales'),
+(5, '987654321D', 'Airbus A380', 50, 'Global Airways'),
+(6, '234567891A', 'Boeing 737', 78, 'Aerolíneas Internacionales'),
+(7, '876543219D', 'Airbus A320', 80, 'Continental Flights'),
+(8, '345678912A', 'Boeing 777', 34, 'Global Airways'),
+(9, '765432198D', 'Boeing 787', 42, 'Sky Partners'),
+(10, '456789123A', 'Airbus A350', 24, 'Continental Flights'),
+(11, '654321987D', 'Boeing 737 MAX', 20, 'Sky Partners'),
+(12, '567891234A', 'Embraer E190', 5, 'Regional Jet'),
+(13, '543219876D', 'Bombardier Q400', 67, 'Regional Jet'),
+(15, '1233ACDD12', 'Boein34', 45, 'Internacional');
 
 -- --------------------------------------------------------
 
@@ -188,14 +189,19 @@ CREATE TABLE `tbltipodestino` (
 
 INSERT INTO `tbltipodestino` (`id_tipodestino`, `Nombre_destino`, `Actividades_populares`, `Epoca_sugerida`) VALUES
 (1, 'Playa', 'Paseo en lancha', 'Verano'),
-(3, 'Histórico', 'Recorrido del centro histórico', 'Otoño'),
+(3, 'Histórico', 'recorrido del centro histórico', 'otoño'),
 (4, 'Playa', 'Visita a acuarios', 'Verano'),
 (5, 'Extranjero', 'Visita a museos', 'Invierno'),
 (6, 'Histórico', 'Tour por la ciudad', 'Primavera'),
 (7, 'Playa', 'Recorrido del centro histórico', 'Otoño'),
 (8, 'Extranjero', 'Paseo en lancha', 'Verano'),
 (9, 'Histórico', 'Visita a museos', 'Primavera'),
-(10, 'Playa', 'Tour por la ciudad', 'Primavera');
+(10, 'Playa', 'Tour por la ciudad', 'Primavera'),
+(11, 'Cancún', 'Buceo, Nado con Delfines, Festivales de Música', 'primavera'),
+(12, 'Cancún', 'Buceo, Nado con Delfines, Festivales de Música', 'verano'),
+(13, 'Cancún', 'paseo en lancha', 'primavera'),
+(14, 'Cancún', 'Paseo en lancha', 'primavera'),
+(15, 'Cancún', 'recorrido del centro histórico', 'primavera');
 
 -- --------------------------------------------------------
 
@@ -217,7 +223,7 @@ CREATE TABLE `tbltransporteterrestre` (
 --
 
 INSERT INTO `tbltransporteterrestre` (`id_transpterrestre`, `tipo_transporte`, `placa`, `capacidad_pasajeros`, `anio_fabricacion`, `empresa_propietaria`) VALUES
-(1, 'Autobús', 'ABC1234', 60, 2015, 'Transporte Urbano SA'),
+(1, 'Autobús', '123333', 60, 2015, 'Transporte Urbano SA'),
 (2, 'Taxi', 'XYZ5678', 4, 2018, 'Taxis Rápidos SRL'),
 (3, 'Autobús', 'DEF9012', 45, 2014, 'Viajes Seguros SL'),
 (4, 'Minivan', 'GHI3456', 7, 2019, 'Transportes Familiares S.A.'),
@@ -226,7 +232,8 @@ INSERT INTO `tbltransporteterrestre` (`id_transpterrestre`, `tipo_transporte`, `
 (7, 'Autobús', 'PQR5678', 60, 2013, 'Rutas Confortables S.A.'),
 (8, 'Minivan', 'STU9012', 8, 2020, 'Servicios Ejecutivos SRL'),
 (9, 'Camioneta', 'VWX3456', 6, 2015, 'Carga y Transporte SA'),
-(10, 'Autobús', 'YZA7890', 55, 2012, 'Transporte Escolar SA');
+(10, 'Autobús', 'YZA7890', 55, 2012, 'Transporte Escolar SA'),
+(13, 'Autobús', '123456', 50, 2015, 'Transporte Urbano SA');
 
 -- --------------------------------------------------------
 
@@ -333,7 +340,7 @@ ALTER TABLE `tbladmin`
 -- AUTO_INCREMENT de la tabla `tblavion`
 --
 ALTER TABLE `tblavion`
-  MODIFY `id_avion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_avion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `tblbitacora`
@@ -363,13 +370,13 @@ ALTER TABLE `tblroles`
 -- AUTO_INCREMENT de la tabla `tbltipodestino`
 --
 ALTER TABLE `tbltipodestino`
-  MODIFY `id_tipodestino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_tipodestino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `tbltransporteterrestre`
 --
 ALTER TABLE `tbltransporteterrestre`
-  MODIFY `id_transpterrestre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_transpterrestre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tblusuarios`

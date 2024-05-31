@@ -32,7 +32,7 @@ function usuario(){
 
             // Validar que los campos no estén vacíos
             if (!usuario || !nombre || !apellido || !email || !password || !rol) {
-                swalMixin("center", "error", "Por favor, complete todos los campos obligatorios");
+                swalMixin("top", "error", "Por favor, complete todos los campos obligatorios");
                 return;
 
             }
@@ -40,7 +40,7 @@ function usuario(){
              // Validar contraseña
              
                 if (!validarContrasena(password)) {
-                    swalMixin("center", "error", "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.");
+                    swalMixin("top", "error", "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.");
                     return;
                 }
 
@@ -107,19 +107,19 @@ function destino(){
 
                 // Validar que los campos no estén vacíos
             if (!nombreDestino.trim() || !tipoDestino.trim() || !avion1.trim() || !avion2.trim() || !transporte1.trim() || !transporte2.trim() || !pais.trim() || !resena.trim() || !coordenadas.trim() ) {
-                    swalMixin("center", "error", "Por favor, complete todos los campos obligatorios");
+                    swalMixin("top", "error", "Por favor, complete todos los campos obligatorios");
                     return;
             }
 
             // Validar imagen
              if (!regex.test(coordenadas)){
-                swalMixin("center","error","Por favor, ingrese las coordenadas en el formato correcto (ej. 35.6895, 139.6917)")
+                swalMixin("top","error","Por favor, ingrese las coordenadas en el formato correcto (ej. 35.6895, 139.6917)")
                 return;
             }
 
               // Validar que el campo de imagen no esté vacío
             if (!imagen && imagenDB == "") {
-                swalMixin("center", "error", "Por favor, seleccione una imagen");
+                swalMixin("top", "error", "Por favor, seleccione una imagen");
                 return;
             }
 
@@ -183,14 +183,22 @@ function transporteTerrestre(){
         
         
             if(tipoTransporte == "" || placa == "" || capacidad == "" || anioFabricacion == "" || empresaPropietaria == ""){
-                swalMixin("center","error","Los campos no puede quedar vacíos")
+                swalMixin("top","error","Los campos no puede quedar vacíos")
                 return;
             }
+
+            
+            // Validación de la placa: numérica y exactamente 6 caracteres
+            if (!/^\d{6}$/.test(placa)) {
+                swalMixin("top", "error", "La placa debe ser un valor numérico y contener exactamente 6 caracteres")
+                return;
+            }
+
             // Capacidad de pasajeros
             if( document.querySelector('.capacidad')){
                     const isValidCapacidad = Number.isInteger(Number(capacidad)) && capacidad >= 1 && capacidad <= 80;
                     if (!isValidCapacidad) {
-                        swalMixin("center","error","La capacidad de pasajeros debe ser de 1 y 80")
+                        swalMixin("top","error","La capacidad de pasajeros debe ser de 1 y 80")
                         return;
                     } 
             }
@@ -198,7 +206,7 @@ function transporteTerrestre(){
             if( document.querySelector('.anioFabricacion')){
                 const isValidAnioFabricacion = Number.isInteger(Number(anioFabricacion)) && anioFabricacion >= 2000 && anioFabricacion <= 2024;
                 if (!isValidAnioFabricacion) {
-                    swalMixin("center","error","El año de fabricación debe ser 2000 al 2024")
+                    swalMixin("top","error","El año de fabricación debe ser 2000 al 2024")
                         return;
                 }   
             }
@@ -247,9 +255,32 @@ if(formTipoDestino){
 
 
         if(nombreDestino == "" || actividadesPopulares == "" || epocaSugerida == "" ){
-            swalMixin("center","error","Los campos no puede quedar vacíos")
+            swalMixin("top","error","Los campos no puede quedar vacíos")
             return;
         }
+            //Convertir a minúsculas para estandarizar la comparación
+            epocaSugerida = epocaSugerida.toLowerCase();
+           // Valida que la época sugerida sea una de las cuatro opciones permitidas
+           const epocasValidas = ["primavera", "verano", "otoño", "invierno"];
+           if (!epocasValidas.includes(epocaSugerida)) {
+               swalMixin("top", "error", "La época sugerida debe ser primavera, verano, otoño o invierno");
+               return;
+           }
+
+            // Convertir a minúsculas para estandarizar la comparación
+            actividadesPopulares = actividadesPopulares.toLowerCase();
+            // Validación de actividades populares
+            const actividadesValidas = [
+                "paseo en lancha",
+                "tour por la ciudad",
+                "recorrido del centro histórico",
+                "visita a museos",
+                "visita a acuarios"
+            ];
+            if (!actividadesValidas.includes(actividadesPopulares)) {
+                swalMixin("top", "error", "Las actividades populares deben ser una de las siguientes: paseo en lancha, tour por la ciudad, recorrido del centro histórico, visita a museos, visita a acuarios");
+                return;
+            }
 
         // Recopila los datos del formulario
         let datosFormularioInsertar = {
@@ -294,23 +325,33 @@ function avion(){
 
         // Validación de campos no vacíos
         if(numeroSerie == "" || modelo == "" || capacidadAsientos == "" || empresaPropietaria == ""){
-            swalMixin("center","error","Todos los campos son obligatorios");
+            swalMixin("top","error","Todos los campos son obligatorios");
             return;
         }
 
         
+        // Validación del número de serie alfanumérico de exactamente 10 caracteres
+        const regexNumeroSerie = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/;
+            if (!regexNumeroSerie.test(numeroSerie)) {
+                swalMixin("top", "error", "El número de serie debe ser alfanumérico y tener exactamente 10 caracteres");
+                return;
+        
+        }
+        
+
+        // Validación para la capacidad de asientos
 
         const isValidCapacidad = Number.isInteger(Number(capacidadAsientos)) && capacidadAsientos >= 1 && capacidadAsientos <= 80;
             
         if (!isValidCapacidad) {
-            swalMixin("center","error","La capacidad de asientos debe ser de 1 y 80")
+            swalMixin("top","error","La capacidad de asientos debe ser de 1 y 80")
             return;
         } 
     
     
         // Preparar datos para inserción o actualización
         let datosFormularioInsertar = {
-            numeroSerie: numeroSerie.trim(),
+            numeroSerie: numeroSerie.trim().toUpperCase(),
             modelo: modelo.trim(),
             capacidadAsientos: capacidadAsientos.trim(),
             empresaPropietaria: empresaPropietaria.trim(),

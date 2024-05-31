@@ -5,6 +5,12 @@ class AvionMdl {
 // Función para registrar un nuevo avión
 public static function canp_registrar_avion_mdl($datosAvion) {
     try {
+
+           // Validación básica en el modelo 
+        if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/', $datosAvion['numeroSerie'])) {
+    return false;
+}
+        
         $db = Conexion::conectar();
         $sql = "INSERT INTO tblavion (numero_serie, modelo, capacidad_asientos, empresa_propietaria) VALUES (:numeroSerie, :modelo, :capacidadAsientos, :empresaPropietaria)";
         $stmt = $db->prepare($sql);
@@ -17,7 +23,7 @@ public static function canp_registrar_avion_mdl($datosAvion) {
         }else{
             return false;
         }
-        
+    
        
     } catch (PDOException $e) {
         return "Error al registrar el avión: " . $e->getMessage();
@@ -53,6 +59,10 @@ public static function canp_leer_aviones_mdl() {
 // Función para actualizar un avión
 public static function canp_actualizar_avion_mdl($datosAvion) {
     try {
+        if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/', $datosAvion['numeroSerie'])) {
+            return false;
+        }
+      
         $db = Conexion::conectar();
         $sql = "UPDATE tblavion SET numero_serie =:numero_serie, modelo = :modelo, capacidad_asientos = :capacidadAsientos, empresa_propietaria = :empresaPropietaria WHERE id_avion = :id";
         $stmt = $db->prepare($sql);
@@ -67,6 +77,7 @@ public static function canp_actualizar_avion_mdl($datosAvion) {
         }else{
             return false;
         }
+    
     } catch (PDOException $e) {
         return "Error al actualizar el avión: " . $e->getMessage();
     }

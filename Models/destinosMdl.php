@@ -7,6 +7,7 @@ class DestinoMdl {
 // Función para añadir un nuevo destino
 public static function canp_registrar_destino_mdl($datosDestino) {
     try {
+     
         $db = Conexion::conectar();
         $sql = "INSERT INTO tbldestino (nombre_destino, id_tipodestino, id_avion1, id_avion2, id_transpterrestre1, id_transpterrestre2, pais, resenia, coordenadas, imagen_destino) VALUES (:nombre_destino,:id_tipodestino, :id_avion1, :id_avion2, :id_transpterrestre1, :id_transpterrestre2, :pais, :resenia, :coordenadas, :imagen_destino)";
         $stmt = $db->prepare($sql);
@@ -107,6 +108,32 @@ public static function canp_eliminar_destino_mdl($id) {
     // Función para añadir un nuevo tipo de destino
     public static function canp_registrar_tipo_destino_mdl($datosTipoDestino) {
         try {
+            $epocaSugeridaNormalizada = strtolower($datosTipoDestino["epocaSugerida"]);
+            $epocasValidas = ['primavera', 'verano', 'otoño', 'invierno'];
+    
+            if (!in_array($epocaSugeridaNormalizada, $epocasValidas)) {
+                return false;
+            }
+
+                    // Lista de actividades válidas
+                $actividadesValidas = [
+                    'paseo en lancha',
+                    'tour por la ciudad',
+                    'recorrido del centro histórico',
+                    'visita a museos',
+                    'visita a acuarios'
+                ];
+
+                // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+                $actividadesPopularesNormalizadas = strtolower($datosTipoDestino["actividadesPopulares"]);
+
+                // Validar que las actividades populares sean una de las permitidas
+                if (!in_array($actividadesPopularesNormalizadas, $actividadesValidas)) {
+                    return false;
+                }
+
+
+
             $db = Conexion::conectar();
             $sql = "INSERT INTO tbltipodestino (Nombre_destino, Actividades_populares, Epoca_sugerida) VALUES (:Nombre_destino, :Actividades_populares, :Epoca_sugerida)";
             $stmt = $db->prepare($sql);
@@ -153,6 +180,30 @@ public static function canp_eliminar_destino_mdl($id) {
     // Función para actualizar un tipo de destino
     public static function canp_actualizar_tipo_destino_mdl($datosTipoDestino) {
         try {
+            $epocaSugeridaNormalizada = strtolower($datosTipoDestino["epocaSugerida"]);
+            $epocasValidas = ['primavera', 'verano', 'otoño', 'invierno'];
+    
+            if (!in_array($epocaSugeridaNormalizada, $epocasValidas)) {
+                return false;
+            }
+
+                    // Lista de actividades válidas
+                $actividadesValidas = [
+                    'paseo en lancha',
+                    'tour por la ciudad',
+                    'recorrido del centro histórico',
+                    'visita a museos',
+                    'visita a acuarios'
+                ];
+
+                // Convertir a minúsculas para hacer la validación insensible a mayúsculas y minúsculas
+                $actividadesPopularesNormalizadas = strtolower($datosTipoDestino["actividadesPopulares"]);
+
+                // Validar que las actividades populares sean una de las permitidas
+                if (!in_array($actividadesPopularesNormalizadas, $actividadesValidas)) {
+                    return false;
+                }
+
             $db = Conexion::conectar();
             $sql = "UPDATE tbltipodestino SET Nombre_destino = :Nombre_destino, Actividades_populares = :Actividades_populares, Epoca_sugerida = :Epoca_sugerida WHERE id_tipodestino = :id";
             $stmt = $db->prepare($sql);

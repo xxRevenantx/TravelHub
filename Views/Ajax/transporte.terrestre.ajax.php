@@ -28,6 +28,14 @@ class TransporteTerrestreAjax {
 
     // REGISTRAR TRANSPORTE TERRESTRE
     public function canp_registrar_transporte_terrestre_ajax() {
+
+           // Validación de la placa: numérica y exactamente 6 caracteres
+           if (!preg_match('/^\d{6}$/', $this->placa)) {
+            echo json_encode(["error" => "La placa debe ser un valor numérico y contener exactamente 6 caracteres."]);
+            return;
+        }
+
+
         $datosTransporte = [
             'tipo_transporte' => $this->tipoTransporte,
             'placa' => $this->placa,
@@ -48,6 +56,12 @@ class TransporteTerrestreAjax {
 
     // ACTUALIZAR TRANSPORTE TERRESTRE
     public function canp_actualizar_transporte_terrestre_ajax() {
+
+           // Validación de la placa: numérica y exactamente 6 caracteres
+           if (!preg_match('/^\d{6}$/', $this->placaA)) {
+            echo json_encode(["error" => "La placa debe ser un valor numérico y contener exactamente 6 caracteres."]);
+            return;
+        }
         $datosTransporte = [
             'id_transporteterrestre' => $this->idTransporteTerrestreA,
             'tipo_transporte' => $this->tipoTransporteA,

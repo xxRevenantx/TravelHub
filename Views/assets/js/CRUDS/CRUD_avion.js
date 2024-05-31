@@ -14,12 +14,17 @@ export function insertar_o_actualizar_avion(formAvion, idAvion, datosFormularioI
                 swalMixin("top", "info", "Espera... guardando avión");
             },
             success: function(response) {
+                console.log(response);
                 if (response === true) {
                     swalMixin("top", "success", "Avión guardado exitosamente en la base de datos");
                     setTimeout(() => {
                         location.reload();
                     }, 2000);
-                } else {
+                }else if(response.error){
+                    swalMixin("top", "error", response.error);
+                }
+                
+                else {
                     swalMixin("top", "error", "El avión no se pudo guardar");
                 }
             },
@@ -83,13 +88,10 @@ function actualizar_avion(formAvion, datosFormularioActualizar) {
             dataType: "json",
         beforeSend: function() {
             swalMixin("top", "info", "Espera... actualizando avión");
-            formAvion.btnAvion.setAttribute("disabled", true);
-            formAvion.btnAvion.style.opacity = "0.5";
         },
         success: function(response) {
             console.log(response);
             if (response == true) {
-                
                 // Notificar éxito
                 swalMixin("top", "success", "Avión actualizado exitosamente en la base de datos");
                 setTimeout(() => {
@@ -97,7 +99,11 @@ function actualizar_avion(formAvion, datosFormularioActualizar) {
                     formAvion.btnAvion.style.opacity = "1";
                     location.reload(); // Recarga la página para reflejar los cambios
                 }, 1000);
-            } else {
+            }else if(response.error){
+                swalMixin("top", "error", response.error);
+            } 
+            
+            else {
                 // Mostrar mensaje de error específico
          // Log del error para diagnóstico
                 swalMixin("top", "error", "El avión no se pudo actualizar: " + response.message);

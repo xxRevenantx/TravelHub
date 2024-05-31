@@ -23,7 +23,9 @@ export function  insertar_o_actualizar_tipo_destino(formTipoDestino, idtipoDesti
                     setTimeout(() => {
                         location.reload();
                     }, 2000);
-                } else {
+                }else if(response.error){
+                    swalMixin("top", "error", response.error);
+                }  else {
                     swalMixin("top", "error", "El destino no se pudo guardar");
                 }
             }
@@ -89,8 +91,7 @@ export function editar_tipo_destino(formTipoDestino){
         dataType: "json",
         beforeSend: function() {
             swalMixin("top", "info", "Espera... actualizando tipo de destino");
-            formTipoDestino.btntTipoDestino.setAttribute("disabled", true);
-            formTipoDestino.btntTipoDestino.style.opacity = "0.5";
+          
         },
         success: function(response) {
             
@@ -103,12 +104,13 @@ export function editar_tipo_destino(formTipoDestino){
                     formTipoDestino.btntTipoDestino.style.opacity = "1";
                     location.reload(); // Recarga la página para reflejar los cambios
                 }, 1000);
-            } else {
+            }else if(response.error){
+                swalMixin("top", "error", response.error);
+            }  else {
                 // Mostrar mensaje de error específico
                 console.log(response); // Log del error para diagnóstico
                 swalMixin("top", "error", "El tipo de destino no se pudo actualizar: " + response.message);
-                formTipoDestino.btntTipoDestino.removeAttribute("disabled");
-                formTipoDestino.btntTipoDestino.style.opacity = "1";
+                
             }
            
         },

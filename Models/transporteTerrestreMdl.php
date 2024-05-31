@@ -4,7 +4,12 @@ class TransporteTerrestreMdl {
 
     // Función para añadir un nuevo transporte terrestre
     public static function canp_registrar_transporte_terrestre_mdl($datosTransporte) {
+
         try {
+             // Segunda capa de validación para garantizar la integridad de los datos
+             if (!preg_match('/^\d{6}$/', $datosTransporte['placa'])) {
+                return ["error" => "La placa debe ser un valor numérico y contener exactamente 6 caracteres."];
+            }
             $db = Conexion::conectar();
             $sql = "INSERT INTO  tbltransporteterrestre (tipo_Transporte, placa, capacidad_pasajeros, anio_fabricacion, empresa_propietaria) VALUES (:tipoTransporte, :placa, :capacidad, :anioFabricacion, :empresa)";
             $stmt = $db->prepare($sql);
@@ -54,6 +59,10 @@ class TransporteTerrestreMdl {
     // Función para actualizar un transporte terrestre
     public static function canp_actualizar_transporte_terrestre_mdl($datosTransporte) {
         try {
+             // Segunda capa de validación para garantizar la integridad de los datos
+             if (!preg_match('/^\d{6}$/', $datosTransporte['placa'])) {
+                return ["error" => "La placa debe ser un valor numérico y contener exactamente 6 caracteres."];
+            }
             $db = Conexion::conectar();
             $sql = "UPDATE  tbltransporteterrestre SET tipo_transporte = :tipo_transporte, placa = :placa, capacidad_pasajeros = :capacidad_pasajeros, anio_fabricacion = :anio_fabricacion, empresa_propietaria = :empresa_propietaria WHERE id_transpterrestre = :id";
             $stmt = $db->prepare($sql);

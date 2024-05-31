@@ -16,12 +16,16 @@ export function insertar_o_actualizar_transporte_terrestre(formTransporteTerrest
             },
             success: function(response) {
                 console.log(response);
+                console.log(response);
                 if (response === true) {
                     swalMixin("top", "success", "Transporte terrestre guardado exitosamente en la base de datos");
                     setTimeout(() => {
                         location.reload();
                     }, 2000);
-                } else {
+                }else if(response.error){
+                    swalMixin("top", "error", response.error);
+                } 
+                 else {
                     console.log(response);
                     swalMixin("top", "error", "El transporte terrestre no se pudo guardar");
                 }
@@ -81,21 +85,24 @@ function actualizar_transporte_terrestre(formTransporteTerrestre, datosFormulari
         dataType: "json",
         beforeSend: function() {
             swalMixin("top", "info", "Espera... actualizando transporte terrestre");
-            formTransporteTerrestre.btnTransporteTerrestre.setAttribute("disabled", true);
-            formTransporteTerrestre.btnTransporteTerrestre.style.opacity = "0.5";
+           
         },
         success: function(response) {
             console.log(response);
             if (response == true) {
+                formTransporteTerrestre.btnTransporteTerrestre.removeAttribute("disabled", true);
+                formTransporteTerrestre.btnTransporteTerrestre.style.opacity = "1";
                 swalMixin("top", "success", "Transporte terrestre actualizado exitosamente en la base de datos");
                 setTimeout(() => {
-                    formTransporteTerrestre.btnTransporteTerrestre.removeAttribute("disabled");
-                    formTransporteTerrestre.btnTransporteTerrestre.style.opacity = "1";
                     location.reload(); // Recarga la página para reflejar los cambios
                 }, 1000);
-            } else {
+            } else if(response.error){
+                swalMixin("top", "error", response.error);
+                
+            } 
+            else {
                 swalMixin("top", "error", "El transporte terrestre no se pudo actualizar: " + response.message);
-                formTransporteTerrestre.btnTransporteTerrestre.removeAttribute("disabled");
+                formTransporteTerrestre.btnTransporteTerrestre.setAttribute("disabled", false);
                 formTransporteTerrestre.btnTransporteTerrestre.style.opacity = "1";
             }
         }
@@ -135,10 +142,12 @@ export function eliminar_transporte_terrestre() {
                             });
                         } else {
                             swalMixin("top", "error", "Ocurrió un error al eliminar el transporte terrestre");
+
                         }
                     },
                     error: function() {
                         swalMixin("top", "error", "No se pudo procesar la petición");
+
                     }
                 });
             }
