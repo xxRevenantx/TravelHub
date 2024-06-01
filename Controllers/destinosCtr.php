@@ -64,8 +64,6 @@ public static function canp_eliminar_destino_ctr($idDestino) {
     }
 
 
-
-
     $respuesta = DestinoMdl::canp_registrar_tipo_destino_mdl($datosTipoDestino);
     return $respuesta; // Esto podría devolver, por ejemplo, un mensaje de éxito o error
 }

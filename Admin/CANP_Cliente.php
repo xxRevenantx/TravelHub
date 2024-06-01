@@ -9,6 +9,7 @@ include 'Components/navAdmin.php'
        
         <form class="formClienteAdmin" method="post">
             <input type="hidden" name="idClienteActualizar" class="idClienteActualizar">
+            <input type="hidden" id="rolIdCliente" name="rolIdCliente" class="rolIdCliente" value="<?php echo Funciones::encrypt(2) ?>">
         <div class="form-row">
             <div class="form-group">
                 <label for="nombre">Nombre: <div class="tooltip required"> *<span class="tooltiptext">Campo obligatorio</span></div></label>

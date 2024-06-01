@@ -6,17 +6,18 @@ class ClienteMdl {
 public static function canp_registrar_cliente_mdl($datosCliente) {
     try {
         $db = Conexion::conectar();
-        $sql = "INSERT INTO tblcliente (nombre, primer_apellido, segundo_apellido, lugarNacimiento, fechaNacimiento, sexo, RFC, CURP, fecha_registro) VALUES (:nombre, :primerApellido, :segundoApellido, :lugarNacimiento, :fechaNacimiento, :sexo, :rfc, :curp, :fechaRegistro)";
+        $sql = "INSERT INTO tblcliente (nombre, primer_apellido, segundo_apellido, lugarNacimiento, fechaNacimiento, sexo, RFC, CURP, fecha_registro, id_rol) VALUES (:nombre, :primerApellido, :segundoApellido, :lugarNacimiento, :fechaNacimiento, :sexo, :rfc, :curp, :fechaRegistro, :id_rol)";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':nombre', $datosCliente["nombre"]);
-        $stmt->bindParam(':primerApellido', $datosCliente["primerApellido"]);
-        $stmt->bindParam(':segundoApellido', $datosCliente["segundoApellido"]);
-        $stmt->bindParam(':lugarNacimiento', $datosCliente["lugarNacimiento"]);
-        $stmt->bindParam(':fechaNacimiento', $datosCliente["fechaNacimiento"]);
-        $stmt->bindParam(':sexo', $datosCliente["sexo"]);
-        $stmt->bindParam(':rfc', $datosCliente["rfc"]);
-        $stmt->bindParam(':curp', $datosCliente["curp"]);
-        $stmt->bindParam(':fechaRegistro', $datosCliente["fechaRegistro"]);
+        $stmt->bindParam(':nombre', $datosCliente["nombre"], PDO::PARAM_STR);
+        $stmt->bindParam(':primerApellido', $datosCliente["primerApellido"], PDO::PARAM_STR);
+        $stmt->bindParam(':segundoApellido', $datosCliente["segundoApellido"], PDO::PARAM_STR);
+        $stmt->bindParam(':lugarNacimiento', $datosCliente["lugarNacimiento"], PDO::PARAM_STR);
+        $stmt->bindParam(':fechaNacimiento', $datosCliente["fechaNacimiento"], PDO::PARAM_STR);
+        $stmt->bindParam(':sexo', $datosCliente["sexo"], PDO::PARAM_STR);
+        $stmt->bindParam(':rfc', $datosCliente["rfc"], PDO::PARAM_STR);
+        $stmt->bindParam(':curp', $datosCliente["curp"], PDO::PARAM_STR);
+        $stmt->bindParam(':fechaRegistro', $datosCliente["fechaRegistro"], PDO::PARAM_STR);
+        $stmt->bindParam(':id_rol', $datosCliente["idRol"], PDO::PARAM_INT);
         
         if($stmt->execute()){
             return true;

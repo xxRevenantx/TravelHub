@@ -4,7 +4,7 @@
 require_once "../../Models/clienteMdl.php";
 require_once "../../Controllers/clienteCtr.php";
 
-
+require_once "../../App/funciones.php";
         
 /* CLASE */
 class ClienteAjax {
@@ -15,6 +15,7 @@ class ClienteAjax {
 
 
     //INSERTAR
+    public $idRol;
     public $nombre;
     public $primerApellido;
     public $segundoApellido;
@@ -45,6 +46,7 @@ class ClienteAjax {
     // REGISTRAR CLIENTE
     public function canp_registrar_cliente_ajax(){
         $datosCliente = [
+            'idRol' => $this->idRol,
             'nombre' => $this->nombre,
             'primerApellido' => $this->primerApellido,
             'segundoApellido' => $this->segundoApellido,
@@ -96,6 +98,7 @@ class ClienteAjax {
 // REGISTRAR CLIENTE
 if(isset($_POST["nombre"])) {
     $c = new ClienteAjax();
+    $c->idRol = Funciones::decrypt($_POST["idRol"]); 
     $c->nombre = $_POST["nombre"];
     $c->primerApellido = $_POST["primerApellido"];
     $c->segundoApellido = $_POST["segundoApellido"];

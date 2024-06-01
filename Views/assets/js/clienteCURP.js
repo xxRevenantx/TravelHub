@@ -99,7 +99,9 @@ if (formClienteAdmin) { // Verifica si el formulario existe
         
         e.preventDefault(); // Previene la acción por defecto del formulario (evita que se envíe)
         
+        const idRol = document.getElementById('rolIdCliente').value;
          // Obtiene el valor del input con id 'nombre' y lo asigna a la variable 'nombre'
+      
         const nombre = document.getElementById('nombre').value;
        
         // Obtiene el valor del input con id 'primerApellido' y lo asigna a la variable 'primerApellido'
@@ -124,7 +126,7 @@ if (formClienteAdmin) { // Verifica si el formulario existe
         const fechaRegistro = document.getElementById('fechaRegistro').value;
        
         // Verifica que todas las variables tienen un valor (no están vacías)
-        if (nombre && primerApellido && segundoApellido && fechaNacimiento && sexo && lugarNacimiento && curp && rfc && fechaRegistro) {
+        if (idRol && nombre && primerApellido && segundoApellido && fechaNacimiento && sexo && lugarNacimiento && curp && rfc && fechaRegistro) {
 
             const soloLetras = /^[a-zA-ZñÑ\s]+$/;
             const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
@@ -132,7 +134,7 @@ if (formClienteAdmin) { // Verifica si el formulario existe
 
 
                // Validar nombre
-               if (!soloLetras.test(nombre)) {
+            if (!soloLetras.test(nombre)) {
                 swalMixin("top","error","El nombre no debe contener caracteres especiales")
                 return;
             } 
@@ -172,7 +174,7 @@ if (formClienteAdmin) { // Verifica si el formulario existe
                swalMixin("top","error","La CURP debe tener exactamente 18 caracteres alfanuméricos")
                return;
             }
-            
+
 
             if(formClienteAdmin.idClienteActualizar.value != ""){ // ACTUALIZAR
                 let id = formClienteAdmin.idClienteActualizar.value;
@@ -226,6 +228,7 @@ if (formClienteAdmin) { // Verifica si el formulario existe
 
                 // Recopila los datos del formulario
                 let datosFormulario = {
+                    idRol: idRol,
                     nombre: nombre,
                     primerApellido: primerApellido,
                     segundoApellido: segundoApellido,
@@ -246,6 +249,7 @@ if (formClienteAdmin) { // Verifica si el formulario existe
                                 swalMixin("top","info","Espera... guardando cliente")
                             },
                             success: function(response) {
+                                console.log(response);
                                 if(response == true){
                                     // Aquí se maneja lo que ocurre después de enviar los datos exitosamente
                                     swalMixin("top","success","Cliente guardado exitosamente en la base de datos")

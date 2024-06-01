@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2024 a las 19:48:03
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.0.25
+-- Tiempo de generación: 01-06-2024 a las 04:40:14
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -77,7 +77,7 @@ CREATE TABLE `tblavion` (
 --
 
 INSERT INTO `tblavion` (`id_avion`, `numero_serie`, `modelo`, `capacidad_asientos`, `empresa_propietaria`) VALUES
-(4, '123456789A', 'Boeing 747', 67, 'Aerolíneas Internacionales'),
+(4, '1234567ACu', 'Boeing 747', 67, 'Aerolíneas Internacionales'),
 (5, '987654321D', 'Airbus A380', 50, 'Global Airways'),
 (6, '234567891A', 'Boeing 737', 78, 'Aerolíneas Internacionales'),
 (7, '876543219D', 'Airbus A320', 80, 'Continental Flights'),
@@ -86,8 +86,7 @@ INSERT INTO `tblavion` (`id_avion`, `numero_serie`, `modelo`, `capacidad_asiento
 (10, '456789123A', 'Airbus A350', 24, 'Continental Flights'),
 (11, '654321987D', 'Boeing 737 MAX', 20, 'Sky Partners'),
 (12, '567891234A', 'Embraer E190', 5, 'Regional Jet'),
-(13, '543219876D', 'Bombardier Q400', 67, 'Regional Jet'),
-(15, '1233ACDD12', 'Boein34', 45, 'Internacional');
+(25, '123456789T', 'Boeing 747', 67, 'Aerolíneas Internacionales');
 
 -- --------------------------------------------------------
 
@@ -115,7 +114,7 @@ CREATE TABLE `tblcliente` (
   `nombre` varchar(255) NOT NULL,
   `primer_apellido` varchar(255) NOT NULL,
   `segundo_apellido` varchar(255) DEFAULT NULL,
-  `lugarNacimiento` varchar(20) NOT NULL,
+  `lugarNacimiento` varchar(255) NOT NULL,
   `fechaNacimiento` date NOT NULL,
   `sexo` varchar(1) NOT NULL,
   `RFC` varchar(13) NOT NULL,
@@ -123,6 +122,17 @@ CREATE TABLE `tblcliente` (
   `fecha_registro` date NOT NULL,
   `id_rol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `tblcliente`
+--
+
+INSERT INTO `tblcliente` (`id_cliente`, `nombre`, `primer_apellido`, `segundo_apellido`, `lugarNacimiento`, `fechaNacimiento`, `sexo`, `RFC`, `CURP`, `fecha_registro`, `id_rol`) VALUES
+(1, 'Liliana', 'Lopez', 'Gonzalez', 'AS', '1989-10-31', 'M', 'JPG12356789AA', 'LOGL891031MASPNLU5', '2023-10-31', 2),
+(2, 'Jorge', 'Sandoval', 'Ramirez', 'GT', '1980-12-05', 'H', 'SHD123456789A', 'SARJ801205HGTNMRQ3', '2023-11-05', 2),
+(3, 'Andrea', 'Hinojosa', 'Vazquez', 'AS', '1990-08-15', 'M', 'JPG12356789BF', 'HIVA900815MASNZNA9', '2023-11-18', 2),
+(4, 'Arturo', 'Cruz', 'Villegas', 'CS', '1995-12-05', 'H', 'SHD123456789A', 'CUVA951205HCSRLRY2', '2023-12-13', 2),
+(5, 'Valentin', 'Rojas', 'Mendoza', 'DF', '1992-04-06', 'H', 'JPG12356789BB', 'ROMV920406HDFJNLM5', '2023-12-15', 2);
 
 -- --------------------------------------------------------
 
@@ -188,7 +198,7 @@ CREATE TABLE `tbltipodestino` (
 --
 
 INSERT INTO `tbltipodestino` (`id_tipodestino`, `Nombre_destino`, `Actividades_populares`, `Epoca_sugerida`) VALUES
-(1, 'Playa', 'Paseo en lancha', 'Verano'),
+(1, 'Playa', 'visita a acuarios', 'invierno'),
 (3, 'Histórico', 'recorrido del centro histórico', 'otoño'),
 (4, 'Playa', 'Visita a acuarios', 'Verano'),
 (5, 'Extranjero', 'Visita a museos', 'Invierno'),
@@ -197,11 +207,9 @@ INSERT INTO `tbltipodestino` (`id_tipodestino`, `Nombre_destino`, `Actividades_p
 (8, 'Extranjero', 'Paseo en lancha', 'Verano'),
 (9, 'Histórico', 'Visita a museos', 'Primavera'),
 (10, 'Playa', 'Tour por la ciudad', 'Primavera'),
-(11, 'Cancún', 'Buceo, Nado con Delfines, Festivales de Música', 'primavera'),
-(12, 'Cancún', 'Buceo, Nado con Delfines, Festivales de Música', 'verano'),
-(13, 'Cancún', 'paseo en lancha', 'primavera'),
-(14, 'Cancún', 'Paseo en lancha', 'primavera'),
-(15, 'Cancún', 'recorrido del centro histórico', 'primavera');
+(11, 'Cancún', 'paseo en lancha', 'verano'),
+(18, 'Playa', 'paseo en lancha', 'verano'),
+(19, 'Playa', 'visita a acuarios', 'primavera');
 
 -- --------------------------------------------------------
 
@@ -223,7 +231,7 @@ CREATE TABLE `tbltransporteterrestre` (
 --
 
 INSERT INTO `tbltransporteterrestre` (`id_transpterrestre`, `tipo_transporte`, `placa`, `capacidad_pasajeros`, `anio_fabricacion`, `empresa_propietaria`) VALUES
-(1, 'Autobús', '123333', 60, 2015, 'Transporte Urbano SA'),
+(1, 'Autobús', '123336', 60, 2015, 'Transporte Urbano SA'),
 (2, 'Taxi', 'XYZ5678', 4, 2018, 'Taxis Rápidos SRL'),
 (3, 'Autobús', 'DEF9012', 45, 2014, 'Viajes Seguros SL'),
 (4, 'Minivan', 'GHI3456', 7, 2019, 'Transportes Familiares S.A.'),
@@ -233,7 +241,8 @@ INSERT INTO `tbltransporteterrestre` (`id_transpterrestre`, `tipo_transporte`, `
 (8, 'Minivan', 'STU9012', 8, 2020, 'Servicios Ejecutivos SRL'),
 (9, 'Camioneta', 'VWX3456', 6, 2015, 'Carga y Transporte SA'),
 (10, 'Autobús', 'YZA7890', 55, 2012, 'Transporte Escolar SA'),
-(13, 'Autobús', '123456', 50, 2015, 'Transporte Urbano SA');
+(13, 'Autobús', '123455', 50, 2015, 'Transporte Urbano SA'),
+(18, 'taxi', '123459', 56, 2023, 'Transporte Urbano SA');
 
 -- --------------------------------------------------------
 
@@ -340,7 +349,7 @@ ALTER TABLE `tbladmin`
 -- AUTO_INCREMENT de la tabla `tblavion`
 --
 ALTER TABLE `tblavion`
-  MODIFY `id_avion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_avion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `tblbitacora`
@@ -352,7 +361,7 @@ ALTER TABLE `tblbitacora`
 -- AUTO_INCREMENT de la tabla `tblcliente`
 --
 ALTER TABLE `tblcliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tbldestino`
@@ -370,13 +379,13 @@ ALTER TABLE `tblroles`
 -- AUTO_INCREMENT de la tabla `tbltipodestino`
 --
 ALTER TABLE `tbltipodestino`
-  MODIFY `id_tipodestino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_tipodestino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `tbltransporteterrestre`
 --
 ALTER TABLE `tbltransporteterrestre`
-  MODIFY `id_transpterrestre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_transpterrestre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `tblusuarios`
@@ -399,7 +408,7 @@ ALTER TABLE `tblbitacora`
 -- Filtros para la tabla `tblcliente`
 --
 ALTER TABLE `tblcliente`
-  ADD CONSTRAINT `tblcliente_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `tblusuarios` (`Id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tblcliente_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `tblroles` (`Id_rol`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbldestino`

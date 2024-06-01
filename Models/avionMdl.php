@@ -8,8 +8,8 @@ public static function canp_registrar_avion_mdl($datosAvion) {
 
            // Validación básica en el modelo 
         if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{10}$/', $datosAvion['numeroSerie'])) {
-    return false;
-}
+        return false;
+        }
         
         $db = Conexion::conectar();
         $sql = "INSERT INTO tblavion (numero_serie, modelo, capacidad_asientos, empresa_propietaria) VALUES (:numeroSerie, :modelo, :capacidadAsientos, :empresaPropietaria)";
