@@ -2,6 +2,10 @@
 // Iniciamos sesión en la plantilla
  session_start();
 $rutaLocal = Ruta::rutaCtr();
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -29,8 +33,10 @@ $rutaLocal = Ruta::rutaCtr();
 
 <body>
 
-
 <?php
+
+
+
 $url = array();
 $ruta1 = null;
 $mensaje = "";
@@ -42,8 +48,9 @@ if(isset($_SESSION['validar']) && $_SESSION['validar'] == true && $_SESSION["rol
              if($url[0] == "logout"){
                    include "Modules/".$url[0].'.php';
                }else if( $url[1] == "CANP_Admin" || $url[1] == "CANP_Destino" || $url[1] == "CANP_TipoDestino" || $url[1] == "CANP_TransporteTerrestre" 
-                || $url[1] == "CANP_Avion" || $url[1] == "CANP_ReporteUsuarios" || $url[1] == "CANP_Bitacora" || $url[1] == "CANP_Cliente"){
-                include "Admin/".$url[1].'.php';
+                || $url[1] == "CANP_Avion" || $url[1] == "CANP_ReporteUsuarios" || $url[1] == "CANP_Bitacora" || $url[1] == "CANP_Cliente" || $url[1] == "CANP_Reportes"
+                || $url[1] == "CANP_Reservas"){
+                    include "Admin/".$url[1].'.php';
                }
                else{
                 header('Location: '.$rutaLocal.'Admin/CANP_Admin');

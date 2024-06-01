@@ -98,6 +98,8 @@ include 'Components/navAdmin.php'
             ?>
 
         <h2>Lista de Destinos</h2>
+        <div style="overflow-y:auto;">
+
         <table class="tblDestinos">
             <thead>
                 <tr>
@@ -155,4 +157,5 @@ include 'Components/navAdmin.php'
             </tbody>
         </table>
 
+        </div>
         </div>

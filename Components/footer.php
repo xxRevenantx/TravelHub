@@ -1,5 +1,17 @@
 <footer>
-CANP – PW1 – 2024/05/21
+
+<?php
+// Establece la zona horaria predeterminada
+date_default_timezone_set('America/Mexico_City');
+
+// Obtiene la fecha actual en formato Año/Mes/Día
+$fecha_actual = date('Y/m/d');
+
+// Imprime la fecha
+echo "CANP – PW1 – " . $fecha_actual;
+
+?>
+
 
 
 

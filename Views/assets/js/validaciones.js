@@ -5,6 +5,7 @@ import {editar_avion,insertar_o_actualizar_avion, eliminar_avion} from './CRUDS/
 import {editar_transporte_terrestre,insertar_o_actualizar_transporte_terrestre, eliminar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
 import {editar_destino,insertar_o_actualizar_destino, imagen, eliminar_destino} from './CRUDS/CRUD_destino.js'; 
 import {editar_usuario,validarContrasena, insertar_o_actualizar_usuario, eliminar_usuario} from './CRUDS/CRUD_usuario.js'; 
+import {insertar_o_actualizar_reserva} from './CRUDS/CRUD_reservas.js'; 
 
 // VALIDACIONES
 let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre");
@@ -12,6 +13,7 @@ let formDestinoAdmin = document.querySelector(".formDestinoAdmin");
 let formTipoDestino = document.querySelector(".formTipoDestino");
 let formAvion = document.querySelector(".formAvion");
 let formUsuario = document.querySelector(".formUsuario");
+let formReserva = document.querySelector(".formReserva");
 
 
 // VALIDAR USUARIO
@@ -381,6 +383,63 @@ function avion(){
 }
 }
 
+// VALIDAR RESERVA
+function reserva(){
+    if(formReserva){
+    formReserva.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        // Recoger los valores del formulario
+        let clienteReserva = e.target.cliente_reserva.value;
+        let destinoReserva = e.target.destino_reserva.value;
+        let tipoDestinoReserva = e.target.tipodestino_reserva.value;
+        let fecha_reserva = e.target.fecha_reserva.value;
+        let fecha_vuelo = e.target.fecha_vuelo.value;
+
+        // Validación de campos no vacíos
+        if (clienteReserva === "" || destinoReserva === "" || tipoDestinoReserva === "" || fecha_reserva === "" || fecha_vuelo === "") {
+            swalMixin("top", "error", "Todos los campos son obligatorios");
+            return;
+        }
+
+        // Validación de fechas (fecha de reserva no debe ser después de la fecha de vuelo)
+        if (new Date(fecha_reserva) > new Date(fecha_vuelo)) {
+            swalMixin("top", "error", "La fecha de reserva no puede ser posterior a la fecha de vuelo");
+            return;
+        }
+
+        // Preparar datos para inserción o actualización
+        let idReserva = e.target.idReserva.value;
+
+        let datosFormularioInsertar = {
+            clienteReserva: clienteReserva.trim(),
+            destinoReserva: destinoReserva.trim(),
+            tipoDestinoReserva: tipoDestinoReserva.trim(),
+            fecha_reserva: fecha_reserva.trim(),
+            fecha_vuelo: fecha_vuelo.trim(),
+        };
+
+        let datosFormularioActualizar = {
+            idReservaA: idReserva.trim(),
+            clienteReservaA: clienteReserva.trim(),
+            destinoReservaA: destinoReserva.trim(),
+            tipoDestinoReservaA: tipoDestinoReserva.trim(),
+            fecha_reservaA: fecha_reserva.trim(),
+            fecha_vueloA: fecha_vuelo.trim(),
+        };
+    
+     // Aquí puedes manejar la inserción o actualización de los datos de la reserva
+     insertar_o_actualizar_reserva(formReserva, idReserva, datosFormularioInsertar, datosFormularioActualizar);
+    });
+
+    // Función para manejar la edición de una reserva
+    // editar_reserva(formReserva);
+
+    // Función para manejar la eliminación de una reserva
+    // eliminar_reserva();
+
+}
+}
 
 
 // EJECUCIÓN DE FUNCIONES
@@ -389,3 +448,4 @@ avion();
 transporteTerrestre();
 destino();
 usuario();
+reserva();

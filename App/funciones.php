@@ -2,6 +2,8 @@
 
 class Funciones{
 
+
+
  // Llave de encriptación
  const ENCRYPTION_KEY = 'es1921022834';
 static public function estaActivo($ruta) {

@@ -5,7 +5,20 @@ include 'Components/navAdmin.php'
 
     <div class="contenedor">
 
-    <h1>Bitácora de Actividades</h1>
+    <div class="contenidoReporte">
+    <form id="reportForm" class="mt-2">
+        <label for="startMonth">Mes de inicio:</label>
+        <input type="month" id="startMonth" name="startMonth" required>
+
+        <label for="endMonth">Mes de fin:</label>
+        <input type="month" id="endMonth" name="endMonth" required>
+
+        <button type="button" class="btnReporte" onclick="fetchReport()">Generar Reporte</button>
+    </form>
+
+
+    <div class="resultadosReporte">
+        <h1 class="reservas">Reservas</h2>
     <table>
         <thead>
             <tr>
@@ -35,4 +48,7 @@ include 'Components/navAdmin.php'
         </tbody>
     </table>
 
+    </div>
+
+    </div>
 </div>
