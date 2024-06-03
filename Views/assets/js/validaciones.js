@@ -5,7 +5,7 @@ import {editar_avion,insertar_o_actualizar_avion, eliminar_avion} from './CRUDS/
 import {editar_transporte_terrestre,insertar_o_actualizar_transporte_terrestre, eliminar_transporte_terrestre} from './CRUDS/CRUD_transporte_terrestre.js'; 
 import {editar_destino,insertar_o_actualizar_destino, imagen, eliminar_destino} from './CRUDS/CRUD_destino.js'; 
 import {editar_usuario,validarContrasena, insertar_o_actualizar_usuario, eliminar_usuario} from './CRUDS/CRUD_usuario.js'; 
-import {insertar_o_actualizar_reserva} from './CRUDS/CRUD_reservas.js'; 
+import {editar_reserva,insertar_o_actualizar_reserva, eliminar_reserva} from './CRUDS/CRUD_reservas.js'; 
 
 // VALIDACIONES
 let formTransporteTerrestre = document.querySelector(".formTransporteTerrestre");
@@ -396,8 +396,9 @@ function reserva(){
         let fecha_reserva = e.target.fecha_reserva.value;
         let fecha_vuelo = e.target.fecha_vuelo.value;
 
+
         // Validación de campos no vacíos
-        if (clienteReserva === "" || destinoReserva === "" || tipoDestinoReserva === "" || fecha_reserva === "" || fecha_vuelo === "") {
+        if (clienteReserva == "" || destinoReserva == "" || tipoDestinoReserva == "" || fecha_reserva == "" || fecha_vuelo == "") {
             swalMixin("top", "error", "Todos los campos son obligatorios");
             return;
         }
@@ -433,10 +434,10 @@ function reserva(){
     });
 
     // Función para manejar la edición de una reserva
-    // editar_reserva(formReserva);
+    editar_reserva(formReserva);
 
     // Función para manejar la eliminación de una reserva
-    // eliminar_reserva();
+    eliminar_reserva();
 
 }
 }

@@ -159,17 +159,13 @@ nav.menu ul{
  justify-content: center;
 }
 
-.hamburger-menu {
-    display: none;
-    font-size: 30px;
-    cursor: pointer;
-}
 
 .menu-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
+    align-items: center;
 }
 
 .menu-list li {
@@ -180,7 +176,7 @@ nav.menu ul{
     .menu-list {
         display: none;
         flex-direction: column;
-        background-color: #333;
+        background-color: #ffffff;
         position: absolute;
         top: 40px;
         right: 0;
@@ -199,7 +195,8 @@ nav.menu ul{
 }
 
 nav.menu ul li{
-    padding: 20px;
+    padding: 10px;
+    color: #fff;
 }
 
 nav ul {
@@ -269,10 +266,58 @@ button.btnformulario{
     width: 20%;
 }
 
+
+.tableContainer{
+    max-height: 800px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
 table {
     width: 100%;
-    margin-bottom: 100px;
     border-collapse: collapse;
+    margin: 10px 0 100px 0;
+    font-size: 17px;
+    min-width: 400px;
+}
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+table th {
+    background-color: #f2f2f2;
+}
+@media (max-width: 768px) {
+    table {
+        border: 0;
+    }
+    table thead {
+        display: none;
+    }
+    table tr {
+        display: block;
+        margin-bottom: 15px;
+    }
+    table td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: 0;
+        border-bottom: 1px solid #ddd;
+    }
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+    table td:last-child {
+        border-bottom: 0;
+    }
 }
 
 th, td {
@@ -405,12 +450,13 @@ textarea {
     font-size: 18px;
 }
 
-.menu li.activo a {
+.menu li.activo a{
     font-weight: bold;
     background: #6a6a6a;
     color: #fff;
-    padding: 20px;
+    padding: 15px;
 }
+
 
 /* LOGINN */
 
@@ -566,7 +612,7 @@ h2.login{
     width: 200px;
 }
 
-form#reportForm {
+form.reporteForm {
 
     padding: 20px;
     width: 100%; /* Ajustable según el diseño de la página */
@@ -576,11 +622,11 @@ form#reportForm {
     flex-direction: column; /* Alinea los elementos verticalmente */
 }
 
-form#reportForm label {
+form.reporteForm label {
     margin-bottom: 5px;
 }
 
-form#reportForm input[type="month"] {
+form.reporteForm input[type="month"] {
     margin-bottom: 20px; /* Espacio después de cada input */
     padding: 8px;
     border: 1px solid #ccc;
@@ -588,7 +634,7 @@ form#reportForm input[type="month"] {
     width: calc(100% - 16px); /* Ajusta el ancho considerando el padding */
 }
 
-form#reportForm button.btnReporte {
+form.reporteForm button.btnReporte {
     padding: 10px;
     background-color: #007bff;
     color: white;
@@ -598,7 +644,7 @@ form#reportForm button.btnReporte {
     transition: background-color 0.3s;
 }
 
-form#reportForm button.btnReporte:hover {
+form.reporteForm button.btnReporte:hover {
     background-color: #0056b3;
 }
 

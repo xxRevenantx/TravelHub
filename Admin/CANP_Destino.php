@@ -98,7 +98,7 @@ include 'Components/navAdmin.php'
             ?>
 
         <h2>Lista de Destinos</h2>
-        <div style="overflow-y:auto;">
+        <div class="tableContainer">
 
         <table class="tblDestinos">
             <thead>

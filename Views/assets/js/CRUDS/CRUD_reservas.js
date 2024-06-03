@@ -35,8 +35,8 @@ export function insertar_o_actualizar_reserva(formReserva, idReserva, datosFormu
 
 
 export function editar_reserva(formReserva) {
-    $('.tblReserva').on('click', '.editarReserva', function(e) {
-        let idReserva = $(this).attr("editarReserva");  // Asegúrate de que el botón tenga un atributo 'data-idReserva'
+    $('.tblReservas').on('click', '.EditarReserva', function(e) {
+        let idReserva = $(this).attr("btnEditarReserva"); 
 
         // Recopila los datos necesarios para la edición
         let datosFormulario = {
@@ -44,24 +44,24 @@ export function editar_reserva(formReserva) {
         };
 
         $.ajax({
-            url: travelHub() + "Views/Ajax/reserva.ajax.php", // Asegúrate de que esta URL apunte al archivo AJAX correcto que maneja las reservas
+            url: travelHub() + "Views/Ajax/reserva.ajax.php", 
             type: 'POST',
             data: datosFormulario,
             dataType: "json",
             success: function(response) {
                 console.log(response);
                 window.scroll({
-                    top: 0, // Ajusta según la posición del formulario en tu página
+                    top: 0, 
                     left: 0,
                     behavior: "smooth",
                 });
                 // Asumiendo que tienes un formulario con los campos necesarios para editar una reserva
                 formReserva.idReserva.value = response.id_reserva;
-                formReserva.cliente_reserva.value = response.cliente_reserva;
-                formReserva.destino_reserva.value = response.destino_reserva;
-                formReserva.tipodestino_reserva.value = response.tipodestino_reserva;
-                formReserva.reservationDate.value = response.fecha_reserva;
-                formReserva.flightDate.value = response.fecha_vuelo;
+                formReserva.cliente_reserva.value = response.id_cliente;
+                formReserva.destino_reserva.value = response.id_destino;
+                formReserva.tipodestino_reserva.value = response.id_tipodestino;
+                formReserva.fecha_reserva.value = response.fecha_reserva;
+                formReserva.fecha_vuelo.value = response.fecha_vuelo;
 
                 // Opcional: ajusta el texto y estilo del botón de guardar
                 formReserva.btnReserva.textContent = "Guardar cambios";
@@ -109,7 +109,7 @@ function actualizar_reserva(formReserva, datosFormularioActualizar) {
 
 
 export function eliminar_reserva() {
-    $('.tblReserva').on('click', '.eliminarReserva', function(e) {
+    $('.tblReservas').on('click', '.eliminarReserva', function(e) {
         let eliminarReserva = $(this).attr("eliminarReserva");
         let removeRow = $(this).closest('tr');
 

@@ -6,14 +6,14 @@ include 'Components/navAdmin.php'
     <div class="contenedor">
 
     <div class="contenidoReporte">
-    <form id="reportForm" class="mt-2">
+    <form class="reporteForm" class="mt-2">
         <label for="startMonth">Mes de inicio:</label>
-        <input type="month" id="startMonth" name="startMonth" required>
+        <input type="month" id="comienzoMes" class="comienzoMes" name="comienzoMes" >
 
         <label for="endMonth">Mes de fin:</label>
-        <input type="month" id="endMonth" name="endMonth" required>
+        <input type="month" id="finMes" class="finMes" name="finMes" >
 
-        <button type="button" class="btnReporte" onclick="fetchReport()">Generar Reporte</button>
+        <button type="submit" class="btnReporte" >Generar Reporte</button>
     </form>
 
 

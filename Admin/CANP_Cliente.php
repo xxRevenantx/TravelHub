@@ -77,6 +77,7 @@ include 'Components/navAdmin.php'
 
         <h2>Lista de Clientes</h2>
 
+        <div class="tableContainer">
         <table class="tblClientes">
         <thead>
             <tr>
@@ -102,9 +103,9 @@ include 'Components/navAdmin.php'
                 <td>'.($key+1).'</td>
                 <td>'.$cliente["nombre"].'</td>
                 <td>'.$cliente["primer_apellido"].'</td>
-                <td>'.$cliente["segundo_apellido"].'</td>
-                <td>'.$cliente["RFC"].'</td>
-                <td>'.$cliente["CURP"].'</td>
+                <td>'.$cliente["segundo_apellido"].'</td>  
+                <td>'. mb_strtoupper($cliente["RFC"]).'</td>
+                <td>'. mb_strtoupper($cliente["CURP"]).'</td>
                 <td>'.$cliente["fecha_registro"].'</td>
                 <td>
                     <button btnEditarCliente="'.$cliente["id_cliente"].'" class="edit btn-edit warning btnEditarCliente"> <i class="fa-solid fa-pen-to-square"></i></a>
@@ -119,6 +120,7 @@ include 'Components/navAdmin.php'
             
         </tbody>
     </table>
+        </div>
 </body>
 </html>
 
