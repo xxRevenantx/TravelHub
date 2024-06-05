@@ -2,10 +2,9 @@ Options All -indexes
 
 RewriteEngine On
 
-RewriteRule ^([-a-zA-Z0-9_/]+)$ index.php?url=$1
-
+#RewriteRule ^([-a-zA-Z0-9/]+)$ index.php?url=$1
 
 #CON ESTA EXPRESIÓN PODEMOS PASAR VARIABLES GET
-  # RewriteRule ^([0-9a-zA-Z-_/]+)/([0-9a-zA-Z-_]+)$ index.php?url=$1&code=$2 [QSA]
-  # RewriteRule ^([0-9a-zA-Z-_/]+)$ index.php?url=$1 [QSA]
-  # RewriteRule ^([0-9a-zA-Z-_/]+)$ index.php?url=$1
+  # RewriteRule ^([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)$ index.php?url=$1
+  # RewriteRule ^([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)$ index.php?url=$1&code=$2 [QSA]
+  RewriteRule ^([0-9a-zA-Z-_/]+)$ index.php?url=$1

@@ -16,6 +16,7 @@ include_once "Controllers/clienteCtr.php";
 include_once "Controllers/destinosCtr.php";
 include_once "Controllers/transporteTerrestreCtr.php";
 include_once "Controllers/reservasCtr.php";
+include_once "Controllers/reportesCtr.php";
 
 
 
@@ -27,6 +28,7 @@ include_once "Models/destinosMdl.php";
 include_once "Models/usuariosMdl.php";
 include_once "Models/transporteTerrestreMdl.php";
 include_once "Models/reservasMdl.php";
+include_once "Models/reportesMdl.php";
 
 
 $template = new Template();

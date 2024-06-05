@@ -31,7 +31,7 @@ include 'Components/navAdmin.php'
 
         </select>
 
-        <button type="submit" class="btnformulario" id="btnGuardar">Guardar Usuario</button>
+        <button type="submit" class="btnformulario mt-2" id="btnGuardar">Guardar Usuario</button>
     </form>
 
 <h2>Listado de Usuarios</h2>
